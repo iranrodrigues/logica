@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 12: Lógica de Predicados &amp; Domínios de Discurso</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f4f8;
+            padding-top: 20px;
+        }
+
+        .main-header {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            width: 180px;
+        }
+
+        .header-info {
+            text-align: right;
+            border-left: 2px solid #e5e7eb;
+            padding-left: 20px;
+        }
+
+        .header-info h2 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #254a8d;
+        }
+
+        .header-info p {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .header-info .sub-p {
+            font-size: 0.75rem;
+            color: #00AEEF;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .code-font {
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 59, 113, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .slot-spinning {
+            animation: slotRotate 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slotRotate {
+            0% {
+                transform: translateY(-12px) scale(0.85);
+                opacity: 0.4;
+            }
+
+            50% {
+                transform: translateY(6px) scale(1.1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .interactive-btn-val {
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .interactive-btn-val:active {
+            transform: scale(0.94);
+        }
+
+        /* Ajuste fino de subscrito para evitar afastamento de parênteses */
+        sub {
+            font-size: 0.72em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+            bottom: -0.22em;
+            margin-left: 0.5px;
+            margin-right: 0.5px;
+        }
+
+        .exercise-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00AEEF;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="text-gray-700 antialiased selection:bg-cyan-500 selection:text-white pb-20">
+
+    <!-- CABEÇALHO DA INSTITUIÇÃO -->
+    <header class="main-header flex-col md:flex-row gap-4 md:gap-0">
+        <div class="logo-container">
+            <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 801.70135 613.78265" height="100%" width="100%"
+                xml:space="preserve" id="svg2" version="1.1">
+                <g transform="matrix(1.3333333,0,0,-1.3333333,0,613.78267)" id="g10">
+                    <g id="g12">
+                        <g clip-path="url(#clipPath18)" id="g14">
+                            <g transform="translate(252.3749,80.1607)" id="g20">
+                                <path id="path22" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -4.711,0 -8.12,3.901 -8.12,8.718 v 0.069 c 0,4.817 3.446,8.68 8.12,8.68 2.81,0 4.92,-1.227 6.889,-3.056 l 2.776,3.196 c -2.355,2.25 -5.097,3.833 -9.631,3.833 -7.45,0 -12.688,-5.73 -12.688,-12.722 V 8.646 c 0,-7.063 5.344,-12.653 12.514,-12.653 4.605,0 7.415,1.689 9.98,4.359 L 7.064,3.162 C 4.957,1.197 3.022,0 0,0" />
+                            </g>
+                            <g transform="translate(272.8636,92.0402)" id="g24">
+                                <path id="path26" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 2.81,0 4.428,-2.144 4.708,-4.886 H -4.817 C -4.428,-2.004 -2.602,0 0,0 m 8.082,-12.407 -2.495,2.215 c -1.474,-1.443 -2.951,-2.215 -5.026,-2.215 -2.742,0 -4.886,1.689 -5.341,4.711 H 8.855 c 0.038,0.42 0.072,0.807 0.072,1.197 0,5.34 -2.988,9.979 -8.893,9.979 -5.306,0 -9.067,-4.359 -9.067,-9.665 v -0.072 c 0,-5.726 4.147,-9.628 9.525,-9.628 3.409,0 5.833,1.368 7.59,3.478" />
+                            </g>
+                            <g transform="translate(301.3308,76.5763)" id="g28">
+                                <path id="path30" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 v 11.843 c 0,4.287 -2.424,7.101 -6.609,7.101 -2.879,0 -4.602,-1.511 -5.798,-3.234 v 2.848 h -4.254 V 0 h 4.254 v 10.472 c 0,2.882 1.723,4.605 4.184,4.605 2.53,0 3.97,-1.651 3.97,-4.533 L -4.253,0 Z" />
+                            </g>
+                            <g transform="translate(310.1876,100.2299)" id="g32">
+                                <path id="path34" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -4.253 v -5.098 h -2.356 v -3.655 h 2.356 v -9.771 c 0,-4.075 2.212,-5.446 5.344,-5.446 1.613,0 2.772,0.352 3.829,0.95 v 3.477 c -0.845,-0.42 -1.689,-0.632 -2.636,-0.632 -1.443,0 -2.284,0.666 -2.284,2.321 v 9.101 h 4.992 v 3.655 l -4.992,0 z" />
+                            </g>
+                            <g transform="translate(322.3457,90.9505)" id="g36">
+                                <path id="path38" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 V 4.181 H -4.253 V -14.373 H 0 v 7.063 c 0,4.92 2.602,7.344 6.328,7.344 H 6.571 V 4.533 C 3.303,4.674 1.159,2.776 0,0" />
+                            </g>
+                            <g transform="translate(334.4361,85.8899)" id="g40">
+                                <path id="path42" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,3.234 2.178,5.904 5.587,5.904 3.34,0 5.695,-2.707 5.695,-5.976 V -0.14 c 0,-3.2 -2.181,-5.871 -5.624,-5.871 C 2.356,-6.011 0,-3.303 0,-0.072 Z m 5.587,-9.734 c 5.73,0 9.949,4.39 9.949,9.662 V 0 c 0,5.306 -4.185,9.631 -9.878,9.631 -5.692,0 -9.911,-4.393 -9.911,-9.703 V -0.14 c 0,-5.272 4.181,-9.594 9.84,-9.594" />
+                            </g>
+                            <g transform="translate(383.1821,87.2253)" id="g44">
+                                <path id="path46" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 V 13.953 H -4.325 V -0.209 c 0,-4.536 -2.352,-6.82 -6.181,-6.82 -3.867,0 -6.223,2.424 -6.223,6.995 V 13.953 H -21.05 V -0.209 c 0,-7.135 4.075,-10.827 10.472,-10.827 C -4.147,-11.036 0,-7.344 0,0" />
+                            </g>
+                            <g transform="translate(391.4741,87.05)" id="g48">
+                                <path id="path50" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,2.882 1.723,4.605 4.181,4.605 2.534,0 3.973,-1.651 3.973,-4.533 v -10.544 h 4.253 V 1.371 c 0,4.287 -2.424,7.098 -6.608,7.098 C 2.916,8.469 1.197,6.961 0,5.238 V 8.082 H -4.253 V -10.472 H 0 Z" />
+                            </g>
+                            <path id="path52" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 407.674,97.98 h 4.568 v 4.041 h -4.568 z" />
+                            <path id="path54" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 407.852,76.577 h 4.253 v 18.558 h -4.253 z" />
+                            <g transform="translate(425.9518,76.4355)" id="g56">
+                                <path id="path58" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 7.59,18.698 H 3.128 L -1.898,5.06 -6.889,18.698 h -4.568 L -3.833,0 Z" />
+                            </g>
+                            <g transform="translate(443.7699,92.0402)" id="g60">
+                                <path id="path62" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 2.81,0 4.428,-2.144 4.708,-4.886 H -4.814 C -4.428,-2.004 -2.602,0 0,0 m 0.492,-15.885 c 3.409,0 5.833,1.368 7.59,3.478 l -2.495,2.215 c -1.474,-1.443 -2.951,-2.215 -5.026,-2.215 -2.739,0 -4.886,1.689 -5.341,4.711 H 8.855 c 0.038,0.42 0.072,0.807 0.072,1.197 0,5.34 -2.988,9.979 -8.893,9.979 -5.306,0 -9.067,-4.359 -9.067,-9.665 v -0.072 c 0,-5.726 4.147,-9.628 9.525,-9.628" />
+                            </g>
+                            <g transform="translate(459.8304,83.6406)" id="g64">
+                                <path id="path66" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,4.92 2.602,7.347 6.328,7.347 h 0.243 v 4.496 C 3.303,11.987 1.159,10.086 0,7.31 v 4.181 H -4.253 V -7.064 H 0 Z" />
+                            </g>
+                            <g transform="translate(476.1727,87.5416)" id="g68">
+                                <path id="path70" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -2.178,0.704 -4.181,1.265 -4.181,2.636 v 0.072 c 0,1.053 0.947,1.825 2.601,1.825 1.546,0 3.443,-0.666 5.235,-1.757 l 1.689,3.022 c -1.97,1.303 -4.5,2.11 -6.821,2.11 -3.689,0 -6.605,-2.144 -6.605,-5.658 V 2.178 c 0,-3.549 3.056,-4.674 5.798,-5.447 2.178,-0.666 4.147,-1.159 4.147,-2.598 v -0.072 c 0,-1.231 -1.056,-2.003 -2.882,-2.003 -1.897,0 -4.041,0.772 -6.082,2.284 l -1.898,-2.883 c 2.322,-1.825 5.238,-2.776 7.874,-2.776 3.867,0 6.889,1.932 6.889,5.836 v 0.069 C 5.764,-2.072 2.708,-0.841 0,0" />
+                            </g>
+                            <path id="path72" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 484.956,97.98 h 4.568 v 4.041 h -4.568 z" />
+                            <path id="path74" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 485.134,76.577 h 4.253 v 18.558 h -4.253 z" />
+                            <g transform="translate(494.4117,81.7074)" id="g76">
+                                <path id="path78" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-4.075 2.212,-5.446 5.344,-5.446 1.614,0 2.773,0.348 3.829,0.947 v 3.48 c -0.844,-0.42 -1.689,-0.632 -2.636,-0.632 -1.443,0 -2.284,0.666 -2.284,2.318 v 9.104 h 4.992 v 3.655 H 4.253 v 5.098 H 0 V 13.426 H -2.356 V 9.771 l 2.356,0 z" />
+                            </g>
+                            <g transform="translate(520.0675,101.5304)" id="g80">
+                                <path id="path82" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 -3.863,1.723 -3.659,-5.764 h 3.2 z" />
+                            </g>
+                            <g transform="translate(509.4892,82.1647)" id="g84">
+                                <path id="path86" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,1.932 1.617,3.094 4.359,3.094 1.686,0 3.128,-0.318 4.216,-0.738 V 1.091 C 8.575,-1.265 6.431,-2.882 3.621,-2.882 1.58,-2.882 0,-1.863 0,-0.072 Z m 2.424,-5.976 c 2.848,0 4.78,1.196 6.045,2.707 v -2.318 h 4.15 V 5.412 c 0,2.424 -0.632,4.393 -2.003,5.73 -1.303,1.334 -3.375,2.072 -6.151,2.072 -2.954,0 -4.957,-0.595 -6.995,-1.511 L -1.405,8.366 C 0.28,9.067 1.829,9.525 3.901,9.525 6.889,9.525 8.506,8.12 8.506,5.484 V 5.026 C 7.064,5.484 5.587,5.798 3.515,5.798 c -4.534,0 -7.662,-1.969 -7.662,-5.972 v -0.072 c 0,-3.727 3.091,-5.73 6.571,-5.73" />
+                            </g>
+                            <g transform="translate(536.3751,90.9864)" id="g88">
+                                <path id="path90" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h 0.246 v 4.499 c -3.268,0.14 -5.412,-1.757 -6.574,-4.533 v 4.181 h -4.254 v -18.558 h 4.254 v 7.064 C -6.328,-2.424 -3.727,0 0,0" />
+                            </g>
+                            <path id="path92" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 543.543,102.021 h -4.568 V 97.98 h 4.568 z" />
+                            <path id="path94" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="M 543.403,95.132 H 539.15 V 76.574 h 4.253 z" />
+                            <g transform="translate(562.0655,85.7491)" id="g96">
+                                <path id="path98" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.197 -2.181,-5.867 -5.624,-5.867 -3.303,0 -5.659,2.704 -5.659,5.939 V 0.14 c 0,3.234 2.178,5.905 5.587,5.905 C -2.356,6.045 0,3.34 0,0.072 Z m -5.624,9.771 c -5.693,0 -9.912,-4.393 -9.912,-9.699 V 0 c 0,-5.272 4.182,-9.594 9.84,-9.594 5.73,0 9.949,4.394 9.949,9.666 V 0.14 c 0,5.306 -4.185,9.631 -9.877,9.631" />
+                            </g>
+                            <g transform="translate(282.0353,53.8006)" id="g100">
+                                <path id="path102" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 -7.487,11.635 h -4.602 v -24.603 h 4.253 V 4.605 L -0.14,-6.923 H 0 L 7.768,4.674 v -17.642 h 4.321 V 11.635 H 7.487 Z" />
+                            </g>
+                            <g transform="translate(310.045,47.5098)" id="g104">
+                                <path id="path106" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.356 -2.144,-3.969 -4.957,-3.969 -2.038,0 -3.618,1.018 -3.618,2.81 v 0.068 c 0,1.935 1.614,3.094 4.359,3.094 1.686,0 3.125,-0.314 4.216,-0.738 z m -4.113,12.123 c -2.951,0 -4.954,-0.594 -6.992,-1.507 L -9.98,7.275 c 1.686,0.705 3.231,1.159 5.306,1.159 2.985,0 4.602,-1.405 4.602,-4.041 V 3.935 c -1.439,0.458 -2.916,0.776 -4.988,0.776 -4.534,0 -7.662,-1.969 -7.662,-5.976 v -0.072 c 0,-3.723 3.091,-5.727 6.571,-5.727 2.848,0 4.78,1.194 6.045,2.705 V -6.677 H 4.041 V 4.325 c 0,2.424 -0.632,4.39 -2.003,5.726 -1.3,1.337 -3.375,2.072 -6.151,2.072" />
+                            </g>
+                            <g transform="translate(322.0294,55.2064)" id="g108">
+                                <path id="path110" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 V 4.181 H -4.253 V -14.373 H 0 v 7.063 c 0,4.92 2.602,7.344 6.328,7.344 H 6.571 V 4.533 C 3.303,4.677 1.159,2.776 0,0" />
+                            </g>
+                            <path id="path112" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 331.131,40.832 h 4.253 V 59.39 h -4.253 z" />
+                            <path id="path114" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 330.957,62.238 h 4.568 v 4.041 h -4.568 z" />
+                            <g transform="translate(354.0468,50.005)" id="g116">
+                                <path id="path118" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.197 -2.181,-5.867 -5.624,-5.867 -3.303,0 -5.659,2.704 -5.659,5.939 V 0.14 c 0,3.234 2.178,5.905 5.587,5.905 C -2.356,6.045 0,3.34 0,0.072 Z m -5.624,9.771 c -5.693,0 -9.912,-4.393 -9.912,-9.699 V 0 c 0,-5.272 4.182,-9.594 9.84,-9.594 5.73,0 9.949,4.394 9.949,9.666 V 0.14 c 0,5.306 -4.185,9.631 -9.877,9.631" />
+                            </g>
+                            <g transform="translate(385.5005,57.0346)" id="g120">
+                                <path id="path122" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.564 -2.041,-4.393 -5.31,-4.393 h -5.022 V 4.462 H -5.31 C -2.075,4.462 0,2.954 0,0.072 Z m -4.957,8.4 h -9.7 v -24.602 h 4.325 v 7.908 h 4.886 c 5.408,0 9.839,2.882 9.839,8.4 v 0.068 c 0,4.958 -3.586,8.226 -9.35,8.226" />
+                            </g>
+                            <g transform="translate(406.9393,50.005)" id="g124">
+                                <path id="path126" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.197 -2.181,-5.867 -5.624,-5.867 -3.303,0 -5.659,2.704 -5.659,5.939 V 0.14 c 0,3.234 2.178,5.905 5.587,5.905 C -2.356,6.045 0,3.34 0,0.072 Z m -5.624,9.771 c -5.693,0 -9.912,-4.393 -9.912,-9.699 V 0 c 0,-5.272 4.182,-9.594 9.84,-9.594 5.73,0 9.949,4.394 9.949,9.666 V 0.14 c 0,5.306 -4.185,9.631 -9.877,9.631" />
+                            </g>
+                            <g transform="translate(424.1581,59.7756)" id="g128">
+                                <path id="path130" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -2.882,0 -4.605,-1.511 -5.799,-3.231 v 2.845 h -4.253 v -18.558 h 4.253 v 10.475 c 0,2.882 1.72,4.602 4.182,4.602 2.53,0 3.973,-1.651 3.973,-4.533 V -18.944 H 6.609 V -7.098 C 6.609,-2.81 4.181,0 0,0" />
+                            </g>
+                            <g transform="translate(439.6221,64.4856)" id="g132">
+                                <path id="path134" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -4.253 v -5.098 h -2.356 v -3.655 h 2.356 v -9.771 c 0,-4.075 2.212,-5.446 5.344,-5.446 1.613,0 2.772,0.352 3.829,0.95 v 3.477 c -0.845,-0.42 -1.689,-0.632 -2.636,-0.632 -1.443,0 -2.284,0.666 -2.284,2.321 v 9.101 h 4.992 v 3.655 l -4.992,0 z" />
+                            </g>
+                            <g transform="translate(450.7282,51.4104)" id="g136">
+                                <path id="path138" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 0.386,2.882 2.212,4.886 4.814,4.886 7.628,4.886 9.245,2.742 9.525,0 Z m 4.848,8.366 c -5.306,0 -9.067,-4.359 -9.067,-9.665 v -0.072 c 0,-5.727 4.147,-9.628 9.525,-9.628 3.409,0 5.833,1.368 7.594,3.477 l -2.496,2.216 C 8.927,-6.749 7.45,-7.522 5.378,-7.522 c -2.742,0 -4.886,1.689 -5.344,4.712 h 13.638 c 0.035,0.42 0.069,0.806 0.069,1.193 0,5.344 -2.988,9.983 -8.893,9.983" />
+                            </g>
+                            <g transform="translate(474.8372,51.7971)" id="g140">
+                                <path id="path142" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -2.178,0.704 -4.181,1.265 -4.181,2.636 v 0.072 c 0,1.053 0.947,1.825 2.601,1.825 1.546,0 3.443,-0.666 5.235,-1.757 l 1.689,3.022 c -1.97,1.303 -4.5,2.11 -6.821,2.11 -3.689,0 -6.605,-2.144 -6.605,-5.658 V 2.178 c 0,-3.549 3.056,-4.674 5.798,-5.447 2.178,-0.666 4.147,-1.159 4.147,-2.598 v -0.072 c 0,-1.231 -1.056,-2.003 -2.882,-2.003 -1.897,0 -4.041,0.772 -6.082,2.284 l -1.898,-2.883 c 2.322,-1.825 5.238,-2.776 7.874,-2.776 3.867,0 6.889,1.932 6.889,5.836 v 0.069 C 5.764,-2.072 2.708,-0.841 0,0" />
+                            </g>
+                            <g transform="translate(502.4592,49.3378)" id="g144">
+                                <path id="path146" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.303 -1.58,-4.852 -3.901,-4.852 -2.075,0 -3.515,1.057 -4.954,2.92 l -2.848,-2.954 c 1.617,-2.215 4.075,-3.973 7.874,-3.973 2.458,0 4.533,0.739 5.973,2.182 1.442,1.439 2.321,3.617 2.321,6.537 V 16.096 H 0 Z" />
+                            </g>
+                            <g transform="translate(523.1606,48.9153)" id="g148">
+                                <path id="path150" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.882 -1.723,-4.568 -4.181,-4.568 -2.534,0 -3.973,1.614 -3.973,4.496 v 10.544 h -4.253 V -1.337 c 0,-4.321 2.424,-7.132 6.608,-7.132 2.883,0 4.602,1.508 5.799,3.269 v -2.882 h 4.287 v 18.554 l -4.287,0 z" />
+                            </g>
+                            <g transform="translate(540.1353,44.1364)" id="g152">
+                                <path id="path154" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C -3.269,0 -5.552,2.636 -5.552,5.939 V 6.01 c 0,3.235 2.283,5.905 5.374,5.905 2.11,0 3.481,-0.951 4.783,-2.322 l 2.671,2.848 c -1.758,1.898 -3.936,3.197 -7.416,3.197 -5.59,0 -9.666,-4.427 -9.666,-9.699 V 5.867 c 0,-5.272 4.076,-9.594 9.594,-9.594 3.621,0 5.764,1.443 7.594,3.481 L 4.814,2.284 C 3.48,0.913 2.004,0 0,0" />
+                            </g>
+                            <g transform="translate(561.5034,47.5098)" id="g156">
+                                <path id="path158" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.356 -2.144,-3.969 -4.958,-3.969 -2.037,0 -3.617,1.018 -3.617,2.81 v 0.068 c 0,1.935 1.614,3.094 4.356,3.094 1.689,0 3.128,-0.314 4.219,-0.738 z m -4.113,12.123 c -2.951,0 -4.954,-0.594 -6.995,-1.507 l 1.125,-3.341 c 1.689,0.705 3.234,1.159 5.306,1.159 2.988,0 4.605,-1.405 4.605,-4.041 V 3.935 c -1.439,0.458 -2.916,0.776 -4.991,0.776 -4.534,0 -7.659,-1.969 -7.659,-5.976 v -0.072 c 0,-3.723 3.091,-5.727 6.571,-5.727 2.848,0 4.78,1.194 6.045,2.705 V -6.677 H 4.041 V 4.325 c 0,2.424 -0.632,4.39 -2.003,5.726 -1.3,1.337 -3.375,2.072 -6.151,2.072" />
+                            </g>
+                            <g transform="translate(563.3729,65.919)" id="g160">
+                                <path id="path162" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 -3.863,1.723 -3.659,-5.764 h 3.2 z" />
+                            </g>
+                            <g transform="translate(537.2679,367.7308)" id="g164">
+                                <path id="path166" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 15.207,0 26.548,11.334 26.548,25.351 26.548,40.863 15.207,52.197 0,52.197 -14.319,52.197 -25.656,40.863 -25.656,25.351 -25.656,11.334 -14.319,0 0,0" />
+                            </g>
+                            <g transform="translate(352.1446,245.0517)" id="g168">
+                                <path id="path170" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -1.125 l -37.543,106.698 h -70.075 V -94.681 h 43.301 V 55.322 h 1.689 L -20.309,-67.47 H 15.255 L 59.343,55.322 h 1.094 V -94.616 h 43.448 V 106.698 H 37.01 Z" />
+                            </g>
+                            <g transform="translate(564.5794,351.8964)" id="g172">
+                                <path id="path174" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -60.502 v -6.113 l 17.492,-29.465 1.172,-83.015 c -0.003,-21.447 -16.694,-39.191 -38.104,-40.501 l 10.879,-42.576 c 40.802,6.51 70.817,41.711 70.8,83.029 z" />
+                            </g>
+                            <g transform="translate(162.3982,225.3562)" id="g176">
+                                <path id="path178" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-27.355 -11.023,-38.456 -31.666,-38.456 -25.441,0 -35.403,15.542 -35.403,43.83 v 121.021 h -60.372 v -6.113 l 16.992,-28.771 0.161,-0.273 V -3.104 c 0,-40.727 21.481,-71.542 72.666,-71.542 18.199,0 35.225,3.522 48.918,11.97 l 25.841,-15.252 h 6.116 V 126.429 L 0,126.395 Z" />
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+        </div>
+        <div class="header-info">
+            <h2>Lógica Aplicada à Computação</h2>
+            <p class="sub-p">Análise e Desenvolvimento de Sistemas</p>
+            <p class="mt-1"><i class="fas fa-chalkboard-teacher text-[#00AEEF] mr-1"></i> Prof. Iran Rodrigues</p>
+        </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <main class="max-w-5xl mx-auto px-4 space-y-10">
+
+        <!-- INTRODUÇÃO E SENTENÇAS ABERTAS VS PROPOSIÇÕES FECHADAS -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-t-4 border-[#003B71] space-y-6">
+            <div class="border-b border-gray-200 pb-4">
+                <span
+                    class="bg-[#003B71] text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                    Aula 12
+                </span>
+                <h1 class="text-3xl font-black text-[#003B71] mt-3">Lógica de Predicados &amp; Domínios de Discurso</h1>
+                <p class="text-sm text-gray-600 font-medium mt-1">
+                    Estrutura interna das sentenças: variáveis livres, predicados como funções de verdade <span
+                        class="code-font font-bold text-[#003B71]">p(x)</span>, conjuntos universo (<span
+                        class="code-font font-bold text-[#003B71]">U</span>) e conjuntos verdade (<span
+                        class="code-font font-bold text-[#003B71]">V<sub>p</sub></span>).
+                </p>
+            </div>
+
+            <!-- CONCEITUAÇÃO FUNDAMENTAL: SENTENÇAS ABERTAS VS PROPOSIÇÕES FECHADAS -->
+            <div class="space-y-4">
+                <h2 class="text-xl font-black text-[#003B71] flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-[#00AEEF]"></span>
+                    Sentenças Abertas vs. Proposições Fechadas
+                </h2>
+
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                    Na Lógica Proposicional, uma <strong>proposição</strong> é uma sentença declarativa sobre a qual
+                    podemos atribuir, sem qualquer ambiguidade, um dos dois valores lógicos: <strong>Verdadeiro
+                        (V)</strong> ou <strong>Falso (F)</strong>. No entanto, frases cotidianas, formulações
+                    matemáticas e condições em software frequentemente contêm termos indefinidos, chamados de
+                    <strong>variáveis</strong>.
+                </p>
+
+                <!-- QUADRO COMPARATIVO -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-emerald-50/80 border border-emerald-200 p-4 rounded-xl space-y-2">
+                        <span class="font-bold text-emerald-900 text-xs uppercase flex items-center gap-1.5">
+                            <i class="fas fa-check text-emerald-600"></i> Proposição Fechada (Valor Lógico Determinado)
+                        </span>
+                        <ul class="text-xs space-y-1.5 text-gray-700 pl-4 list-disc">
+                            <li><em>"Maceió é a capital de Alagoas."</em> &rarr; <strong>Verdadeiro (V)</strong></li>
+                            <li><em>"7 é um número par."</em> &rarr; <strong>Falso (F)</strong></li>
+                            <li><em>"2 + 3 = 5"</em> &rarr; <strong>Verdadeiro (V)</strong></li>
+                        </ul>
+                        <p class="text-[11px] text-emerald-800">Possui sujeito e predicado totalmente explícitos. Não
+                            depende de parâmetros externos.</p>
+                    </div>
+
+                    <div class="bg-amber-50/80 border border-amber-200 p-4 rounded-xl space-y-2">
+                        <span class="font-bold text-amber-900 text-xs uppercase flex items-center gap-1.5">
+                            <i class="fas fa-exclamation-triangle text-amber-600"></i> Sentença Aberta (Indeterminada a
+                            Priori)
+                        </span>
+                        <ul class="text-xs space-y-1.5 text-gray-700 pl-4 list-disc">
+                            <li><em>"x é a capital de Alagoas."</em> &rarr; <strong>Indeterminado</strong></li>
+                            <li><em>"x é um número par."</em> &rarr; <strong>Indeterminado</strong></li>
+                            <li><em>"x + y = 10"</em> &rarr; <strong>Indeterminado</strong></li>
+                        </ul>
+                        <p class="text-[11px] text-amber-800">Contém <strong>variáveis livres</strong>. Transforma-se em
+                            proposição apenas quando a variável é <strong>substituída por um valor específico</strong>
+                            do domínio.</p>
+                    </div>
+                </div>
+
+                <!-- OS 3 PILARES CONCEITUAIS INTEGRADOS COM EXEMPLOS REAIS -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                    <div class="bg-blue-50/80 p-4 rounded-xl border border-blue-200 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <div
+                                class="w-7 h-7 rounded-lg bg-[#003B71] text-white flex items-center justify-center font-bold text-xs">
+                                1</div>
+                            <h3 class="font-bold text-[#003B71] text-xs uppercase">Além das Proposições</h3>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            A lógica proposicional trata frases como caixas-pretas atômicas (<span
+                                class="code-font font-bold">p, q</span>). A lógica de predicados decompõe a sentença em
+                            <em>sujeito</em> (variável ou constante) e <em>propriedade</em> afirmada.
+                        </p>
+                        <div class="bg-white p-2 rounded border border-blue-100 text-[11px] text-gray-700">
+                            <strong>Exemplo:</strong> Na sentença <span class="code-font">"x > 10"</span>, <span
+                                class="code-font font-bold">x</span> é o sujeito e <span class="code-font font-bold">">
+                                10"</span> é o predicado.
+                        </div>
+                    </div>
+
+                    <div class="bg-indigo-50/80 p-4 rounded-xl border border-indigo-200 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <div
+                                class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">
+                                2</div>
+                            <h3 class="font-bold text-indigo-900 text-xs uppercase">Funções de Verdade p(x)</h3>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Uma sentença aberta comporta-se matematicamente como uma função que recebe um argumento e
+                            devolve um valor de verdade: <span class="code-font font-bold text-indigo-900">p: U &rarr;
+                                {V, F}</span>.
+                        </p>
+                        <div class="bg-white p-2 rounded border border-indigo-100 text-[11px] text-gray-700">
+                            <strong>Exemplo:</strong> Se <span class="code-font">p(x): "x é par"</span>, então <span
+                                class="code-font font-bold">p(4) = V</span> e <span class="code-font font-bold">p(7) =
+                                F</span>.
+                        </div>
+                    </div>
+
+                    <div class="bg-cyan-50/80 p-4 rounded-xl border border-cyan-200 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <div
+                                class="w-7 h-7 rounded-lg bg-cyan-600 text-white flex items-center justify-center font-bold text-xs">
+                                3</div>
+                            <h3 class="font-bold text-[#003B71] text-xs uppercase">O Papel do Domínio (U)</h3>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            A mesmíssima sentença aberta altera radicalmente suas soluções e sua validade dependendo do
+                            Conjunto Universo (<span class="code-font font-bold">U</span>) adotado para suas variáveis.
+                        </p>
+                        <div class="bg-white p-2 rounded border border-cyan-100 text-[11px] text-gray-700">
+                            <strong>Exemplo:</strong> A equação <span class="code-font">"x² = 2"</span> não tem solução
+                            em <span class="code-font font-bold">U = &rationals;</span>, mas possui soluções em <span
+                                class="code-font font-bold">U = &reals;</span> (<span
+                                class="code-font">&plusmn;&radic;2</span>).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 1: INSTANCIAÇÃO DE VARIÁVEIS EM SENTENÇAS ABERTAS -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-[#003B71] space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span
+                        class="bg-[#003B71] text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 1
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Instanciação de Sentenças Abertas
+                    </h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Ao atribuir valores do domínio às variáveis de uma sentença aberta, ela converte-se em uma
+                        proposição fechada. Selecione o valor de verdade (<span
+                            class="font-bold text-emerald-700">V</span> ou <span
+                            class="font-bold text-rose-700">F</span>) resultante para cada item:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center">
+                    <button onclick="checkEx1()"
+                        class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx1()"
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5" id="ex1-items-container">
+                <!-- Injetado dinamicamente via JS (1A a 1F) com gabarito individual -->
+            </div>
+        </section>
+
+        <!-- PREDICADOS COMO FUNÇÕES DE VERDADE, ARIDADE E ISOMORFISMO COM CONJUNTOS -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 space-y-6">
+            <div class="border-b border-gray-200 pb-3 flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-indigo-600"></span>
+                <h2 class="text-2xl font-black text-[#003B71]">Predicados como Funções de Verdade e Aridade</h2>
+            </div>
+
+            <div class="text-xs sm:text-sm text-gray-700 space-y-4 leading-relaxed">
+                <p>
+                    Formalmente, seja <span class="code-font font-bold">U</span> um conjunto não-vazio chamado de
+                    <strong>Domínio de Discurso</strong> ou <strong>Conjunto Universo</strong>. Um predicado unário
+                    <span class="code-font font-bold">p(x)</span> é uma regra que mapeia cada elemento <span
+                        class="code-font">u &in; U</span> em uma proposição fechada <span class="code-font">p(u)</span>
+                    dotada de valor de verdade determinável.
+                </p>
+
+                <!-- TABELA DE ARIDADE COM EXEMPLOS COMPUTACIONAIS EM PORTUGUÊS -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse border border-gray-200 text-xs">
+                        <thead class="bg-gray-100 text-[#003B71]">
+                            <tr>
+                                <th class="p-2.5 border border-gray-200 font-bold">Aridade</th>
+                                <th class="p-2.5 border border-gray-200 font-bold">Notação</th>
+                                <th class="p-2.5 border border-gray-200 font-bold">Domínio Cartesiano</th>
+                                <th class="p-2.5 border border-gray-200 font-bold">Exemplo Matemático</th>
+                                <th class="p-2.5 border border-gray-200 font-bold">Exemplo em Software</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-blue-50/50">
+                                <td class="p-2.5 border border-gray-200 font-bold text-indigo-900">Unário (1)</td>
+                                <td class="p-2.5 border border-gray-200 code-font">p(x)</td>
+                                <td class="p-2.5 border border-gray-200 code-font">U</td>
+                                <td class="p-2.5 border border-gray-200">"x &eacute; número primo", U = &naturals;</td>
+                                <td class="p-2.5 border border-gray-200 code-font text-blue-900 font-semibold">
+                                    is_ativo(id_usuario)</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50/50">
+                                <td class="p-2.5 border border-gray-200 font-bold text-indigo-900">Binário (2)</td>
+                                <td class="p-2.5 border border-gray-200 code-font">q(x, y)</td>
+                                <td class="p-2.5 border border-gray-200 code-font">U &times; U</td>
+                                <td class="p-2.5 border border-gray-200">"x divide y", U = &integers;</td>
+                                <td class="p-2.5 border border-gray-200 code-font text-blue-900 font-semibold">
+                                    tem_permissao(usuario, perfil)</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50/50">
+                                <td class="p-2.5 border border-gray-200 font-bold text-indigo-900">Ternário (3)</td>
+                                <td class="p-2.5 border border-gray-200 code-font">r(x, y, z)</td>
+                                <td class="p-2.5 border border-gray-200 code-font">U &times; U &times; U</td>
+                                <td class="p-2.5 border border-gray-200">"x + y = z", U = &reals;</td>
+                                <td class="p-2.5 border border-gray-200 code-font text-blue-900 font-semibold">
+                                    transferencia(origem, destino, valor)</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50/50">
+                                <td class="p-2.5 border border-gray-200 font-bold text-indigo-900">n-ário (n)</td>
+                                <td class="p-2.5 border border-gray-200 code-font">p(x<sub>1</sub>, x<sub>2</sub>, ...,
+                                    x<sub>n</sub>)</td>
+                                <td class="p-2.5 border border-gray-200 code-font">U<sup>n</sup></td>
+                                <td class="p-2.5 border border-gray-200">&sum;<sub>i=1</sub><sup>n</sup> x<sub>i</sub> =
+                                    0, U = &reals;</td>
+                                <td class="p-2.5 border border-gray-200 code-font text-blue-900 font-semibold">
+                                    validar_campos(campo<sub>1</sub>, ..., campo<sub>n</sub>)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- CONCEITO DE CONJUNTO VERDADE FORMALIZADO (COM V_P AJUSTADO SEM ESPAÇO) -->
+                <div class="bg-blue-50/90 border-l-4 border-[#003B71] p-4 rounded-r-xl space-y-2 text-xs">
+                    <strong class="text-[#003B71] font-extrabold flex items-center gap-2">
+                        <i class="fas fa-bullseye text-[#00AEEF]"></i> Conjunto Verdade (V<sub>p</sub>):
+                    </strong>
+                    <p class="text-gray-700 leading-relaxed">
+                        Fixada uma sentença aberta <span class="code-font font-bold">p(x)</span> em um universo <span
+                            class="code-font font-bold">U</span>, chamamos de <strong>conjunto verdade</strong> o
+                        subconjunto de <span class="code-font font-bold">U</span> composto pelos elementos que tornam a
+                        sentença verdadeira:
+                    </p>
+                    <div
+                        class="bg-white p-2.5 rounded-lg border border-blue-200 code-font text-blue-950 font-bold text-center">
+                        V<sub>p</sub> = { x &in; U | p(x) }
+                    </div>
+                    <p class="text-gray-600 text-[11px] leading-relaxed">
+                        Por exemplo, para a inequação <span class="code-font font-bold">q(x): x + 3 &ge; 2</span> (isto
+                        é, <span class="code-font">x &ge; -1</span>), quando avaliada no domínio dos reais (<span
+                            class="code-font">U = &reals;</span>), seu conjunto verdade é o intervalo contínuo <span
+                            class="code-font font-bold text-blue-900">V<sub>q</sub> = [-1, +&infin;)</span>. Se avaliada
+                        nos inteiros (<span class="code-font">U = &integers;</span>), o conjunto torna-se discreto:
+                        <span class="code-font font-bold text-blue-900">V<sub>q</sub> = {-1, 0, 1, 2, 3, ...}</span>.
+                    </p>
+                </div>
+
+                <!-- ISOMORFISMO LÓGICA DE PREDICADOS & OPERAÇÕES DE CONJUNTOS (FORMATO ESPAÇADO E DESTACADO) -->
+                <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 space-y-4">
+                    <div class="flex items-center gap-2 border-b border-gray-200 pb-2">
+                        <i class="fas fa-project-diagram text-[#00AEEF]"></i>
+                        <h3 class="font-bold text-[#003B71] text-sm uppercase tracking-wide">
+                            Isomorfismo: Lógica de Predicados &amp; Operações de Conjuntos
+                        </h3>
+                    </div>
+
+                    <p class="text-xs text-gray-700 leading-relaxed">
+                        Cada conectivo lógico clássico aplicado a predicados corresponde exatamente a uma operação sobre
+                        conjuntos. Para visualizar essa correspondência unívoca, considere o seguinte domínio discreto
+                        de referência:
+                    </p>
+
+                    <!-- CAIXAS DE DESTAQUE DE UNIVERSO E PREDICADOS -->
+                    <div class="space-y-2">
+                        <div
+                            class="bg-white p-3 rounded-xl border border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-2xs">
+                            <span class="text-xs font-bold text-[#003B71] uppercase tracking-wider">Universo de
+                                Referência:</span>
+                            <span
+                                class="code-font font-black text-xs text-indigo-950 bg-blue-50 px-3 py-1 rounded-lg border border-blue-200">
+                                U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            <div
+                                class="bg-white p-2.5 rounded-xl border border-gray-200 flex items-center justify-between">
+                                <span class="text-gray-700 font-medium">Predicado <strong>p(x)</strong>: "x é
+                                    par"</span>
+                                <span
+                                    class="code-font font-bold text-cyan-800 bg-cyan-50 px-2 py-0.5 rounded border border-cyan-200">V<sub>p</sub>
+                                    = {2, 4, 6, 8, 10}</span>
+                            </div>
+                            <div
+                                class="bg-white p-2.5 rounded-xl border border-gray-200 flex items-center justify-between">
+                                <span class="text-gray-700 font-medium">Predicado <strong>q(x)</strong>: "x > 5"</span>
+                                <span
+                                    class="code-font font-bold text-indigo-800 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">V<sub>q</sub>
+                                    = {6, 7, 8, 9, 10}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3 OPERAÇÕES ISOMÓRFICAS DESTACADAS -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-1 text-xs">
+                        <div class="bg-white p-3.5 rounded-xl border border-gray-200 space-y-2 shadow-2xs">
+                            <span class="font-bold text-blue-950 block border-b border-gray-100 pb-1">
+                                <i class="fas fa-times text-rose-500 mr-1"></i> Negação (~p(x)) &harr; Complementar
+                            </span>
+                            <div class="code-font text-blue-900 font-bold bg-gray-50 p-1.5 rounded text-center">
+                                V<sub>~p</sub> = U &minus; V<sub>p</sub> = (V<sub>p</sub>)<sup>c</sup>
+                            </div>
+                            <p class="text-[11px] text-gray-600 leading-relaxed">
+                                Elementos que <em>não</em> satisfazem p(x) (não são pares):
+                                <span class="code-font font-bold text-rose-700 block mt-1">{1, 3, 5, 7, 9}</span>
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-3.5 rounded-xl border border-gray-200 space-y-2 shadow-2xs">
+                            <span class="font-bold text-indigo-950 block border-b border-gray-100 pb-1">
+                                <i class="fas fa-compress-arrows-alt text-indigo-500 mr-1"></i> Conjunção (p &and; q)
+                                &harr; Interseção
+                            </span>
+                            <div class="code-font text-indigo-900 font-bold bg-gray-50 p-1.5 rounded text-center">
+                                V<sub>p &and; q</sub> = V<sub>p</sub> &cap; V<sub>q</sub>
+                            </div>
+                            <p class="text-[11px] text-gray-600 leading-relaxed">
+                                Elementos que são pares <em>e simultaneamente</em> maiores que 5:
+                                <span class="code-font font-bold text-indigo-700 block mt-1">{6, 8, 10}</span>
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-3.5 rounded-xl border border-gray-200 space-y-2 shadow-2xs">
+                            <span class="font-bold text-cyan-950 block border-b border-gray-100 pb-1">
+                                <i class="fas fa-expand-arrows-alt text-cyan-600 mr-1"></i> Disjunção (p &or; q) &harr;
+                                União
+                            </span>
+                            <div class="code-font text-cyan-900 font-bold bg-gray-50 p-1.5 rounded text-center">
+                                V<sub>p &or; q</sub> = V<sub>p</sub> &cup; V<sub>q</sub>
+                            </div>
+                            <p class="text-[11px] text-gray-600 leading-relaxed">
+                                Elementos que são pares <em>ou</em> maiores que 5 (ou ambos):
+                                <span class="code-font font-bold text-cyan-700 block mt-1">{2, 4, 6, 7, 8, 9, 10}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIMULADOR: TESTE DE PREDICADOS E CONJUNTO VERDADE -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-cyan-500 shadow-sm space-y-6">
+            <div class="border-b border-gray-200 pb-3">
+                <span
+                    class="bg-cyan-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                    Laboratório
+                </span>
+                <h2 class="text-2xl font-black text-[#003B71] mt-1">Teste de Predicados e Conjunto Verdade</h2>
+            </div>
+
+            <p class="text-xs text-gray-600 leading-relaxed">
+                Selecione diferentes domínios e predicados pré-definidos para inspecionar como a sentença aberta é
+                avaliada elemento a elemento, gerando proposições individuais e consolidando o Conjunto Verdade (<span
+                    class="code-font font-bold">V<sub>p</sub></span>).
+            </p>
+
+            <!-- CONTROLES DO SIMULADOR -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-gray-700 block">1. Domínio de Discurso (U):</label>
+                    <select id="sim-domain" onchange="updateSimulator()"
+                        class="w-full bg-white border border-gray-300 rounded-lg p-2 text-xs font-mono focus:ring-2 focus:ring-[#00AEEF] focus:outline-none">
+                        <option value="digitos">U = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9} (Dígitos Decimais)</option>
+                        <option value="inteiros_pequenos">U = {-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5} (Inteiros
+                            Simétricos)</option>
+                        <option value="primos_amostra">U = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}</option>
+                        <option value="arquivos">U = {"auth.js", "style.css", "index.html", "script.ts", "data.json"}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="space-y-1 md:col-span-2">
+                    <label class="text-xs font-bold text-gray-700 block">2. Predicado / Sentença Aberta p(x):</label>
+                    <select id="sim-predicate" onchange="updateSimulator()"
+                        class="w-full bg-white border border-gray-300 rounded-lg p-2 text-xs font-mono focus:ring-2 focus:ring-[#00AEEF] focus:outline-none">
+                        <!-- Preenchido dinamicamente via JS -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- RESULTADO DA AVALIAÇÃO DO SIMULADOR -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-indigo-900 uppercase">
+                        Avaliação Elemento por Elemento: <span class="font-mono text-gray-600"
+                            id="sim-formula-tag"></span>
+                    </span>
+                    <span class="text-xs font-bold text-cyan-700" id="sim-count-tag"></span>
+                </div>
+
+                <!-- Element Grid -->
+                <div id="sim-elements-grid" class="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-5 gap-2">
+                    <!-- Cards preenchidos via JS com representação melhorada -->
+                </div>
+
+                <!-- Conjunto Verdade Final -->
+                <div class="bg-[#003B71] text-white p-4 rounded-xl space-y-1 shadow-inner">
+                    <span class="text-[11px] font-bold text-cyan-300 uppercase tracking-wider block">
+                        Conjunto Verdade Resultante (V<sub>p</sub> &sube; U):
+                    </span>
+                    <div id="sim-truth-set" class="code-font text-base sm:text-lg font-black text-yellow-300 break-all">
+                        { }
+                    </div>
+                    <div id="sim-explanation" class="text-xs text-gray-200 pt-1 border-t border-cyan-800/80">
+                        Explicação semântica da regra aplicada.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 2: IDENTIFICAÇÃO DO CONJUNTO VERDADE V_P -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-indigo-600 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span
+                        class="bg-indigo-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 2
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Identificação do Conjunto Verdade
+                        V<sub>p</sub></h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Para cada sentença aberta e domínio de discurso abaixo, selecione qual é o conjunto verdade
+                        <span class="code-font font-bold">V<sub>p</sub></span> correspondente:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center">
+                    <button onclick="checkEx2()"
+                        class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx2()"
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start" id="ex2-items-container">
+                <!-- Injetado dinamicamente via JS (2A a 2D) com gabarito individual -->
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 3: PROBLEMAS DE FIXAÇÃO DE DOMÍNIOS E CONJUNTO VERDADE -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-[#003B71] space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span
+                        class="bg-[#003B71] text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 3
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Fixação de Domínios, Conjunto Verdade
+                        e Identificação de Universo</h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Determine conjuntos verdade sob diferentes universos e identifique qual domínio de discurso U
+                        torna válida cada solução apresentada:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center">
+                    <button onclick="checkEx3Form()"
+                        class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx3Form()"
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start" id="ex3-cards-container">
+                <!-- Injetado via JS no padrão unificado (3A a 3F) -->
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 4: COMPOSIÇÃO, ARIDADE MÚLTIPLA E CASOS LIMITE -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-indigo-600 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span
+                        class="bg-indigo-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 4
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Composição de Predicados, Aridade
+                        Múltipla e Casos Limite</h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Analise problemas com produto cartesiano, operações compostas e limites (conjunto vazio &empty;
+                        e universo completo U):
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center">
+                    <button onclick="checkEx4Form()"
+                        class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx4Form()"
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start" id="ex4-cards-container">
+                <!-- Injetado via JS no padrão unificado (4A a 4D) -->
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 5: PREDICADOS E DOMÍNIOS EM PSEUDOCÓDIGO E ESTRUTURAS DE SOFTWARE -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-emerald-600 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span
+                        class="bg-emerald-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 5
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Predicados e Domínios em Pseudocódigo
+                    </h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Analise o comportamento de predicados, tipos de dados e funções booleanas aplicados a coleções e
+                        registros em algoritmos:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center">
+                    <button onclick="checkEx5Form()"
+                        class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx5Form()"
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start" id="ex5-cards-container">
+                <!-- Injetado via JS no padrão unificado (5A a 5D) -->
+            </div>
+        </section>
+
+        <!-- QUIZ: FIXAÇÃO RÁPIDA -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-2 border-cyan-500 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-cyan-200 pb-3">
+                <div>
+                    <span class="bg-cyan-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded uppercase">Fixação
+                        Rápida</span>
+                    <h3 class="font-black text-xl text-[#003B71] mt-1">Quiz: Lógica de Predicados</h3>
+                </div>
+                <span id="quiz-score-badge"
+                    class="text-xs font-extrabold text-cyan-800 bg-cyan-50 px-3 py-1 rounded-full border border-cyan-200 self-start sm:self-auto">
+                    Pontuação: 0 / 5
+                </span>
+            </div>
+
+            <div class="space-y-4" id="fast-quiz-container">
+                <!-- Injetado via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ INSTITUCIONAL COM O SISTEMA DE CAÇA-NÍQUEIS DE EMOJIS (SENHA: ⚡ • 🧩 • 🧪) -->
+    <footer id="main-footer"
+        class="text-center mt-16 text-gray-400 text-xs pb-8 space-y-3 select-none border-t border-gray-200/50 pt-8">
+        <p>Lógica Aplicada à Computação &bull; Análise e Desenvolvimento de Sistemas</p>
+        <p class="text-gray-500 font-semibold">Material Didático Interativo &bull; Prof. Iran Rodrigues</p>
+
+        <!-- CAÇA-NÍQUEIS DE EMOJIS PARA DESBLOQUEIO DO GABARITO (SENHA DA AULA 12: ⚡ • 🧩 • 🧪) -->
+        <div class="pt-2 flex flex-col items-center justify-center gap-2">
+            <div
+                class="inline-flex items-center gap-2 bg-white px-3 py-1.5 rounded-2xl border border-gray-200 shadow-sm">
+                <button type="button" onclick="spinSlot(0)" id="slot-0"
+                    class="slot-reel text-lg w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 hover:bg-cyan-50 border border-gray-200 active:scale-90 transition-all cursor-pointer select-none">
+                    🎲
+                </button>
+                <button type="button" onclick="spinSlot(1)" id="slot-1"
+                    class="slot-reel text-lg w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 hover:bg-cyan-50 border border-gray-200 active:scale-90 transition-all cursor-pointer select-none">
+                    🎮
+                </button>
+                <button type="button" onclick="spinSlot(2)" id="slot-2"
+                    class="slot-reel text-lg w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 hover:bg-cyan-50 border border-gray-200 active:scale-90 transition-all cursor-pointer select-none">
+                    ⭐
+                </button>
+            </div>
+        </div>
+
+        <div id="gabarito-checkbox-wrapper" class="hidden pt-2 transition-all">
+            <label
+                class="text-gray-600 hover:text-[#003B71] text-[11px] font-normal cursor-pointer inline-flex items-center gap-2 select-none transition-colors">
+                <input type="checkbox" id="toggle-gabarito-checkbox" onchange="onToggleGabaritoCheckbox()"
+                    class="accent-[#00AEEF] cursor-pointer">
+                <span>exibir links para o gabarito</span>
+            </label>
+        </div>
+    </footer>
+
+    <script>
+        /* ESTADO GERAL DA APLICAÇÃO */
+        const state = {
+            ex1: {},
+            ex2: {},
+            ex3: {},
+            ex4: {},
+            ex5: {},
+            quiz: {},
+            quizScore: 0
+        };
+
+
+        function playFaahSound() {
+            try {
+                const audio = new Audio('./faah.mp3');
+                audio.play().catch(err => {
+                    console.log("Não foi possível reproduzir o áudio.", err);
+                });
+            } catch (err) {
+                console.log("Áudio não disponível ou bloqueado pelo navegador.");
+            }
+        }
+
+        /* DADOS DO EXERCÍCIO 1: PADRONIZADO COM GABARITO INDIVIDUAL E VALORES DISTRIBUÍDOS */
+        const ex1Data = [
+            { id: '1A', expr: 'p(x): x + 5 = 12', domain: 'U = ℕ', val: 'x = 7', correct: 'Verdadeiro', reason: '7 + 5 = 12 é uma igualdade verdadeira.' },
+            { id: '1B', expr: 'p(x): x é número primo', domain: 'U = ℕ', val: 'x = 9', correct: 'Falso', reason: '9 possui divisores 1, 3 e 9, portanto não é primo.' },
+            { id: '1C', expr: 'q(x, y): x > 2y', domain: 'U = ℤ × ℤ', val: 'x = 10, y = 4', correct: 'Verdadeiro', reason: '10 > 2(4) ⇒ 10 > 8 (Verdadeiro).' },
+            { id: '1D', expr: 'r(x): x² < 0', domain: 'U = ℝ', val: 'x = -3', correct: 'Falso', reason: 'O quadrado de qualquer real é não-negativo: (-3)² = 9 ≥ 0 (Falso).' },
+            { id: '1E', expr: 's(x, y): x é múltiplo de y', domain: 'U = ℕ* × ℕ*', val: 'x = 15, y = 3', correct: 'Verdadeiro', reason: '15 = 3 × 5, logo 15 é múltiplo de 3 (Verdadeiro).' },
+            { id: '1F', expr: 't(x): 2x - 1 = 10', domain: 'U = ℤ', val: 'x = 4', correct: 'Falso', reason: '2(4) - 1 = 7 ≠ 10 (Falso. Note que x = 4 pertence ao domínio ℤ).' }
+        ];
+
+        function renderEx1() {
+            const container = document.getElementById('ex1-items-container');
+            const isGabaritoVisible = document.getElementById('toggle-gabarito-checkbox')?.checked;
+
+            container.innerHTML = ex1Data.map(item => `
+                <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3" id="box-ex1-${item.id}">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+                        <span class="bg-[#003B71] text-white font-extrabold text-[11px] px-2.5 py-0.5 rounded">${item.id}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] font-mono font-bold text-gray-500">${item.domain}</span>
+                            <button type="button" onclick="toggleAnswer('ex1', '${item.id}')" class="gabarito-btn ${isGabaritoVisible ? '' : 'hidden'} text-[10px] font-bold text-[#00AEEF] hover:underline flex items-center gap-1">
+                                <i class="fas fa-eye text-[9px]"></i> Gabarito
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <span class="code-font font-bold text-xs text-[#003B71] block">${item.expr}</span>
+                        <span class="text-[11px] font-mono text-gray-600 block">Instanciação: <strong class="text-indigo-900">${item.val}</strong></span>
+                    </div>
+
+                    <div class="space-y-2 pt-1">
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="selectEx1('${item.id}', 'Verdadeiro')" id="btn-ex1-${item.id}-Verdadeiro" class="interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300">
+                                Verdadeiro
+                            </button>
+                            <button type="button" onclick="selectEx1('${item.id}', 'Falso')" id="btn-ex1-${item.id}-Falso" class="interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-rose-50 hover:border-rose-300">
+                                Falso
+                            </button>
+                        </div>
+                        <div id="feedback-ex1-${item.id}" class="hidden text-[11px] p-1.5 rounded-lg font-bold"></div>
+                        
+                        <div id="answer-ex1-${item.id}" class="hidden bg-emerald-50 border border-emerald-200 p-2.5 rounded-lg text-[11px] space-y-1">
+                            <span class="font-extrabold text-emerald-900 block">Resposta Correta: ${item.correct}</span>
+                            <p class="text-gray-600 text-[10px] leading-relaxed">${item.reason}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectEx1(id, val) {
+            state.ex1[id] = val;
+            const btnV = document.getElementById(`btn-ex1-${id}-Verdadeiro`);
+            const btnF = document.getElementById(`btn-ex1-${id}-Falso`);
+
+            btnV.className = val === 'Verdadeiro'
+                ? 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-black bg-emerald-600 text-white border-emerald-700 shadow-xs'
+                : 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-emerald-50';
+
+            btnF.className = val === 'Falso'
+                ? 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-black bg-rose-600 text-white border-rose-700 shadow-xs'
+                : 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-rose-50';
+
+            document.getElementById(`feedback-ex1-${id}`)?.classList.add('hidden');
+        }
+
+        function checkEx1() {
+            ex1Data.forEach(item => {
+                const userVal = state.ex1[item.id];
+                const feedback = document.getElementById(`feedback-ex1-${item.id}`);
+                const box = document.getElementById(`box-ex1-${item.id}`);
+                if (!feedback) return;
+
+                feedback.classList.remove('hidden');
+
+                if (!userVal) {
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-amber-50 text-amber-800 border border-amber-200';
+                    feedback.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Escolha Verdadeiro ou Falso.';
+                } else if (userVal === item.correct) {
+                    box.classList.remove('border-rose-300', 'bg-rose-50/20');
+                    box.classList.add('border-emerald-300', 'bg-emerald-50/20');
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+                    feedback.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Correto!';
+                } else {
+                    box.classList.remove('border-emerald-300', 'bg-emerald-50/20');
+                    box.classList.add('border-rose-300', 'bg-rose-50/20');
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-rose-100 text-rose-800 border border-rose-200';
+                    feedback.innerHTML = '<i class="fas fa-times-circle mr-1"></i> Incorreto.';
+                }
+            });
+        }
+
+        function resetEx1() {
+            state.ex1 = {};
+            ex1Data.forEach(item => {
+                const box = document.getElementById(`box-ex1-${item.id}`);
+                if (box) box.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3';
+                const btnV = document.getElementById(`btn-ex1-${item.id}-Verdadeiro`);
+                const btnF = document.getElementById(`btn-ex1-${item.id}-Falso`);
+                if (btnV) btnV.className = 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300';
+                if (btnF) btnF.className = 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-rose-50 hover:border-rose-300';
+                document.getElementById(`feedback-ex1-${item.id}`)?.classList.add('hidden');
+                document.getElementById(`answer-ex1-${item.id}`)?.classList.add('hidden');
+            });
+        }
+
+        /* DADOS DO EXERCÍCIO 2: PADRONIZADO COM GABARITO INDIVIDUAL E OPÇÕES EMBARALHADAS */
+        const ex2Data = [
+            {
+                id: '2A',
+                predicate: 'p(x): "x é divisor positivo de 10"',
+                domain: 'U = ℕ* = {1, 2, 3, ...}',
+                options: ['{2, 5}', '{1, 2, 5, 10}', '{1, 10}', '{0, 1, 2, 5, 10}'],
+                correct: '{1, 2, 5, 10}',
+                reason: 'Os divisores naturais positivos de 10 são exatamente 1, 2, 5 e 10.'
+            },
+            {
+                id: '2B',
+                predicate: 'q(x): "x é primo menor que 20"',
+                domain: 'U = ℕ = {0, 1, 2, ...}',
+                options: ['{1, 2, 3, 5, 7, 11, 13, 17, 19}', '{3, 5, 7, 11, 13, 17, 19}', '{2, 3, 5, 7, 11, 13, 17, 19}', '{2, 3, 5, 7, 9, 11, 13, 15, 17, 19}'],
+                correct: '{2, 3, 5, 7, 11, 13, 17, 19}',
+                reason: 'Lembrando que 1 não é primo e 2 é o único primo par.'
+            },
+            {
+                id: '2C',
+                predicate: 'r(x): x² + 5 = 14',
+                domain: 'U = ℤ = {..., -2, -1, 0, 1, 2, ...}',
+                options: ['{3}', '{-3, 3}', '{-9, 9}', '∅'],
+                correct: '{-3, 3}',
+                reason: 'x² = 14 - 5 = 9 ⇒ x = ±3. Como ambos pertencem a ℤ, V<sub>r</sub> = {-3, 3}.'
+            },
+            {
+                id: '2D',
+                predicate: 's(x): "x > -5 e x < 100"',
+                domain: 'U = ℝ (Reais)',
+                options: ['[-5, 100]', '{-4, -3, ..., 99}', '(-∞, 100)', '(-5, 100)'],
+                correct: '(-5, 100)',
+                reason: 'Em ℝ, a conjunção de desigualdades estritas define o intervalo real aberto (-5, 100).'
+            }
+        ];
+
+        function renderEx2() {
+            const container = document.getElementById('ex2-items-container');
+            const isGabaritoVisible = document.getElementById('toggle-gabarito-checkbox')?.checked;
+
+            container.innerHTML = ex2Data.map(item => `
+                <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3" id="box-ex2-${item.id}">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+                        <span class="bg-indigo-600 text-white font-extrabold text-[11px] px-2.5 py-0.5 rounded">${item.id}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-500 text-[11px] font-mono">${item.domain}</span>
+                            <button type="button" onclick="toggleAnswer('ex2', '${item.id}')" class="gabarito-btn ${isGabaritoVisible ? '' : 'hidden'} text-[10px] font-bold text-[#00AEEF] hover:underline flex items-center gap-1">
+                                <i class="fas fa-eye text-[9px]"></i> Gabarito
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mt-1">
+                        <strong class="text-indigo-950 code-font block text-xs font-bold leading-relaxed">${item.predicate}</strong>
+                    </div>
+
+                    <div class="space-y-2 pt-1">
+                        <label class="text-[11px] font-bold text-gray-700 block">Selecione V<sub>p</sub>:</label>
+                        <select onchange="selectEx2('${item.id}', this.value)" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2 text-xs font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <option value="">-- Selecione o conjunto verdade --</option>
+                            ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                        </select>
+                        <div id="feedback-ex2-${item.id}" class="hidden text-[11px] p-1.5 rounded-lg font-bold"></div>
+
+                        <div id="answer-ex2-${item.id}" class="hidden bg-emerald-50 border border-emerald-200 p-2.5 rounded-lg text-[11px] space-y-1">
+                            <span class="font-extrabold text-emerald-900 block">Resposta Correta: ${item.correct}</span>
+                            <p class="text-gray-600 text-[10px] leading-relaxed">${item.reason}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectEx2(id, val) {
+            state.ex2[id] = val;
+            document.getElementById(`feedback-ex2-${id}`)?.classList.add('hidden');
+        }
+
+        function checkEx2() {
+            ex2Data.forEach(item => {
+                const userVal = state.ex2[item.id];
+                const feedback = document.getElementById(`feedback-ex2-${item.id}`);
+                const box = document.getElementById(`box-ex2-${item.id}`);
+                if (!feedback) return;
+
+                feedback.classList.remove('hidden');
+
+                if (!userVal) {
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-amber-50 text-amber-800 border border-amber-200';
+                    feedback.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Selecione uma opção.';
+                } else if (userVal === item.correct) {
+                    box.classList.remove('border-rose-300', 'bg-rose-50/20');
+                    box.classList.add('border-emerald-300', 'bg-emerald-50/20');
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+                    feedback.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Correto!';
+                } else {
+                    box.classList.remove('border-emerald-300', 'bg-emerald-50/20');
+                    box.classList.add('border-rose-300', 'bg-rose-50/20');
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-rose-100 text-rose-800 border border-rose-200';
+                    feedback.innerHTML = '<i class="fas fa-times-circle mr-1"></i> Incorreto.';
+                }
+            });
+        }
+
+        function resetEx2() {
+            state.ex2 = {};
+            ex2Data.forEach(item => {
+                const box = document.getElementById(`box-ex2-${item.id}`);
+                if (box) box.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3';
+                document.getElementById(`feedback-ex2-${item.id}`)?.classList.add('hidden');
+                document.getElementById(`answer-ex2-${item.id}`)?.classList.add('hidden');
+            });
+            renderEx2();
+        }
+
+        /* EXERCÍCIO 3: PROBLEMAS DE FIXAÇÃO DE DOMÍNIOS, CONJUNTO VERDADE E IDENTIFICAÇÃO DE UNIVERSO */
+        const ex3Questions = [
+            {
+                id: '3A',
+                desc: 'Considere a sentença aberta p(x): x² = 9 sob diferentes conjuntos universo U:',
+                subItems: [
+                    { id: '3A_1', text: 'Em U = ℕ = {0, 1, 2, ...}:', options: ['{-3, 3}', '{3}', '{-3}', '∅'], correct: '{3}', explain: 'Apenas a raiz positiva 3 pertence a ℕ.' },
+                    { id: '3A_2', text: 'Em U = ℤ = {..., -2, -1, 0, 1, 2, ...}:', options: ['{3}', '{-3}', '{-3, 3}', '∅'], correct: '{-3, 3}', explain: 'Ambas as raízes (-3 e 3) pertencem a ℤ.' },
+                    { id: '3A_3', text: 'Em U = {x ∈ ℝ | x < 0} (Reais negativos):', options: ['{3}', '{-3, 3}', '∅', '{-3}'], correct: '{-3}', explain: 'Apenas a raiz negativa -3 é estritamente menor que 0.' }
+                ]
+            },
+            {
+                id: '3B',
+                desc: 'Seja a sentença aberta p(x): "x é divisor de 18":',
+                subItems: [
+                    { id: '3B_1', text: 'Em U = ℕ* = {1, 2, 3, ...}:', options: ['{2, 3, 6, 9}', '{1, 2, 3, 6, 9, 18}', '{1, 18}', '{-18, ..., 18}'], correct: '{1, 2, 3, 6, 9, 18}', explain: 'Divisores naturais positivos de 18.' },
+                    { id: '3B_2', text: 'Em U = ℤ = {..., -2, -1, 0, 1, 2, ...}:', options: ['{1, 2, 3, 6, 9, 18}', '{-18, 18}', '{-18, -9, -6, -3, -2, -1, 1, 2, 3, 6, 9, 18}', '∅'], correct: '{-18, -9, -6, -3, -2, -1, 1, 2, 3, 6, 9, 18}', explain: 'Em ℤ, todo divisor admite simétrico negativo exato.' }
+                ]
+            },
+            {
+                id: '3C',
+                desc: 'Seja a sentença aberta q(x): 2x - 5 ≥ 3 (equivalente a x ≥ 4):',
+                subItems: [
+                    { id: '3C_1', text: 'Em U = ℝ (Reais):', options: ['(4, +∞)', '[4, +∞)', '(-∞, 4]', '{4, 5, 6, ...}'], correct: '[4, +∞)', explain: 'Intervalo fechado à esquerda em 4.' },
+                    { id: '3C_2', text: 'Em U = {1, 2, 3, 4, 5, 6, 7}:', options: ['{5, 6, 7}', '{4, 5, 6, 7}', '{1, 2, 3}', '[4, 7]'], correct: '{4, 5, 6, 7}', explain: 'Filtram-se do conjunto discreto dado os valores com x ≥ 4.' }
+                ]
+            },
+            {
+                id: '3D',
+                desc: 'Seja q(x, y): "x + y = 10", com U = A × A onde A = {2, 4, 6, 8}:',
+                subItems: [
+                    { id: '3D_1', text: 'Conjunto verdade V<sub>q</sub> composto por pares ordenados com soma 10:', options: ['{(2, 8), (4, 6)}', '{(4, 6), (6, 4)}', '{(2, 8), (4, 6), (6, 4), (8, 2)}', '{(2, 8), (8, 2)}'], correct: '{(2, 8), (4, 6), (6, 4), (8, 2)}', explain: 'Como a adição é comutativa, tanto (2, 8) e (8, 2) quanto (4, 6) e (6, 4) pertencem a V<sub>q</sub>.' }
+                ]
+            },
+            {
+                id: '3E',
+                desc: 'Para a sentença aberta p(x): 2x + 1 = 6 (isto é, x = 2,5), identifique o domínio de discurso U:',
+                subItems: [
+                    { id: '3E_1', text: 'Qual domínio U resulta em V<sub>p</sub> = ∅ (Conjunto Vazio)?', options: ['U = ℚ (Racionais)', 'U = ℤ (Inteiros)', 'U = ℝ (Reais)', 'U = {2, 2.5, 3}'], correct: 'U = ℤ (Inteiros)', explain: 'A fração 5/2 = 2,5 não é inteira, logo não pertence a ℤ.' },
+                    { id: '3E_2', text: 'Qual domínio U resulta em V<sub>p</sub> = {2,5}?', options: ['U = ℕ (Naturais)', 'U = ℤ (Inteiros)', 'U = ℚ (Racionais)', 'U = {0, 1, 2, 3}'], correct: 'U = ℚ (Racionais)', explain: '2,5 = 5/2 é um número racional e portanto elemento de ℚ.' }
+                ]
+            },
+            {
+                id: '3F',
+                desc: 'Para a inequação q(x): x² ≤ 4, observe os conjuntos verdade obtidos:',
+                subItems: [
+                    { id: '3F_1', text: 'Se o conjunto verdade é o intervalo contínuo [-2, 2], qual é o universo U?', options: ['U = ℤ (Inteiros)', 'U = ℝ (Reais)', 'U = ℕ (Naturais)', 'U = ℕ* (Naturais sem zero)'], correct: 'U = ℝ (Reais)', explain: 'Intervalos contínuos de reta são subconjuntos dos números reais.' },
+                    { id: '3F_2', text: 'Se o conjunto verdade é {0, 1, 2}, qual é o universo U correspondente?', options: ['U = ℤ (Inteiros)', 'U = ℝ (Reais)', 'U = ℕ (Naturais)', 'U = ℚ (Racionais)'], correct: 'U = ℕ (Naturais)', explain: 'Em ℕ = {0, 1, 2, ...}, os únicos valores com x² ≤ 4 são 0, 1 e 2 (eliminam-se -1 e -2).' }
+                ]
+            }
+        ];
+
+        /* EXERCÍCIO 4: COMPOSIÇÃO, ARIDADE MÚLTIPLA E CASOS LIMITE (SEM O ITEM 4E) */
+        const ex4Questions = [
+            {
+                id: '4A',
+                desc: 'Considere U = {1, 2, 3, ..., 20}, com p(x): "x é par" e q(x): "x é múltiplo de 3":',
+                subItems: [
+                    { id: '4A_1', text: 'Conjunto verdade de r(x): p(x) ∧ q(x) (V<sub>p</sub> ∩ V<sub>q</sub>):', options: ['{3, 6, 9, 12, 15, 18}', '{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}', '{6, 12, 18}', '{6, 12}'], correct: '{6, 12, 18}', explain: 'Múltiplos simultâneos de 2 e 3 (múltiplos de 6) de 1 a 20.' }
+                ]
+            },
+            {
+                id: '4B',
+                desc: 'Seja U = {1, 2, 3, ..., 10}, com p(x): "x é primo" ({2, 3, 5, 7}) e q(x): "x > 6" ({7, 8, 9, 10}):',
+                subItems: [
+                    { id: '4B_1', text: 'Conjunto verdade de s(x): p(x) ∨ q(x) (V<sub>p</sub> ∪ V<sub>q</sub>):', options: ['{7}', '{2, 3, 5, 7, 8, 9, 10}', '{1, 4, 6}', '{2, 3, 5, 6, 7, 8, 9, 10}'], correct: '{2, 3, 5, 7, 8, 9, 10}', explain: 'União de todos os primos com todos os números maiores que 6.' },
+                    { id: '4B_2', text: 'Conjunto verdade de t(x): ~p(x) (U - V<sub>p</sub>):', options: ['{4, 6, 8, 9, 10}', '{1, 4, 6, 8, 9, 10}', '{1, 2, 4, 6, 8, 10}', '{8, 9, 10}'], correct: '{1, 4, 6, 8, 9, 10}', explain: 'Todos os elementos de U que não são primos (1 não é primo).' }
+                ]
+            },
+            {
+                id: '4C',
+                desc: 'Seja o predicado ternário r(x₁, x₂, x₃): "x₁ + x₂ = x₃", com U = ℝ × ℝ × ℝ = ℝ³:',
+                subItems: [
+                    { id: '4C_1', text: 'A tripla ordenada (4, 6, 10) resulta em:', options: ['Verdadeiro', 'Falso'], correct: 'Verdadeiro', explain: '4 + 6 = 10 (Verdadeiro).' },
+                    { id: '4C_2', text: 'A tripla ordenada (3, 2, 8) resulta em:', options: ['Verdadeiro', 'Falso'], correct: 'Falso', explain: '3 + 2 = 5 ≠ 8 (Falso).' }
+                ]
+            },
+            {
+                id: '4D',
+                desc: 'No domínio dos números reais U = ℝ, determine o conjunto verdade de cada predicado:',
+                subItems: [
+                    { id: '4D_1', text: 'a(x): x² + 4 = 0', options: ['V<sub>a</sub> = ℝ', 'V<sub>a</sub> = ∅'], correct: 'V<sub>a</sub> = ∅', explain: 'Para todo x real x² ≥ 0, logo x² + 4 ≥ 4 > 0.' },
+                    { id: '4D_2', text: 'b(x): |x| ≥ 0', options: ['V<sub>b</sub> = ℝ', 'V<sub>b</sub> = ∅'], correct: 'V<sub>b</sub> = ℝ', explain: 'O módulo de qualquer número real é sempre não-negativo.' },
+                    { id: '4D_3', text: 'c(x): x + 1 > x', options: ['V<sub>c</sub> = ∅', 'V<sub>c</sub> = ℝ'], correct: 'V<sub>c</sub> = ℝ', explain: 'Subtraindo x de ambos os lados, obtemos 1 > 0 (verdade universal).' },
+                    { id: '4D_4', text: 'd(x): x ≠ x', options: ['V<sub>d</sub> = ℝ', 'V<sub>d</sub> = ∅'], correct: 'V<sub>d</sub> = ∅', explain: 'Princípio da Identidade: nenhum número difere de si mesmo.' }
+                ]
+            }
+        ];
+
+        /* EXERCÍCIO 5: PREDICADOS E DOMÍNIOS EM PSEUDOCÓDIGO E ESTRUTURAS DE SOFTWARE */
+        const ex5Questions = [
+            {
+                id: '5A',
+                desc: 'Considere a coleção de usuários no domínio U = {u₁, u₂, u₃, u₄, u₅} cadastrados em um sistema web e os predicados m(x): "x.idade ≥ 18", a(x): "x.ativo == verdadeiro" e s(x): "x.a2f == verdadeiro":',
+                code: `// Coleção de Registros no Domínio U
+// a2f corresponde à autenticação em dois fatores (2FA)
+u1 = { idade: 17, ativo: verdadeiro, a2f: verdadeiro }
+u2 = { idade: 22, ativo: falso,      a2f: falso }
+u3 = { idade: 35, ativo: verdadeiro, a2f: verdadeiro }
+u4 = { idade: 15, ativo: verdadeiro, a2f: falso }
+u5 = { idade: 42, ativo: verdadeiro, a2f: verdadeiro }`,
+                subItems: [
+                    { id: '5A_1', text: 'Conjunto verdade de m(x) ∧ s(x):', options: ['{u₁, u₃, u₅}', '{u₃, u₅}', '{u₂, u₃, u₅}', '{u₃}'], correct: '{u₃, u₅}', explain: 'Apenas u₃ (35 anos, 2FA true) e u₅ (42 anos, 2FA true) satisfazem ambos os predicados simultaneamente.' },
+                    { id: '5A_2', text: 'Conjunto verdade de ~a(x):', options: ['{u₂}', '{u₁, u₄}', '{u₂, u₄}', '∅'], correct: '{u₂}', explain: 'Apenas u₂ possui ativo == falso.' }
+                ]
+            },
+            {
+                id: '5B',
+                desc: 'Analise a função booleana em pseudocódigo que valida arquivos enviados para upload sobre o domínio U = {d₁, d₂, d₃, d₄}:',
+                code: `funcao validar_anexo(arq):
+    retorne (arq.tamanho_kb <= 1024) E
+        (arq.extensao == "pdf" OU
+        arq.extensao == "png")
+
+// Instâncias avaliadas no domínio U:
+d1 = { tamanho_kb: 500,  extensao: "pdf" }
+d2 = { tamanho_kb: 2048, extensao: "pdf" }
+d3 = { tamanho_kb: 800,  extensao: "png" }
+d4 = { tamanho_kb: 400,  extensao: "exe" }`,
+                subItems: [
+                    { id: '5B_1', text: 'Qual é o conjunto verdade V<sub>validar</sub> em U?', options: ['{d₁, d₂, d₃}', '{d₁, d₃}', '{d₁, d₃, d₄}', '{d₁}'], correct: '{d₁, d₃}', explain: 'd₁ (500KB, pdf) e d₃ (800KB, png) atendem ao limite de 1024KB e à extensão permitida.' }
+                ]
+            },
+            {
+                id: '5C',
+                desc: 'Considere a função de controle de acesso sobre o domínio cartesiano U = Papéis × Rotas, onde Papéis = {\'admin\', \'editor\', \'leitor\'} e Rotas = {\'/painel\', \'/sistema/config\'}:',
+                code: `funcao permite_acesso(papel, rota):
+    retorne (papel == "admin") OU<br>       (papel == "editor" E<br>        rota != "/sistema/config")`,
+                subItems: [
+                    { id: '5C_1', text: 'A tupla (\'editor\', \'/sistema/config\') resulta em:', options: ['Verdadeiro', 'Falso'], correct: 'Falso', explain: 'Como papel é editor e a rota é exatamente /sistema/config, a condição é falsa.' },
+                    { id: '5C_2', text: 'A tupla (\'leitor\', \'/painel\') resulta em:', options: ['Verdadeiro', 'Falso'], correct: 'Falso', explain: 'O leitor não satisfaz a primeira condição (admin) nem a segunda (editor).' }
+                ]
+            },
+            {
+                id: '5D',
+                desc: 'Análise de Tipagem e Domínios: Uma função em pseudocódigo avalia operações numéricas e relacionais sobre uma entrada x:',
+                code: `funcao eh_valido(x):
+    retorne (x > 0) E (x mod 2 == 0)
+
+// mod é o operador de módulo (resto da divisão)`,
+                subItems: [
+                    { id: '5D_1', text: 'Qual é o domínio de discurso U formalmente adequado para garantir que o predicado sempre possa ser avaliado como proposição fechada (sem erros de execução)?', options: ['U = String (Cadeias de caracteres)', 'U = ℤ (Números Inteiros)', 'U = Boolean {verdadeiro, falso}', 'U = Array[] (Conjunto Vazio)'], correct: 'U = ℤ (Números Inteiros)', explain: 'As operações de comparação numérica (> 0) e módulo (mod 2) requerem o universo dos inteiros para gerar proposições fechadas válidas.' }
+                ]
+            }
+        ];
+
+        /* RENDERIZADOR DOS EXERCÍCIOS 3, 4 E 5 NO PADRÃO UNIFICADO */
+        function renderGroupedExercises(data, containerId, stateKey) {
+            const isGabaritoVisible = document.getElementById('toggle-gabarito-checkbox')?.checked;
+            const container = document.getElementById(containerId);
+
+            container.innerHTML = data.map(card => `
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-200 border-l-8 border-[#003B71] exercise-card space-y-3.5 shadow-sm" id="card-${stateKey}-${card.id}">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+                        <span class="bg-[#003B71] text-white font-extrabold text-[11px] px-2.5 py-0.5 rounded">
+                            ${card.id}
+                        </span>
+                        <button type="button" onclick="toggleAnswer('${stateKey}', '${card.id}')" class="gabarito-btn ${isGabaritoVisible ? '' : 'hidden'} text-[11px] font-bold text-[#00AEEF] hover:underline flex items-center gap-1 transition">
+                            <i class="fas fa-eye text-[10px]"></i> Gabarito
+                        </button>
+                    </div>
+                    
+                    <p class="text-xs text-gray-800 font-semibold leading-relaxed whitespace-pre-line">${card.desc}</p>
+
+                    ${card.code ? `
+                        <div class="bg-slate-900 text-slate-100 rounded-xl p-3.5 border border-slate-800 font-mono text-[11px] leading-relaxed shadow-inner overflow-x-auto">
+                            <div class="flex items-center gap-1.5 pb-2 mb-2 border-b border-slate-800/80 text-[10px] text-slate-400 select-none">
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block"></span>
+                                <span class="ml-2 font-sans font-semibold text-cyan-400">pseudocódigo</span>
+                            </div>
+                            <pre class="whitespace-pre overflow-x-auto text-emerald-300"><code>${card.code.replace(/(\/\/.*)/g, '<span class="text-slate-500 italic">$1</span>').replace(/(funcao|retorne|se)/g, '<span class="text-pink-400 font-bold">$1</span>').replace(/(verdadeiro|falso)/g, '<span class="text-amber-300 font-bold">$1</span>').replace(/(E|OU)/g, '<span class="text-cyan-300 font-bold">$1</span>')}</code></pre>
+                        </div>
+                    ` : ''}
+
+                    <div class="space-y-3 pt-1">
+                        ${card.subItems.map(sub => `
+                            <div class="bg-gray-50 border border-gray-200 p-2.5 rounded-xl space-y-2" id="box-sub-${sub.id}">
+                                <span class="text-xs font-bold text-gray-800 block">${sub.text}</span>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs">
+                                    ${sub.options.map(opt => `
+                                        <label class="flex items-center gap-2 bg-white p-2 rounded-lg border border-gray-200 hover:border-[#00AEEF] cursor-pointer shadow-2xs">
+                                            <input type="radio" name="radio-${sub.id}" value="${opt}" onchange="selectSubItem('${stateKey}', '${sub.id}', this.value)" class="accent-[#00AEEF] cursor-pointer">
+                                            <span class="font-mono text-gray-700 text-[11px]">${opt}</span>
+                                        </label>
+                                    `).join('')}
+                                </div>
+                                <div id="feedback-sub-${sub.id}" class="hidden text-[10px] p-1.5 rounded-lg font-bold"></div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div id="answer-${stateKey}-${card.id}" class="hidden bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs space-y-2 mt-2">
+                        <strong class="text-emerald-950 uppercase font-extrabold text-[11px] flex items-center gap-1 border-b border-emerald-200 pb-1">
+                            <i class="fas fa-check-circle text-emerald-600"></i> Respostas e Justificativas:
+                        </strong>
+                        <div class="space-y-1">
+                            ${card.subItems.map(sub => `
+                                <div class="bg-white p-2 rounded border border-emerald-200">
+                                    <span class="font-bold text-indigo-950 font-mono text-[11px] block">${sub.text} &rarr; <span class="text-emerald-700">${sub.correct}</span></span>
+                                    <span class="text-[10px] text-gray-600 block mt-0.5">${sub.explain}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectSubItem(stateKey, subId, val) {
+            state[stateKey][subId] = val;
+            document.getElementById(`feedback-sub-${subId}`)?.classList.add('hidden');
+        }
+
+        function checkFormGroup(data, stateKey) {
+            data.forEach(card => {
+                card.subItems.forEach(sub => {
+                    const userVal = state[stateKey][sub.id];
+                    const feedback = document.getElementById(`feedback-sub-${sub.id}`);
+                    const box = document.getElementById(`box-sub-${sub.id}`);
+                    if (!feedback) return;
+
+                    feedback.classList.remove('hidden');
+
+                    if (!userVal) {
+                        feedback.className = 'text-[10px] p-1.5 rounded-lg font-bold bg-amber-50 text-amber-800 border border-amber-200';
+                        feedback.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Selecione uma opção.';
+                    } else if (userVal === sub.correct) {
+                        box.classList.remove('border-rose-300', 'bg-rose-50/20');
+                        box.classList.add('border-emerald-300', 'bg-emerald-50/20');
+                        feedback.className = 'text-[10px] p-1.5 rounded-lg font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+                        feedback.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Correto!';
+                    } else {
+                        box.classList.remove('border-emerald-300', 'bg-emerald-50/20');
+                        box.classList.add('border-rose-300', 'bg-rose-50/20');
+                        feedback.className = 'text-[10px] p-1.5 rounded-lg font-bold bg-rose-100 text-rose-800 border border-rose-200';
+                        feedback.innerHTML = '<i class="fas fa-times-circle mr-1"></i> Incorreto.';
+                    }
+                });
+            });
+        }
+
+        function checkEx3Form() { checkFormGroup(ex3Questions, 'ex3'); }
+        function checkEx4Form() { checkFormGroup(ex4Questions, 'ex4'); }
+        function checkEx5Form() { checkFormGroup(ex5Questions, 'ex5'); }
+
+        function resetFormGroup(data, stateKey, containerId) {
+            state[stateKey] = {};
+            renderGroupedExercises(data, containerId, stateKey);
+        }
+
+        function resetEx3Form() { resetFormGroup(ex3Questions, 'ex3', 'ex3-cards-container'); }
+        function resetEx4Form() { resetFormGroup(ex4Questions, 'ex4', 'ex4-cards-container'); }
+        function resetEx5Form() { resetFormGroup(ex5Questions, 'ex5', 'ex5-cards-container'); }
+
+        function toggleAnswer(stateKey, id) {
+            document.getElementById(`answer-${stateKey}-${id}`)?.classList.toggle('hidden');
+        }
+
+        /* DEFINIÇÕES E LÓGICA DO SIMULADOR (LABORATÓRIO DE PREDICADOS E CONJUNTO VERDADE) */
+        const simulatorDomains = {
+            digitos: {
+                name: "U = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}",
+                elements: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                predicates: [
+                    { id: 'par', name: 'p(x): "x é par"', formula: 'x % 2 === 0', fn: x => x % 2 === 0, desc: 'Números que deixam resto zero quando divididos por 2.' },
+                    { id: 'impar', name: 'p(x): "x é ímpar"', formula: 'x % 2 !== 0', fn: x => x % 2 !== 0, desc: 'Números que deixam resto diferente de zero na divisão por 2.' },
+                    { id: 'primo', name: 'p(x): "x é número primo"', formula: 'x > 1 e divisível apenas por 1 e por si', fn: x => [2, 3, 5, 7].includes(x), desc: 'Dígitos naturais maiores que 1 divisíveis apenas por 1 e por si mesmos.' },
+                    { id: 'maior5', name: 'p(x): x > 5', formula: 'x > 5', fn: x => x > 5, desc: 'Elementos estritamente maiores do que 5.' },
+                    { id: 'quadrado', name: 'p(x): "x é quadrado perfeito"', formula: '√x ∈ ℕ', fn: x => [0, 1, 4, 9].includes(x), desc: 'Dígitos cuja raiz quadrada é um número inteiro exato (0, 1, 4, 9).' }
+                ]
+            },
+            inteiros_pequenos: {
+                name: "U = {-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5}",
+                elements: [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
+                predicates: [
+                    { id: 'quadrado_igual_9', name: 'p(x): x² = 9', formula: 'x * x === 9', fn: x => x * x === 9, desc: 'Inteiros cujo quadrado é exatamente igual a 9 (x = -3 ou x = 3).' },
+                    { id: 'modulo_menor_3', name: 'p(x): |x| < 3', formula: 'Math.abs(x) < 3', fn: x => Math.abs(x) < 3, desc: 'Inteiros com distância até a origem estritamente menor do que 3.' },
+                    { id: 'estritamente_positivo', name: 'p(x): x > 0', formula: 'x > 0', fn: x => x > 0, desc: 'Elementos estritamente positivos (0 é neutro).' },
+                    { id: 'quadrado_negativo', name: 'p(x): x² < 0', formula: 'x * x < 0', fn: x => (x * x) < 0, desc: 'Nenhum número real ao quadrado resulta em valor negativo.' }
+                ]
+            },
+            primos_amostra: {
+                name: "U = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}",
+                elements: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+                predicates: [
+                    { id: 'primo_teste', name: 'p(x): "x é número primo"', formula: 'x é primo', fn: x => [2, 3, 5, 7, 11, 13].includes(x), desc: 'Subconjunto de números que possuem exatamente dois divisores positivos distintos.' },
+                    { id: 'multiplo_3', name: 'p(x): "x é múltiplo de 3"', formula: 'x % 3 === 0', fn: x => x % 3 === 0, desc: 'Elementos do domínio gerados pelo produto de 3 por um número inteiro.' },
+                    { id: 'divisor_24', name: 'p(x): "x divide 24"', formula: '24 % x === 0', fn: x => 24 % x === 0, desc: 'Elementos do domínio que dividem 24 de forma exata.' }
+                ]
+            },
+            arquivos: {
+                name: 'U = {"auth.js", "style.css", "index.html", "script.ts", "data.json"}',
+                elements: ["auth.js", "style.css", "index.html", "script.ts", "data.json"],
+                predicates: [
+                    { id: 'is_web_script', name: 'p(x): "x termina com .js ou .ts"', formula: 'x.endsWith(".js") || x.endsWith(".ts")', fn: x => x.endsWith(".js") || x.endsWith(".ts"), desc: 'Scripts executáveis em runtime JavaScript/TypeScript.' },
+                    { id: 'has_dot_html', name: 'p(x): "x é documento HTML"', formula: 'x.endsWith(".html")', fn: x => x.endsWith(".html"), desc: 'Arquivos de marcação de páginas web.' },
+                    { id: 'is_data', name: 'p(x): "x contém dados estructurados (.json)"', formula: 'x.endsWith(".json")', fn: x => x.endsWith(".json"), desc: 'Arquivos contendo coleções estruturadas serializadas.' }
+                ]
+            }
+        };
+
+        function populateSimulatorPredicates() {
+            const domainKey = document.getElementById('sim-domain')?.value || 'digitos';
+            const domainObj = simulatorDomains[domainKey];
+            const selectPred = document.getElementById('sim-predicate');
+            if (!selectPred || !domainObj) return;
+
+            selectPred.innerHTML = domainObj.predicates.map((p, idx) => `
+                <option value="${p.id}" ${idx === 0 ? 'selected' : ''}>${p.name}</option>
+            `).join('');
+        }
+
+        function updateSimulator() {
+            const domainSelect = document.getElementById('sim-domain');
+            const predSelect = document.getElementById('sim-predicate');
+            if (!domainSelect || !predSelect) return;
+
+            const domainKey = domainSelect.value;
+            const domainObj = simulatorDomains[domainKey];
+            if (!domainObj) return;
+
+            // Se o predicado selecionado não pertencer ao domínio atual, atualiza a lista
+            let predObj = domainObj.predicates.find(p => p.id === predSelect.value);
+            if (!predObj) {
+                populateSimulatorPredicates();
+                predObj = domainObj.predicates[0];
+            }
+
+            const formulaTag = document.getElementById('sim-formula-tag');
+            if (formulaTag) formulaTag.innerText = predObj.formula;
+
+            const grid = document.getElementById('sim-elements-grid');
+            const truthSetEl = document.getElementById('sim-truth-set');
+            const explanationEl = document.getElementById('sim-explanation');
+            const countTag = document.getElementById('sim-count-tag');
+
+            const truthSet = [];
+
+            if (grid) {
+                grid.innerHTML = domainObj.elements.map(el => {
+                    const isTrue = predObj.fn(el);
+                    const formattedEl = typeof el === 'string' ? `"${el}"` : el;
+                    if (isTrue) truthSet.push(formattedEl);
+
+                    return `
+                        <div class="p-2.5 rounded-xl border text-center transition-all ${isTrue
+                            ? 'bg-emerald-50 border-emerald-300 shadow-2xs'
+                            : 'bg-rose-50/60 border-rose-200 opacity-80'
+                        }">
+                            <div class="code-font font-black text-xs ${isTrue ? 'text-emerald-950' : 'text-gray-600'}">
+                                x = ${formattedEl}
+                            </div>
+                            <div class="text-[10px] font-bold mt-1 ${isTrue ? 'text-emerald-700' : 'text-rose-700'}">
+                                ${isTrue ? 'Verdadeiro (p(x) = V)' : 'Falso (p(x) = F)'}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            if (truthSetEl) {
+                truthSetEl.innerHTML = truthSet.length > 0
+                    ? `V<sub>p</sub> = { ${truthSet.join(', ')} }`
+                    : `V<sub>p</sub> = ∅ (Conjunto Vazio)`;
+            }
+
+            if (explanationEl) {
+                explanationEl.innerText = predObj.desc;
+            }
+
+            if (countTag) {
+                countTag.innerText = `${truthSet.length} de ${domainObj.elements.length} elementos satisfazem p(x)`;
+            }
+        }
+
+        /* QUIZ RÁPIDO: CORREÇÃO TOTAL DE V_P E EMBARALHAMENTO DE RESPOSTAS */
+        const fastQuizQuestions = [
+            {
+                q: "1. O que diferencia formalmente uma sentença aberta de uma proposição fechada?",
+                options: [
+                    "O fato de uma sentença aberta ser sempre falsa.",
+                    "A presença de variáveis livres que necessitam de substituição por elementos do domínio.",
+                    "Sentenças abertas nunca podem ser convertidas em proposições.",
+                    "Proposições fechadas não aceitam conectivos como conjunção e disjunção."
+                ],
+                answer: 1
+            },
+            {
+                q: "2. Como é formalmente definido o Conjunto Verdade V<sub>p</sub> de um predicado p(x) em um universo U?",
+                options: [
+                    "V<sub>p</sub> = { x ∈ U | p(x) é verdadeira }",
+                    "V<sub>p</sub> = { x ∉ U | p(x) é falsa }",
+                    "V<sub>p</sub> = U × U",
+                    "V<sub>p</sub> é sempre um conjunto com exatamente um elemento."
+                ],
+                answer: 0
+            },
+            {
+                q: "3. Se p(x) e q(x) são predicados em U, a conjunção p(x) ∧ q(x) tem como conjunto verdade:",
+                options: [
+                    "A união: V<sub>p</sub> ∪ V<sub>q</sub>",
+                    "O produto cartesiano: V<sub>p</sub> × V<sub>q</sub>",
+                    "A interseção: V<sub>p</sub> ∩ V<sub>q</sub>",
+                    "O complementar: U - V<sub>p</sub>"
+                ],
+                answer: 2
+            },
+            {
+                q: "4. Qual o valor do conjunto verdade da inequação x² < 0 quando o domínio de discurso é o conjunto dos números reais (U = ℝ)?",
+                options: [
+                    "Verdadeira para números negativos.",
+                    "O conjunto verdade é todo o universo: V<sub>p</sub> = ℝ.",
+                    "Indeterminado até que x seja multiplicado por -1.",
+                    "O conjunto verdade é vazio: V<sub>p</sub> = ∅."
+                ],
+                answer: 3
+            },
+            {
+                q: "5. A sentença aberta \"x + y = z\" possui qual aridade e está definida sobre qual produto cartesiano?",
+                options: [
+                    "Unária, definida em U.",
+                    "Ternária, definida em U × U × U.",
+                    "Binária, definida em U × U.",
+                    "Tetranária, definida em U⁴."
+                ],
+                answer: 1
+            }
+        ];
+
+        function renderFastQuiz() {
+            const container = document.getElementById('fast-quiz-container');
+            container.innerHTML = fastQuizQuestions.map((q, qIdx) => `
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2">
+                    <p class="font-bold text-xs text-[#003B71]">${q.q}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        ${q.options.map((opt, oIdx) => `
+                            <button type="button" onclick="answerFastQuiz(${qIdx}, ${oIdx})" id="btn-quiz-${qIdx}-${oIdx}" class="text-left p-2.5 rounded-lg border border-gray-200 bg-white hover:border-[#00AEEF] transition">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function answerFastQuiz(qIdx, oIdx) {
+            if (state.quiz[qIdx] !== undefined) return;
+            state.quiz[qIdx] = oIdx;
+
+            const q = fastQuizQuestions[qIdx];
+            const isCorrect = (oIdx === q.answer);
+            const btn = document.getElementById(`btn-quiz-${qIdx}-${oIdx}`);
+
+            if (isCorrect) {
+                btn.className = 'text-left p-2.5 rounded-lg border border-emerald-500 bg-emerald-100 text-emerald-800 font-bold';
+                state.quizScore++;
+            } else {
+                btn.className = 'text-left p-2.5 rounded-lg border border-rose-500 bg-rose-100 text-rose-800 font-bold';
+                const correctBtn = document.getElementById(`btn-quiz-${qIdx}-${q.answer}`);
+                correctBtn.className = 'text-left p-2.5 rounded-lg border border-emerald-500 bg-emerald-100 text-emerald-800 font-bold';
+            }
+
+            document.getElementById('quiz-score-badge').innerText = `Pontuação: ${state.quizScore} / ${fastQuizQuestions.length}`;
+        }
+
+        /* CAÇA-NÍQUEIS DE EMOJIS */
+        const slotReels = [
+            ['🎲', '🤖', '⚖️', '⚡', '🔒', '💡', '🧠', '🛠️', '🚀', '🎯'],
+            ['🎮', '💻', '🌐', '🔥', '🧩', '⚙️', '🔬', '🎨', '🔍', '🏆'],
+            ['⭐', '🏆', '🎯', '🔑', '💎', '🧪', '🛡️', '👑', '🚨', '🧭']
+        ];
+        const slotTargetIndices = [1 + 2, 3 + 4, 5];
+        const currentSlotIndices = [0, 0, 0];
+
+        function spinSlot(slotIndex) {
+            const btn = document.getElementById(`slot-${slotIndex}`);
+            if (!btn) return;
+
+            currentSlotIndices[slotIndex] = (currentSlotIndices[slotIndex] + 1) % slotReels[slotIndex].length;
+            const newEmoji = slotReels[slotIndex][currentSlotIndices[slotIndex]];
+
+            btn.classList.remove('slot-spinning');
+            void btn.offsetWidth;
+            btn.classList.add('slot-spinning');
+            btn.innerText = newEmoji;
+
+            checkSlotPassword();
+        }
+
+        function checkSlotPassword() {
+            const isUnlocked = currentSlotIndices[0] === slotTargetIndices[0] &&
+                currentSlotIndices[1] === slotTargetIndices[1] &&
+                currentSlotIndices[2] === slotTargetIndices[2];
+
+            const wrapper = document.getElementById('gabarito-checkbox-wrapper');
+            if (isUnlocked) {
+                if (wrapper && wrapper.classList.contains('hidden')) {
+                    playFaahSound();
+                }
+                wrapper?.classList.remove('hidden');
+            } else {
+                wrapper?.classList.add('hidden');
+                const checkbox = document.getElementById('toggle-gabarito-checkbox');
+                if (checkbox && checkbox.checked) {
+                    checkbox.checked = false;
+                    onToggleGabaritoCheckbox();
+                }
+            }
+        }
+
+        function onToggleGabaritoCheckbox() {
+            const isChecked = document.getElementById('toggle-gabarito-checkbox')?.checked;
+            const gabaritoBtns = document.querySelectorAll('.gabarito-btn');
+            gabaritoBtns.forEach(btn => {
+                if (isChecked) btn.classList.remove('hidden');
+                else btn.classList.add('hidden');
+            });
+
+            if (!isChecked) {
+                ex1Data.forEach(item => document.getElementById(`answer-ex1-${item.id}`)?.classList.add('hidden'));
+                ex2Data.forEach(item => document.getElementById(`answer-ex2-${item.id}`)?.classList.add('hidden'));
+                ex3Questions.forEach(q => document.getElementById(`answer-ex3-${q.id}`)?.classList.add('hidden'));
+                ex4Questions.forEach(q => document.getElementById(`answer-ex4-${q.id}`)?.classList.add('hidden'));
+                ex5Questions.forEach(q => document.getElementById(`answer-ex5-${q.id}`)?.classList.add('hidden'));
+            }
+        }
+
+        /* INICIALIZAÇÃO NA CARGA DA PÁGINA */
+        window.onload = function () {
+            renderEx1();
+            populateSimulatorPredicates();
+            updateSimulator();
+            renderEx2();
+            renderGroupedExercises(ex3Questions, 'ex3-cards-container', 'ex3');
+            renderGroupedExercises(ex4Questions, 'ex4-cards-container', 'ex4');
+            renderGroupedExercises(ex5Questions, 'ex5-cards-container', 'ex5');
+            renderFastQuiz();
+        };
+    </script>
+</body>
+
+</html>
