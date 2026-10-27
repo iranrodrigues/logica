@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 13: Quantificadores &amp; Negação de Quantificadores</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f4f8;
+            padding-top: 20px;
+        }
+        .main-header {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo-container {
+            width: 180px;
+        }
+        .header-info {
+            text-align: right;
+            border-left: 2px solid #e5e7eb;
+            padding-left: 20px;
+        }
+        .header-info h2 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #254a8d;
+        }
+        .header-info p {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+        .header-info .sub-p {
+            font-size: 0.75rem;
+            color: #00AEEF;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .code-font {
+            font-family: 'Roboto Mono', monospace;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 59, 113, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04);
+        }
+        .slot-spinning {
+            animation: slotRotate 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes slotRotate {
+            0% { transform: translateY(-12px) scale(0.85); opacity: 0.4; }
+            50% { transform: translateY(6px) scale(1.1); opacity: 0.8; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .interactive-btn-val {
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+            user-select: none;
+        }
+        .interactive-btn-val:active {
+            transform: scale(0.94);
+        }
+        sub {
+            font-size: 0.72em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+            bottom: -0.22em;
+            margin-left: 0.5px;
+            margin-right: 0.5px;
+        }
+        .exercise-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00AEEF;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="text-gray-700 antialiased selection:bg-cyan-500 selection:text-white pb-20">
+
+    <!-- CABEÇALHO DA INSTITUIÇÃO -->
+    <header class="main-header flex-col md:flex-row gap-4 md:gap-0">
+        <div class="logo-container">
+            <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 801.70135 613.78265" height="100%" width="100%"
+                xml:space="preserve" id="svg2" version="1.1">
+                <g transform="matrix(1.3333333,0,0,-1.3333333,0,613.78267)" id="g10">
+                    <g id="g12">
+                        <g clip-path="url(#clipPath18)" id="g14">
+                            <g transform="translate(252.3749,80.1607)" id="g20">
+                                <path id="path22" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -4.711,0 -8.12,3.901 -8.12,8.718 v 0.069 c 0,4.817 3.446,8.68 8.12,8.68 2.81,0 4.92,-1.227 6.889,-3.056 l 2.776,3.196 c -2.355,2.25 -5.097,3.833 -9.631,3.833 -7.45,0 -12.688,-5.73 -12.688,-12.722 V 8.646 c 0,-7.063 5.344,-12.653 12.514,-12.653 4.605,0 7.415,1.689 9.98,4.359 L 7.064,3.162 C 4.957,1.197 3.022,0 0,0" />
+                            </g>
+                            <g transform="translate(272.8636,92.0402)" id="g24">
+                                <path id="path26" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 2.81,0 4.428,-2.144 4.708,-4.886 H -4.817 C -4.428,-2.004 -2.602,0 0,0 m 8.082,-12.407 -2.495,2.215 c -1.474,-1.443 -2.951,-2.215 -5.026,-2.215 -2.742,0 -4.886,1.689 -5.341,4.711 H 8.855 c 0.038,0.42 0.072,0.807 0.072,1.197 0,5.34 -2.988,9.979 -8.893,9.979 -5.306,0 -9.067,-4.359 -9.067,-9.665 v -0.072 c 0,-5.726 4.147,-9.628 9.525,-9.628 3.409,0 5.833,1.368 7.59,3.478" />
+                            </g>
+                            <g transform="translate(301.3308,76.5763)" id="g28">
+                                <path id="path30" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 v 11.843 c 0,4.287 -2.424,7.101 -6.609,7.101 -2.879,0 -4.602,-1.511 -5.798,-3.234 v 2.848 h -4.254 V 0 h 4.254 v 10.472 c 0,2.882 1.723,4.605 4.184,4.605 2.53,0 3.97,-1.651 3.97,-4.533 L -4.253,0 Z" />
+                            </g>
+                            <g transform="translate(310.1876,100.2299)" id="g32">
+                                <path id="path34" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -4.253 v -5.098 h -2.356 v -3.655 h 2.356 v -9.771 c 0,-4.075 2.212,-5.446 5.344,-5.446 1.613,0 2.772,0.352 3.829,0.95 v 3.477 c -0.845,-0.42 -1.689,-0.632 -2.636,-0.632 -1.443,0 -2.284,0.666 -2.284,2.321 v 9.101 h 4.992 v 3.655 l -4.992,0 z" />
+                            </g>
+                            <g transform="translate(322.3457,90.9505)" id="g36">
+                                <path id="path38" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 V 4.181 H -4.253 V -14.373 H 0 v 7.063 c 0,4.92 2.602,7.344 6.328,7.344 H 6.571 V 4.533 C 3.303,4.674 1.159,2.776 0,0" />
+                            </g>
+                            <g transform="translate(334.4361,85.8899)" id="g40">
+                                <path id="path42" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,3.234 2.178,5.904 5.587,5.904 3.34,0 5.695,-2.707 5.695,-5.976 V -0.14 c 0,-3.2 -2.181,-5.871 -5.624,-5.871 C 2.356,-6.011 0,-3.303 0,-0.072 Z m 5.587,-9.734 c 5.73,0 9.949,4.39 9.949,9.662 V 0 c 0,5.306 -4.185,9.631 -9.878,9.631 -5.692,0 -9.911,-4.393 -9.911,-9.703 V -0.14 c 0,-5.272 4.181,-9.594 9.84,-9.594" />
+                            </g>
+                            <g transform="translate(383.1821,87.2253)" id="g44">
+                                <path id="path46" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 V 13.953 H -4.325 V -0.209 c 0,-4.536 -2.352,-6.82 -6.181,-6.82 -3.867,0 -6.223,2.424 -6.223,6.995 V 13.953 H -21.05 V -0.209 c 0,-7.135 4.075,-10.827 10.472,-10.827 C -4.147,-11.036 0,-7.344 0,0" />
+                            </g>
+                            <g transform="translate(391.4741,87.05)" id="g48">
+                                <path id="path50" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,2.882 1.723,4.605 4.181,4.605 2.534,0 3.973,-1.651 3.973,-4.533 v -10.544 h 4.253 V 1.371 c 0,4.287 -2.424,7.098 -6.608,7.098 C 2.916,8.469 1.197,6.961 0,5.238 V 8.082 H -4.253 V -10.472 H 0 Z" />
+                            </g>
+                            <path id="path52" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 407.674,97.98 h 4.568 v 4.041 h -4.568 z" />
+                            <path id="path54" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 407.852,76.577 h 4.253 v 18.558 h -4.253 z" />
+                            <g transform="translate(425.9518,76.4355)" id="g56">
+                                <path id="path58" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 7.59,18.698 H 3.128 L -1.898,5.06 -6.889,18.698 h -4.568 L -3.833,0 Z" />
+                            </g>
+                            <g transform="translate(443.7699,92.0402)" id="g60">
+                                <path id="path62" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 2.81,0 4.428,-2.144 4.708,-4.886 H -4.814 C -4.428,-2.004 -2.602,0 0,0 m 0.492,-15.885 c 3.409,0 5.833,1.368 7.59,3.478 l -2.495,2.215 c -1.474,-1.443 -2.951,-2.215 -5.026,-2.215 -2.739,0 -4.886,1.689 -5.341,4.711 H 8.855 c 0.038,0.42 0.072,0.807 0.072,1.197 0,5.34 -2.988,9.979 -8.893,9.979 -5.306,0 -9.067,-4.359 -9.067,-9.665 v -0.072 c 0,-5.726 4.147,-9.628 9.525,-9.628" />
+                            </g>
+                            <g transform="translate(459.8304,83.6406)" id="g64">
+                                <path id="path66" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,4.92 2.602,7.347 6.328,7.347 h 0.243 v 4.496 C 3.303,11.987 1.159,10.086 0,7.31 v 4.181 H -4.253 V -7.064 H 0 Z" />
+                            </g>
+                            <g transform="translate(476.1727,87.5416)" id="g68">
+                                <path id="path70" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -2.178,0.704 -4.181,1.265 -4.181,2.636 v 0.072 c 0,1.053 0.947,1.825 2.601,1.825 1.546,0 3.443,-0.666 5.235,-1.757 l 1.689,3.022 c -1.97,1.303 -4.5,2.11 -6.821,2.11 -3.689,0 -6.605,-2.144 -6.605,-5.658 V 2.178 c 0,-3.549 3.056,-4.674 5.798,-5.447 2.178,-0.666 4.147,-1.159 4.147,-2.598 v -0.072 c 0,-1.231 -1.056,-2.003 -2.882,-2.003 -1.897,0 -4.041,0.772 -6.082,2.284 l -1.898,-2.883 c 2.322,-1.825 5.238,-2.776 7.874,-2.776 3.867,0 6.889,1.932 6.889,5.836 v 0.069 C 5.764,-2.072 2.708,-0.841 0,0" />
+                            </g>
+                            <path id="path72" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 484.956,97.98 h 4.568 v 4.041 h -4.568 z" />
+                            <path id="path74" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 485.134,76.577 h 4.253 v 18.558 h -4.253 z" />
+                            <g transform="translate(494.4117,81.7074)" id="g76">
+                                <path id="path78" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-4.075 2.212,-5.446 5.344,-5.446 1.614,0 2.773,0.348 3.829,0.947 v 3.48 c -0.844,-0.42 -1.689,-0.632 -2.636,-0.632 -1.443,0 -2.284,0.666 -2.284,2.318 v 9.104 h 4.992 v 3.655 H 4.253 v 5.098 H 0 V 13.426 H -2.356 V 9.771 l 2.356,0 z" />
+                            </g>
+                            <g transform="translate(520.0675,101.5304)" id="g80">
+                                <path id="path82" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 -3.863,1.723 -3.659,-5.764 h 3.2 z" />
+                            </g>
+                            <g transform="translate(509.4892,82.1647)" id="g84">
+                                <path id="path86" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,1.932 1.617,3.094 4.359,3.094 1.686,0 3.128,-0.318 4.216,-0.738 V 1.091 C 8.575,-1.265 6.431,-2.882 3.621,-2.882 1.58,-2.882 0,-1.863 0,-0.072 Z m 2.424,-5.976 c 2.848,0 4.78,1.196 6.045,2.707 v -2.318 h 4.15 V 5.412 c 0,2.424 -0.632,4.393 -2.003,5.73 -1.303,1.334 -3.375,2.072 -6.151,2.072 -2.954,0 -4.957,-0.595 -6.995,-1.511 L -1.405,8.366 C 0.28,9.067 1.829,9.525 3.901,9.525 6.889,9.525 8.506,8.12 8.506,5.484 V 5.026 C 7.064,5.484 5.587,5.798 3.515,5.798 c -4.534,0 -7.662,-1.969 -7.662,-5.972 v -0.072 c 0,-3.727 3.091,-5.73 6.571,-5.73" />
+                            </g>
+                            <g transform="translate(536.3751,90.9864)" id="g88">
+                                <path id="path90" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h 0.246 v 4.499 c -3.268,0.14 -5.412,-1.757 -6.574,-4.533 v 4.181 h -4.254 v -18.558 h 4.254 v 7.064 C -6.328,-2.424 -3.727,0 0,0" />
+                            </g>
+                            <path id="path92" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 543.543,102.021 h -4.568 V 97.98 h 4.568 z" />
+                            <path id="path94" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="M 543.403,95.132 H 539.15 V 76.574 h 4.253 z" />
+                            <g transform="translate(562.0655,85.7491)" id="g96">
+                                <path id="path98" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.197 -2.181,-5.867 -5.624,-5.867 -3.303,0 -5.659,2.704 -5.659,5.939 V 0.14 c 0,3.234 2.178,5.905 5.587,5.905 C -2.356,6.045 0,3.34 0,0.072 Z m -5.624,9.771 c -5.693,0 -9.912,-4.393 -9.912,-9.699 V 0 c 0,-5.272 4.182,-9.594 9.84,-9.594 5.73,0 9.949,4.394 9.949,9.666 V 0.14 c 0,5.306 -4.185,9.631 -9.877,9.631" />
+                            </g>
+                            <g transform="translate(282.0353,53.8006)" id="g100">
+                                <path id="path102" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 -7.487,11.635 h -4.602 v -24.603 h 4.253 V 4.605 L -0.14,-6.923 H 0 L 7.768,4.674 v -17.642 h 4.321 V 11.635 H 7.487 Z" />
+                            </g>
+                            <g transform="translate(310.045,47.5098)" id="g104">
+                                <path id="path106" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.356 -2.144,-3.969 -4.957,-3.969 -2.038,0 -3.618,1.018 -3.618,2.81 v 0.068 c 0,1.935 1.614,3.094 4.359,3.094 1.686,0 3.125,-0.314 4.216,-0.738 z m -4.113,12.123 c -2.951,0 -4.954,-0.594 -6.992,-1.507 L -9.98,7.275 c 1.686,0.705 3.231,1.159 5.306,1.159 2.985,0 4.602,-1.405 4.602,-4.041 V 3.935 c -1.439,0.458 -2.916,0.776 -4.988,0.776 -4.534,0 -7.662,-1.969 -7.662,-5.976 v -0.072 c 0,-3.723 3.091,-5.727 6.571,-5.727 2.848,0 4.78,1.194 6.045,2.705 V -6.677 H 4.041 V 4.325 c 0,2.424 -0.632,4.39 -2.003,5.726 -1.3,1.337 -3.375,2.072 -6.151,2.072" />
+                            </g>
+                            <g transform="translate(322.0294,55.2064)" id="g108">
+                                <path id="path110" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 V 4.181 H -4.253 V -14.373 H 0 v 7.063 c 0,4.92 2.602,7.344 6.328,7.344 H 6.571 V 4.533 C 3.303,4.677 1.159,2.776 0,0" />
+                            </g>
+                            <path id="path112" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 331.131,40.832 h 4.253 V 59.39 h -4.253 z" />
+                            <path id="path114" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 330.957,62.238 h 4.568 v 4.041 h -4.568 z" />
+                            <g transform="translate(354.0468,50.005)" id="g116">
+                                <path id="path118" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.197 -2.181,-5.867 -5.624,-5.867 -3.303,0 -5.659,2.704 -5.659,5.939 V 0.14 c 0,3.234 2.178,5.905 5.587,5.905 C -2.356,6.045 0,3.34 0,0.072 Z m -5.624,9.771 c -5.693,0 -9.912,-4.393 -9.912,-9.699 V 0 c 0,-5.272 4.182,-9.594 9.84,-9.594 5.73,0 9.949,4.394 9.949,9.666 V 0.14 c 0,5.306 -4.185,9.631 -9.877,9.631" />
+                            </g>
+                            <g transform="translate(385.5005,57.0346)" id="g120">
+                                <path id="path122" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.564 -2.041,-4.393 -5.31,-4.393 h -5.022 V 4.462 H -5.31 C -2.075,4.462 0,2.954 0,0.072 Z m -4.957,8.4 h -9.7 v -24.602 h 4.325 v 7.908 h 4.886 c 5.408,0 9.839,2.882 9.839,8.4 v 0.068 c 0,4.958 -3.586,8.226 -9.35,8.226" />
+                            </g>
+                            <g transform="translate(406.9393,50.005)" id="g124">
+                                <path id="path126" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.197 -2.181,-5.867 -5.624,-5.867 -3.303,0 -5.659,2.704 -5.659,5.939 V 0.14 c 0,3.234 2.178,5.905 5.587,5.905 C -2.356,6.045 0,3.34 0,0.072 Z m -5.624,9.771 c -5.693,0 -9.912,-4.393 -9.912,-9.699 V 0 c 0,-5.272 4.182,-9.594 9.84,-9.594 5.73,0 9.949,4.394 9.949,9.666 V 0.14 c 0,5.306 -4.185,9.631 -9.877,9.631" />
+                            </g>
+                            <g transform="translate(424.1581,59.7756)" id="g128">
+                                <path id="path130" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -2.882,0 -4.605,-1.511 -5.799,-3.231 v 2.845 h -4.253 v -18.558 h 4.253 v 10.475 c 0,2.882 1.72,4.602 4.182,4.602 2.53,0 3.973,-1.651 3.973,-4.533 V -18.944 H 6.609 V -7.098 C 6.609,-2.81 4.181,0 0,0" />
+                            </g>
+                            <g transform="translate(439.6221,64.4856)" id="g132">
+                                <path id="path134" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -4.253 v -5.098 h -2.356 v -3.655 h 2.356 v -9.771 c 0,-4.075 2.212,-5.446 5.344,-5.446 1.613,0 2.772,0.352 3.829,0.95 v 3.477 c -0.845,-0.42 -1.689,-0.632 -2.636,-0.632 -1.443,0 -2.284,0.666 -2.284,2.321 v 9.101 h 4.992 v 3.655 l -4.992,0 z" />
+                            </g>
+                            <g transform="translate(450.7282,51.4104)" id="g136">
+                                <path id="path138" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 0.386,2.882 2.212,4.886 4.814,4.886 7.628,4.886 9.245,2.742 9.525,0 Z m 4.848,8.366 c -5.306,0 -9.067,-4.359 -9.067,-9.665 v -0.072 c 0,-5.727 4.147,-9.628 9.525,-9.628 3.409,0 5.833,1.368 7.594,3.477 l -2.496,2.216 C 8.927,-6.749 7.45,-7.522 5.378,-7.522 c -2.742,0 -4.886,1.689 -5.344,4.712 h 13.638 c 0.035,0.42 0.069,0.806 0.069,1.193 0,5.344 -2.988,9.983 -8.893,9.983" />
+                            </g>
+                            <g transform="translate(474.8372,51.7971)" id="g140">
+                                <path id="path142" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -2.178,0.704 -4.181,1.265 -4.181,2.636 v 0.072 c 0,1.053 0.947,1.825 2.601,1.825 1.546,0 3.443,-0.666 5.235,-1.757 l 1.689,3.022 c -1.97,1.303 -4.5,2.11 -6.821,2.11 -3.689,0 -6.605,-2.144 -6.605,-5.658 V 2.178 c 0,-3.549 3.056,-4.674 5.798,-5.447 2.178,-0.666 4.147,-1.159 4.147,-2.598 v -0.072 c 0,-1.231 -1.056,-2.003 -2.882,-2.003 -1.897,0 -4.041,0.772 -6.082,2.284 l -1.898,-2.883 c 2.322,-1.825 5.238,-2.776 7.874,-2.776 3.867,0 6.889,1.932 6.889,5.836 v 0.069 C 5.764,-2.072 2.708,-0.841 0,0" />
+                            </g>
+                            <g transform="translate(502.4592,49.3378)" id="g144">
+                                <path id="path146" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.303 -1.58,-4.852 -3.901,-4.852 -2.075,0 -3.515,1.057 -4.954,2.92 l -2.848,-2.954 c 1.617,-2.215 4.075,-3.973 7.874,-3.973 2.458,0 4.533,0.739 5.973,2.182 1.442,1.439 2.321,3.617 2.321,6.537 V 16.096 H 0 Z" />
+                            </g>
+                            <g transform="translate(523.1606,48.9153)" id="g148">
+                                <path id="path150" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.882 -1.723,-4.568 -4.181,-4.568 -2.534,0 -3.973,1.614 -3.973,4.496 v 10.544 h -4.253 V -1.337 c 0,-4.321 2.424,-7.132 6.608,-7.132 2.883,0 4.602,1.508 5.799,3.269 v -2.882 h 4.287 v 18.554 l -4.287,0 z" />
+                            </g>
+                            <g transform="translate(540.1353,44.1364)" id="g152">
+                                <path id="path154" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C -3.269,0 -5.552,2.636 -5.552,5.939 V 6.01 c 0,3.235 2.283,5.905 5.374,5.905 2.11,0 3.481,-0.951 4.783,-2.322 l 2.671,2.848 c -1.758,1.898 -3.936,3.197 -7.416,3.197 -5.59,0 -9.666,-4.427 -9.666,-9.699 V 5.867 c 0,-5.272 4.076,-9.594 9.594,-9.594 3.621,0 5.764,1.443 7.594,3.481 L 4.814,2.284 C 3.48,0.913 2.004,0 0,0" />
+                            </g>
+                            <g transform="translate(561.5034,47.5098)" id="g156">
+                                <path id="path158" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.356 -2.144,-3.969 -4.958,-3.969 -2.037,0 -3.617,1.018 -3.617,2.81 v 0.068 c 0,1.935 1.614,3.094 4.356,3.094 1.689,0 3.128,-0.314 4.219,-0.738 z m -4.113,12.123 c -2.951,0 -4.954,-0.594 -6.995,-1.507 l 1.125,-3.341 c 1.689,0.705 3.234,1.159 5.306,1.159 2.988,0 4.605,-1.405 4.605,-4.041 V 3.935 c -1.439,0.458 -2.916,0.776 -4.991,0.776 -4.534,0 -7.659,-1.969 -7.659,-5.976 v -0.072 c 0,-3.723 3.091,-5.727 6.571,-5.727 2.848,0 4.78,1.194 6.045,2.705 V -6.677 H 4.041 V 4.325 c 0,2.424 -0.632,4.39 -2.003,5.726 -1.3,1.337 -3.375,2.072 -6.151,2.072" />
+                            </g>
+                            <g transform="translate(563.3729,65.919)" id="g160">
+                                <path id="path162" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 -3.863,1.723 -3.659,-5.764 h 3.2 z" />
+                            </g>
+                            <g transform="translate(537.2679,367.7308)" id="g164">
+                                <path id="path166" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 15.207,0 26.548,11.334 26.548,25.351 26.548,40.863 15.207,52.197 0,52.197 -14.319,52.197 -25.656,40.863 -25.656,25.351 -25.656,11.334 -14.319,0 0,0" />
+                            </g>
+                            <g transform="translate(352.1446,245.0517)" id="g168">
+                                <path id="path170" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -1.125 l -37.543,106.698 h -70.075 V -94.681 h 43.301 V 55.322 h 1.689 L -20.309,-67.47 H 15.255 L 59.343,55.322 h 1.094 V -94.616 h 43.448 V 106.698 H 37.01 Z" />
+                            </g>
+                            <g transform="translate(564.5794,351.8964)" id="g172">
+                                <path id="path174" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -60.502 v -6.113 l 17.492,-29.465 1.172,-83.015 c -0.003,-21.447 -16.694,-39.191 -38.104,-40.501 l 10.879,-42.576 c 40.802,6.51 70.817,41.711 70.8,83.029 z" />
+                            </g>
+                            <g transform="translate(162.3982,225.3562)" id="g176">
+                                <path id="path178" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-27.355 -11.023,-38.456 -31.666,-38.456 -25.441,0 -35.403,15.542 -35.403,43.83 v 121.021 h -60.372 v -6.113 l 16.992,-28.771 0.161,-0.273 V -3.104 c 0,-40.727 21.481,-71.542 72.666,-71.542 18.199,0 35.225,3.522 48.918,11.97 l 25.841,-15.252 h 6.116 V 126.429 L 0,126.395 Z" />
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+        </div>
+        <div class="header-info">
+            <h2>Lógica Aplicada à Computação</h2>
+            <p class="sub-p">Análise e Desenvolvimento de Sistemas</p>
+            <p class="mt-1"><i class="fas fa-chalkboard-teacher text-[#00AEEF] mr-1"></i> Prof. Iran Rodrigues</p>
+        </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <main class="max-w-5xl mx-auto px-4 space-y-10">
+
+        <!-- INTRODUÇÃO TEÓRICA DA AULA 13 -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-t-4 border-[#003B71] space-y-6">
+            <div class="border-b border-gray-200 pb-4">
+                <span class="bg-[#003B71] text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                    Aula 13
+                </span>
+                <h1 class="text-3xl font-black text-[#003B71] mt-3">Quantificadores &amp; Negação de Quantificadores</h1>
+                <p class="text-sm text-gray-600 font-medium mt-1">
+                    Fechamento de sentenças abertas por quantificação: Universal (<span class="code-font font-bold text-[#003B71]">&forall;</span>), Existencial (<span class="code-font font-bold text-[#003B71]">&exist;</span>), Unicidade (<span class="code-font font-bold text-[#003B71]">&exist;!</span>) e as Leis de De Morgan para Negação.
+                </p>
+            </div>
+
+            <!-- TEORIA: DE SENTENÇAS ABERTAS A PROPOSIÇÕES QUANTIFICADAS -->
+            <div class="space-y-4">
+                <h2 class="text-xl font-black text-[#003B71] flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-[#00AEEF]"></span>
+                    Da Instanciação à Quantificação de Variáveis
+                </h2>
+                
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                    Na Aula 12, vimos que uma <strong>sentença aberta</strong> como <span class="code-font font-bold">p(x): "x + 2 = 10"</span> não possui valor lógico determinado a priori. Aprendemos que uma forma de convertê-la em proposição é a <strong>instanciação</strong> (atribuir um valor fixo, como <span class="code-font">x = 8</span>).
+                </p>
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                    Contudo, em Matemática e na Ciência da Computação, raramente testamos apenas um elemento isolado. Frequentemente precisamos expressar propriedades sobre <strong>todos</strong> os elementos de um conjunto de dados, sobre a <strong>existência</strong> de pelo menos um registro que satisfaça um critério, ou sobre a <strong>unicidade</strong> de um identificador. Essa operação chama-se <strong>Quantificação</strong>, e converte sentenças abertas em <strong>proposições fechadas</strong> com valor de verdade bem-definido.
+                </p>
+
+                <!-- OS 3 QUANTIFICADORES FUNDAMENTAIS -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                    <!-- UNIVERSAL -->
+                    <div class="bg-blue-50/80 p-4 rounded-xl border border-blue-200 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-[#003B71] text-white code-font font-black text-sm px-2.5 py-0.5 rounded">
+                                &forall; (Para todo)
+                            </span>
+                            <span class="text-[11px] font-bold text-[#003B71] uppercase">Universal</span>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Afirma que a propriedade é satisfeita por <strong>absolutamente todos</strong> os elementos do domínio de discurso <span class="code-font font-bold">U</span>.
+                        </p>
+                        <div class="bg-white p-2.5 rounded border border-blue-200 text-xs code-font text-[#003B71] font-bold text-center">
+                            (&forall;x &in; U)(p(x)) &hArr; V<sub>p</sub> = U
+                        </div>
+                        <p class="text-[11px] text-gray-600 leading-relaxed">
+                            <strong>Como refutar?</strong> Basta encontrar <strong>um único contraexemplo</strong> <span class="code-font">c &in; U</span> tal que <span class="code-font">p(c) = F</span>.
+                        </p>
+                    </div>
+
+                    <!-- EXISTENCIAL -->
+                    <div class="bg-indigo-50/80 p-4 rounded-xl border border-indigo-200 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-indigo-600 text-white code-font font-black text-sm px-2.5 py-0.5 rounded">
+                                &exist; (Existe)
+                            </span>
+                            <span class="text-[11px] font-bold text-indigo-900 uppercase">Existencial</span>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Afirma que existe <strong>pelo menos um</strong> elemento em <span class="code-font font-bold">U</span> para o qual a propriedade é verdadeira.
+                        </p>
+                        <div class="bg-white p-2.5 rounded border border-indigo-200 text-xs code-font text-indigo-900 font-bold text-center">
+                            (&exist;x &in; U)(p(x)) &hArr; V<sub>p</sub> &ne; &empty;
+                        </div>
+                        <p class="text-[11px] text-gray-600 leading-relaxed">
+                            <strong>Como provar?</strong> Basta exibir <strong>uma única testemunha</strong> <span class="code-font">t &in; U</span> tal que <span class="code-font">p(t) = V</span>.
+                        </p>
+                    </div>
+
+                    <!-- UNICIDADE -->
+                    <div class="bg-cyan-50/80 p-4 rounded-xl border border-cyan-200 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-cyan-600 text-white code-font font-black text-sm px-2.5 py-0.5 rounded">
+                                &exist;! (Existe único)
+                            </span>
+                            <span class="text-[11px] font-bold text-cyan-900 uppercase">Unicidade</span>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Afirma que existe <strong>exatamente um</strong> (apenas um e não mais de um) elemento no universo satisfazendo a regra.
+                        </p>
+                        <div class="bg-white p-2.5 rounded border border-cyan-200 text-xs code-font text-cyan-900 font-bold text-center">
+                            (&exist;!x &in; U)(p(x)) &hArr; |V<sub>p</sub>| = 1
+                        </div>
+                        <p class="text-[11px] text-gray-600 leading-relaxed">
+                            <strong>Como refutar?</strong> Demonstrando que nenhum elemento serve (<span class="code-font">|V<sub>p</sub>| = 0</span>) ou que existem dois ou mais (<span class="code-font">|V<sub>p</sub>| &ge; 2</span>).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- NEGAÇÃO DE QUANTIFICADORES: LEIS DE DE MORGAN -->
+                <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-5 rounded-2xl border border-amber-200 space-y-3 mt-4">
+                    <div class="flex items-center gap-2 border-b border-amber-200 pb-2">
+                        <i class="fas fa-balance-scale text-amber-600"></i>
+                        <h3 class="font-black text-[#003B71] text-sm uppercase tracking-wide">
+                            Negação de Proposições Quantificadas (Leis de De Morgan de 1ª Ordem)
+                        </h3>
+                    </div>
+
+                    <p class="text-xs text-gray-700 leading-relaxed">
+                        Negar que <em>"todos os elementos possuem uma propriedade"</em> <strong>NÃO</strong> é dizer que <em>"nenhum possui"</em> (erro comum de senso comum!). A negação lógica de que todos cumprem uma regra é simplesmente afirmar que <strong>existe ao menos um que não a cumpre</strong>:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                        <div class="bg-white p-3 rounded-xl border border-amber-200 space-y-1.5 shadow-2xs">
+                            <span class="font-bold text-amber-950 block border-b border-gray-100 pb-1">
+                                Negação do Quantificador Universal:
+                            </span>
+                            <div class="code-font font-black text-xs text-[#003B71] bg-amber-50/60 p-2 rounded text-center">
+                                ~(&forall;x &in; U, p(x)) &hArr; &exist;x &in; U | ~p(x)
+                            </div>
+                            <p class="text-[11px] text-gray-600">
+                                <em>"Nem todo elemento satisfaz p"</em> equivale a <em>"Existe elemento que não satisfaz p"</em>.
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-xl border border-amber-200 space-y-1.5 shadow-2xs">
+                            <span class="font-bold text-amber-950 block border-b border-gray-100 pb-1">
+                                Negação do Quantificador Existencial:
+                            </span>
+                            <div class="code-font font-black text-xs text-[#003B71] bg-amber-50/60 p-2 rounded text-center">
+                                ~(&exist;x &in; U | p(x)) &hArr; &forall;x &in; U, ~p(x)
+                            </div>
+                            <p class="text-[11px] text-gray-600">
+                                <em>"Não existe elemento que satisfaça p"</em> equivale a <em>"Todo elemento não satisfaz p" (Nenhum satisfaz)</em>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIMULADOR: LABORATÓRIO DE QUANTIFICADORES -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-cyan-500 shadow-sm space-y-6">
+            <div class="border-b border-gray-200 pb-3">
+                <span class="bg-cyan-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                    Laboratório
+                </span>
+                <h2 class="text-2xl font-black text-[#003B71] mt-1">Laboratório de Quantificadores e Contraexemplos</h2>
+            </div>
+
+            <p class="text-xs text-gray-600 leading-relaxed">
+                Escolha domínios e predicados para inspecionar em tempo real o cálculo do Conjunto Verdade (<span class="code-font font-bold">V<sub>p</sub></span>) e a validação lógica instantânea das proposições quantificadas <span class="code-font font-bold">&forall;x</span>, <span class="code-font font-bold">&exist;x</span> e <span class="code-font font-bold">&exist;!x</span>:
+            </p>
+
+            <!-- CONTROLES DO SIMULADOR -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-gray-700 block">1. Domínio de Discurso (U):</label>
+                    <select id="sim-domain" onchange="updateSimulator()" class="w-full bg-white border border-gray-300 rounded-lg p-2 text-xs font-mono focus:ring-2 focus:ring-[#00AEEF] focus:outline-none">
+                        <option value="simetricos">U = {-4, -3, -2, -1, 0, 1, 2, 3, 4} (Inteiros Simétricos)</option>
+                        <option value="naturais10">U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10} (Naturais Contáveis)</option>
+                        <option value="primosAmostra">U = {2, 3, 5, 7, 11, 13} (Conjunto de Primos)</option>
+                        <option value="usuarios">U = {"admin", "dev_backend", "dev_frontend", "qa_lead"}</option>
+                    </select>
+                </div>
+
+                <div class="space-y-1 md:col-span-2">
+                    <label class="text-xs font-bold text-gray-700 block">2. Predicado / Sentença Aberta p(x):</label>
+                    <select id="sim-predicate" onchange="updateSimulator()" class="w-full bg-white border border-gray-300 rounded-lg p-2 text-xs font-mono focus:ring-2 focus:ring-[#00AEEF] focus:outline-none">
+                        <!-- Preenchido via JS -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- CARDS DE ESTADO DOS QUANTIFICADORES -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div id="sim-card-universal" class="p-3.5 rounded-xl border text-center transition-all">
+                    <span class="text-[10px] font-extrabold uppercase block tracking-wider text-gray-500">&forall;x &in; U, p(x)</span>
+                    <span id="sim-status-universal" class="text-sm font-black mt-1 block">---</span>
+                    <span id="sim-note-universal" class="text-[10px] block mt-0.5 text-gray-600">---</span>
+                </div>
+                <div id="sim-card-existencial" class="p-3.5 rounded-xl border text-center transition-all">
+                    <span class="text-[10px] font-extrabold uppercase block tracking-wider text-gray-500">&exist;x &in; U | p(x)</span>
+                    <span id="sim-status-existencial" class="text-sm font-black mt-1 block">---</span>
+                    <span id="sim-note-existencial" class="text-[10px] block mt-0.5 text-gray-600">---</span>
+                </div>
+                <div id="sim-card-unicidade" class="p-3.5 rounded-xl border text-center transition-all">
+                    <span class="text-[10px] font-extrabold uppercase block tracking-wider text-gray-500">&exist;!x &in; U | p(x)</span>
+                    <span id="sim-status-unicidade" class="text-sm font-black mt-1 block">---</span>
+                    <span id="sim-note-unicidade" class="text-[10px] block mt-0.5 text-gray-600">---</span>
+                </div>
+            </div>
+
+            <!-- GRID DE ELEMENTOS -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-indigo-900 uppercase">
+                        Mapeamento Elemento a Elemento: <span class="font-mono text-gray-600" id="sim-formula-tag"></span>
+                    </span>
+                    <span class="text-xs font-bold text-cyan-700" id="sim-count-tag"></span>
+                </div>
+
+                <div id="sim-elements-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                    <!-- Cards preenchidos dinamicamente -->
+                </div>
+
+                <div class="bg-[#003B71] text-white p-4 rounded-xl space-y-1 shadow-inner">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] font-bold text-cyan-300 uppercase tracking-wider block">
+                            Conjunto Verdade (V<sub>p</sub>) &amp; Cardinalidade |V<sub>p</sub>|:
+                        </span>
+                        <span id="sim-cardinality" class="code-font text-xs bg-cyan-900/60 text-cyan-200 px-2 py-0.5 rounded border border-cyan-700">|V<sub>p</sub>| = 0</span>
+                    </div>
+                    <div id="sim-truth-set" class="code-font text-base sm:text-lg font-black text-yellow-300 break-all">
+                        { }
+                    </div>
+                    <div id="sim-explanation" class="text-xs text-gray-200 pt-1 border-t border-cyan-800/80">
+                        Explicação semântica.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 1: VALORAÇÃO DE PROPOSIÇÕES QUANTIFICADAS FUNDAMENTAIS -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-[#003B71] space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span class="bg-[#003B71] text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 1
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Valoração de Proposições Quantificadas</h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Determine se cada proposição quantificada abaixo é Verdadeira ou Falsa no universo U especificado:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center">
+                    <button onclick="checkEx1()" class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx1()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5" id="ex1-items-container">
+                <!-- Injetado dinamicamente via JS (1A a 1F) -->
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 2: TRADUÇÃO FORMAL E FORMALIZAÇÃO SIMBÓLICA -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-indigo-600 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span class="bg-indigo-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 2
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Formalização Simbólica com Quantificadores</h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Selecione a correta representação lógica simbólica para cada afirmação expressa em linguagem natural:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center">
+                    <button onclick="checkEx2()" class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx2()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start" id="ex2-items-container">
+                <!-- Injetado dinamicamente via JS (2A a 2D) -->
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 3: NEGAÇÃO E EQUIVALÊNCIA DE QUANTIFICADORES -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-[#003B71] space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span class="bg-[#003B71] text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 3
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Negação de Proposições Quantificadas</h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Aplique as Leis de De Morgan para quantificadores e selecione a negação formal logicamente equivalente:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center">
+                    <button onclick="checkEx3Form()" class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx3Form()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start" id="ex3-cards-container">
+                <!-- Injetado via JS no padrão unificado (3A a 3D) -->
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 4: CONTRAEXEMPLOS E VALIDAÇÃO EM DOMÍNIOS NUMÉRICOS -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-indigo-600 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span class="bg-indigo-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 4
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Contraexemplos e Testemunhas em Domínios Numéricos</h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Identifique contraexemplos que refutam afirmações universais ou testemunhas que validam afirmações existenciais:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center">
+                    <button onclick="checkEx4Form()" class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx4Form()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start" id="ex4-cards-container">
+                <!-- Injetado via JS no padrão unificado (4A a 4D) -->
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 5: QUANTIFICADORES EM PSEUDOCÓDIGO E VALIDAÇÃO DE SOFTWARE -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-emerald-600 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span class="bg-emerald-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 5
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Quantificadores em Algoritmos e Coleções</h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Analise o comportamento de predicados quantificados sobre vetores, listas e invariantes em pseudocódigo:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center">
+                    <button onclick="checkEx5Form()" class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx5Form()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start" id="ex5-cards-container">
+                <!-- Injetado via JS no padrão unificado (5A a 5D) -->
+            </div>
+        </section>
+
+        <!-- QUIZ DE FIXAÇÃO RÁPIDA -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-2 border-cyan-500 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-cyan-200 pb-3">
+                <div>
+                    <span class="bg-cyan-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded uppercase">Fixação Rápida</span>
+                    <h3 class="font-black text-xl text-[#003B71] mt-1">Quiz: Quantificadores Lógicos</h3>
+                </div>
+                <span id="quiz-score-badge" class="text-xs font-extrabold text-cyan-800 bg-cyan-50 px-3 py-1 rounded-full border border-cyan-200 self-start sm:self-auto">
+                    Pontuação: 0 / 5
+                </span>
+            </div>
+
+            <div class="space-y-4" id="fast-quiz-container">
+                <!-- Injetado via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ INSTITUCIONAL COM O SISTEMA DE CAÇA-NÍQUEIS DE EMOJIS -->
+    <footer id="main-footer" class="text-center mt-16 text-gray-400 text-xs pb-8 space-y-3 select-none border-t border-gray-200/50 pt-8">
+        <p>Lógica Aplicada à Computação &bull; Análise e Desenvolvimento de Sistemas</p>
+        <p class="text-gray-500 font-semibold">Material Didático Interativo &bull; Prof. Iran Rodrigues</p>
+
+        <!-- CAÇA-NÍQUEIS DE EMOJIS PARA DESBLOQUEIO DO GABARITO -->
+        <div class="pt-2 flex flex-col items-center justify-center gap-2">
+            <div class="inline-flex items-center gap-2 bg-white px-3 py-1.5 rounded-2xl border border-gray-200 shadow-sm">
+                <button type="button" onclick="spinSlot(0)" id="slot-0" class="slot-reel text-lg w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 hover:bg-cyan-50 border border-gray-200 active:scale-90 transition-all cursor-pointer select-none">
+                    🎲
+                </button>
+                <button type="button" onclick="spinSlot(1)" id="slot-1" class="slot-reel text-lg w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 hover:bg-cyan-50 border border-gray-200 active:scale-90 transition-all cursor-pointer select-none">
+                    🎮
+                </button>
+                <button type="button" onclick="spinSlot(2)" id="slot-2" class="slot-reel text-lg w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 hover:bg-cyan-50 border border-gray-200 active:scale-90 transition-all cursor-pointer select-none">
+                    ⭐
+                </button>
+            </div>
+        </div>
+
+        <div id="gabarito-checkbox-wrapper" class="hidden pt-2 transition-all">
+            <label class="text-gray-600 hover:text-[#003B71] text-[11px] font-normal cursor-pointer inline-flex items-center gap-2 select-none transition-colors">
+                <input type="checkbox" id="toggle-gabarito-checkbox" onchange="onToggleGabaritoCheckbox()" class="accent-[#00AEEF] cursor-pointer">
+                <span>exibir links para o gabarito</span>
+            </label>
+        </div>
+    </footer>
+
+    <script>
+        /* ESTADO GERAL DA APLICAÇÃO */
+        const state = {
+            ex1: {},
+            ex2: {},
+            ex3: {},
+            ex4: {},
+            ex5: {},
+            quiz: {},
+            quizScore: 0
+        };
+
+        function playFaahSound() {
+            try {
+                const audio = new Audio('../common/faah.mp3');
+                audio.play().catch(err => {
+                    console.log("Não foi possível reproduzir o áudio.", err);
+                });
+            } catch (err) {
+                console.log("Áudio não disponível ou bloqueado pelo navegador.");
+            }
+        }
+
+        /* DADOS DO EXERCÍCIO 1: VALORAÇÃO DE QUANTIFICADORES */
+        const ex1Data = [
+            { id: '1A', expr: '∀x ∈ ℕ, x ≥ 0', domain: 'U = ℕ = {0, 1, 2, ...}', correct: 'Verdadeiro', reason: 'Por definição dos números naturais, o menor elemento é 0 e todos são maiores ou iguais a zero.' },
+            { id: '1B', expr: '∀x ∈ ℤ, √x ∈ ℝ', domain: 'U = ℤ', correct: 'Falso', reason: 'Contraexemplo: para x = -4 ∈ ℤ, √(-4) = 2i ∉ ℝ (não é um número real).' },
+            { id: '1C', expr: '∃x ∈ ℝ | x² < 0', domain: 'U = ℝ', correct: 'Falso', reason: 'O quadrado de qualquer número real é sempre maior ou igual a zero (x² ≥ 0). V<sub>p</sub> = ∅.' },
+            { id: '1D', expr: '∃!x ∈ ℕ | x < 1', domain: 'U = ℕ = {0, 1, 2, ...}', correct: 'Verdadeiro', reason: 'Apenas x = 0 é natural e estritamente menor que 1. Como V<sub>p</sub> = {0}, |V<sub>p</sub>| = 1 (existe único).' },
+            { id: '1E', expr: '∃!x ∈ ℤ | x² = 9', domain: 'U = ℤ', correct: 'Falso', reason: 'Existem dois inteiros cujo quadrado é 9: x = 3 e x = -3. Portanto |V<sub>p</sub>| = 2, violando a unicidade.' },
+            { id: '1F', expr: '∃x ∈ ℕ | x é primo e x é par', domain: 'U = ℕ', correct: 'Verdadeiro', reason: 'Testemunha: x = 2 é primo e simultaneamente par. Como V<sub>p</sub> = {2} ≠ ∅, a afirmação é verdadeira.' }
+        ];
+
+        function renderEx1() {
+            const container = document.getElementById('ex1-items-container');
+            const isGabaritoVisible = document.getElementById('toggle-gabarito-checkbox')?.checked;
+
+            container.innerHTML = ex1Data.map(item => `
+                <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3" id="box-ex1-${item.id}">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+                        <span class="bg-[#003B71] text-white font-extrabold text-[11px] px-2.5 py-0.5 rounded">${item.id}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] font-mono font-bold text-gray-500">${item.domain}</span>
+                            <button type="button" onclick="toggleAnswer('ex1', '${item.id}')" class="gabarito-btn ${isGabaritoVisible ? '' : 'hidden'} text-[10px] font-bold text-[#00AEEF] hover:underline flex items-center gap-1">
+                                <i class="fas fa-eye text-[9px]"></i> Gabarito
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <span class="code-font font-bold text-xs text-[#003B71] block">${item.expr}</span>
+                    </div>
+
+                    <div class="space-y-2 pt-1">
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="selectEx1('${item.id}', 'Verdadeiro')" id="btn-ex1-${item.id}-Verdadeiro" class="interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300">
+                                Verdadeiro
+                            </button>
+                            <button type="button" onclick="selectEx1('${item.id}', 'Falso')" id="btn-ex1-${item.id}-Falso" class="interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-rose-50 hover:border-rose-300">
+                                Falso
+                            </button>
+                        </div>
+                        <div id="feedback-ex1-${item.id}" class="hidden text-[11px] p-1.5 rounded-lg font-bold"></div>
+                        
+                        <div id="answer-ex1-${item.id}" class="hidden bg-emerald-50 border border-emerald-200 p-2.5 rounded-lg text-[11px] space-y-1">
+                            <span class="font-extrabold text-emerald-900 block">Resposta Correta: ${item.correct}</span>
+                            <p class="text-gray-600 text-[10px] leading-relaxed">${item.reason}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectEx1(id, val) {
+            state.ex1[id] = val;
+            const btnV = document.getElementById(`btn-ex1-${id}-Verdadeiro`);
+            const btnF = document.getElementById(`btn-ex1-${id}-Falso`);
+
+            btnV.className = val === 'Verdadeiro' 
+                ? 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-black bg-emerald-600 text-white border-emerald-700 shadow-xs'
+                : 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-emerald-50';
+
+            btnF.className = val === 'Falso'
+                ? 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-black bg-rose-600 text-white border-rose-700 shadow-xs'
+                : 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-rose-50';
+
+            document.getElementById(`feedback-ex1-${id}`)?.classList.add('hidden');
+        }
+
+        function checkEx1() {
+            ex1Data.forEach(item => {
+                const userVal = state.ex1[item.id];
+                const feedback = document.getElementById(`feedback-ex1-${item.id}`);
+                const box = document.getElementById(`box-ex1-${item.id}`);
+                if (!feedback) return;
+
+                feedback.classList.remove('hidden');
+
+                if (!userVal) {
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-amber-50 text-amber-800 border border-amber-200';
+                    feedback.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Escolha Verdadeiro ou Falso.';
+                } else if (userVal === item.correct) {
+                    box.classList.remove('border-rose-300', 'bg-rose-50/20');
+                    box.classList.add('border-emerald-300', 'bg-emerald-50/20');
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+                    feedback.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Correto!';
+                } else {
+                    box.classList.remove('border-emerald-300', 'bg-emerald-50/20');
+                    box.classList.add('border-rose-300', 'bg-rose-50/20');
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-rose-100 text-rose-800 border border-rose-200';
+                    feedback.innerHTML = '<i class="fas fa-times-circle mr-1"></i> Incorreto.';
+                }
+            });
+        }
+
+        function resetEx1() {
+            state.ex1 = {};
+            ex1Data.forEach(item => {
+                const box = document.getElementById(`box-ex1-${item.id}`);
+                if (box) box.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3';
+                const btnV = document.getElementById(`btn-ex1-${item.id}-Verdadeiro`);
+                const btnF = document.getElementById(`btn-ex1-${item.id}-Falso`);
+                if (btnV) btnV.className = 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300';
+                if (btnF) btnF.className = 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-rose-50 hover:border-rose-300';
+                document.getElementById(`feedback-ex1-${item.id}`)?.classList.add('hidden');
+                document.getElementById(`answer-ex1-${item.id}`)?.classList.add('hidden');
+            });
+        }
+
+        /* DADOS DO EXERCÍCIO 2: FORMALIZAÇÃO SIMBÓLICA */
+        const ex2Data = [
+            {
+                id: '2A',
+                statement: '"O quadrado de todo número real é estritamente maior que zero."',
+                domain: 'U = ℝ',
+                options: [
+                    '∃x ∈ ℝ | x² > 0',
+                    '∀x ∈ ℝ, x² ≥ 0',
+                    '∀x ∈ ℝ, x² > 0',
+                    '∃!x ∈ ℝ | x² > 0'
+                ],
+                correct: '∀x ∈ ℝ, x² > 0',
+                reason: 'A expressão "de todo número real" exige o quantificador universal ∀ e a relação estrita > 0 (obs: proposição falsa em virtude do contraexemplo x = 0).'
+            },
+            {
+                id: '2B',
+                statement: '"Existe um único número inteiro x tal que x + 3 = 5."',
+                domain: 'U = ℤ',
+                options: [
+                    '∀x ∈ ℤ, x + 3 = 5',
+                    '∃!x ∈ ℤ | x + 3 = 5',
+                    '∃x ∈ ℤ | x + 3 = 5',
+                    '∀x ∈ ℤ, x + 3 ≠ 5'
+                ],
+                correct: '∃!x ∈ ℤ | x + 3 = 5',
+                reason: '"Existe um único" formaliza-se com o quantificador existencial de unicidade ∃! (é verdadeira, pois apenas x = 2 satisfaz).'
+            },
+            {
+                id: '2C',
+                statement: '"Alguns inteiros são pares e simultaneamente divisíveis por 5."',
+                domain: 'U = ℤ',
+                options: [
+                    '∀x ∈ ℤ, (par(x) ∧ div5(x))',
+                    '∃!x ∈ ℤ | (par(x) ∧ div5(x))',
+                    '∃x ∈ ℤ | (par(x) ∧ div5(x))',
+                    '∃x ∈ ℤ | (par(x) ∨ div5(x))'
+                ],
+                correct: '∃x ∈ ℤ | (par(x) ∧ div5(x))',
+                reason: '"Alguns" indica existência (pelo menos um, ∃). A conjunção "e" conecta as propriedades par e divisível por 5 (ex: 10, 20).'
+            },
+            {
+                id: '2D',
+                statement: '"A equação x² - 16 = 0 possui uma única solução inteira positiva."',
+                domain: 'U = ℤ*₊ = {1, 2, 3, ...}',
+                options: [
+                    '∃!x ∈ ℤ*₊ | x² - 16 = 0',
+                    '∀x ∈ ℤ*₊, x² - 16 = 0',
+                    '∃x ∈ ℤ*₊ | x² - 16 = 0',
+                    '∃!x ∈ ℤ | x² - 16 = 0'
+                ],
+                correct: '∃!x ∈ ℤ*₊ | x² - 16 = 0',
+                reason: 'No domínio dos inteiros positivos ℤ*₊, a única solução é x = 4 (o valor -4 não pertence a este domínio), configurando unicidade ∃!.'
+            }
+        ];
+
+        function renderEx2() {
+            const container = document.getElementById('ex2-items-container');
+            const isGabaritoVisible = document.getElementById('toggle-gabarito-checkbox')?.checked;
+
+            container.innerHTML = ex2Data.map(item => `
+                <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3" id="box-ex2-${item.id}">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+                        <span class="bg-indigo-600 text-white font-extrabold text-[11px] px-2.5 py-0.5 rounded">${item.id}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-500 text-[11px] font-mono">${item.domain}</span>
+                            <button type="button" onclick="toggleAnswer('ex2', '${item.id}')" class="gabarito-btn ${isGabaritoVisible ? '' : 'hidden'} text-[10px] font-bold text-[#00AEEF] hover:underline flex items-center gap-1">
+                                <i class="fas fa-eye text-[9px]"></i> Gabarito
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mt-1">
+                        <strong class="text-indigo-950 block text-xs font-bold leading-relaxed">${item.statement}</strong>
+                    </div>
+
+                    <div class="space-y-2 pt-1">
+                        <label class="text-[11px] font-bold text-gray-700 block">Selecione a fórmula lógica correspondente:</label>
+                        <select onchange="selectEx2('${item.id}', this.value)" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2 text-xs font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <option value="">-- Selecione a representação simbólica --</option>
+                            ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                        </select>
+                        <div id="feedback-ex2-${item.id}" class="hidden text-[11px] p-1.5 rounded-lg font-bold"></div>
+
+                        <div id="answer-ex2-${item.id}" class="hidden bg-emerald-50 border border-emerald-200 p-2.5 rounded-lg text-[11px] space-y-1">
+                            <span class="font-extrabold text-emerald-900 block">Resposta Correta: ${item.correct}</span>
+                            <p class="text-gray-600 text-[10px] leading-relaxed">${item.reason}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectEx2(id, val) {
+            state.ex2[id] = val;
+            document.getElementById(`feedback-ex2-${id}`)?.classList.add('hidden');
+        }
+
+        function checkEx2() {
+            ex2Data.forEach(item => {
+                const userVal = state.ex2[item.id];
+                const feedback = document.getElementById(`feedback-ex2-${item.id}`);
+                const box = document.getElementById(`box-ex2-${item.id}`);
+                if (!feedback) return;
+
+                feedback.classList.remove('hidden');
+
+                if (!userVal) {
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-amber-50 text-amber-800 border border-amber-200';
+                    feedback.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Selecione uma opção.';
+                } else if (userVal === item.correct) {
+                    box.classList.remove('border-rose-300', 'bg-rose-50/20');
+                    box.classList.add('border-emerald-300', 'bg-emerald-50/20');
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+                    feedback.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Correto!';
+                } else {
+                    box.classList.remove('border-emerald-300', 'bg-emerald-50/20');
+                    box.classList.add('border-rose-300', 'bg-rose-50/20');
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-rose-100 text-rose-800 border border-rose-200';
+                    feedback.innerHTML = '<i class="fas fa-times-circle mr-1"></i> Incorreto.';
+                }
+            });
+        }
+
+        function resetEx2() {
+            state.ex2 = {};
+            ex2Data.forEach(item => {
+                const box = document.getElementById(`box-ex2-${item.id}`);
+                if (box) box.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3';
+                document.getElementById(`feedback-ex2-${item.id}`)?.classList.add('hidden');
+                document.getElementById(`answer-ex2-${item.id}`)?.classList.add('hidden');
+            });
+            renderEx2();
+        }
+
+        /* DADOS DO EXERCÍCIO 3: NEGAÇÃO DE QUANTIFICADORES */
+        const ex3Questions = [
+            {
+                id: '3A',
+                desc: 'Considere a proposição P: "Todo número primo é ímpar" (fórmula: ∀x ∈ Primos, impar(x)):',
+                subItems: [
+                    { id: '3A_1', text: 'Qual é a negação lógica correta (~P)?', options: ['Nenhum número primo é ímpar', 'Todo número primo é par', 'Existe pelo menos um número primo que não é ímpar', 'Existe apenas um número primo ímpar'], correct: 'Existe pelo menos um número primo que não é ímpar', explain: '~[∀x, p(x)] ⇔ ∃x | ~p(x). A negação afirma a existência de um primo que não seja ímpar.' },
+                    { id: '3A_2', text: 'Qual é o valor de verdade da negação (~P)?', options: ['Verdadeiro', 'Falso'], correct: 'Verdadeiro', explain: 'Como x = 2 é primo e par (não é ímpar), o contraexemplo torna a negação verdadeira.' }
+                ]
+            },
+            {
+                id: '3B',
+                desc: 'Considere a proposição Q: "Existe um número real x tal que x² + 1 = 0":',
+                subItems: [
+                    { id: '3B_1', text: 'Qual é a negação simbólica correta (~Q)?', options: ['∀x ∈ ℝ, x² + 1 ≠ 0', '∃x ∈ ℝ | x² + 1 ≠ 0', '∀x ∈ ℝ, x² + 1 = 0', '∃!x ∈ ℝ | x² + 1 ≠ 0'], correct: '∀x ∈ ℝ, x² + 1 ≠ 0', explain: '~[∃x, p(x)] ⇔ ∀x, ~p(x). A negação de "existe x" é "para todo x, a igualdade não ocorre".' },
+                    { id: '3B_2', text: 'Qual é o valor lógico da proposição original Q?', options: ['Verdadeiro', 'Falso'], correct: 'Falso', explain: 'Para todo real x, x² ≥ 0, logo x² + 1 ≥ 1 > 0. Portanto Q é falsa (e ~Q é verdadeira).' }
+                ]
+            },
+            {
+                id: '3C',
+                desc: 'Considere a proposição R: "Toda segunda-feira tem aula de Lógica" (∀d ∈ Segundas, temAula(d)):',
+                subItems: [
+                    { id: '3C_1', text: 'A negação correta em linguagem natural é:', options: ['Nenhuma segunda-feira tem aula de Lógica', 'Pelo menos uma segunda-feira não tem aula de Lógica', 'Toda terça-feira tem aula de Lógica', 'Existe uma única segunda-feira sem aula'], correct: 'Pelo menos uma segunda-feira não tem aula de Lógica', explain: 'Basta haver uma única segunda-feira sem aula (por exemplo, em um feriado) para refutar a afirmação universal.' }
+                ]
+            },
+            {
+                id: '3D',
+                desc: 'Considere a sentença aberta p(x): "x é quadrado perfeito" sobre o domínio U = {50, 51, ..., 59}:',
+                subItems: [
+                    { id: '3D_1', text: 'Para a proposição "Existe x ∈ U tal que p(x)", qual é a negação?', options: ['Nenhum número entre 50 e 59 é um quadrado perfeito', 'Todo número entre 50 e 59 é quadrado perfeito', 'Existe pelo menos um quadrado perfeito entre 50 e 59', 'Existem exatamente dois quadrados perfeitos'], correct: 'Nenhum número entre 50 e 59 é um quadrado perfeito', explain: '~[∃x, p(x)] ⇔ ∀x, ~p(x) (isto é, "Para todo x no intervalo, x não é quadrado perfeito" ou "Nenhum é").' },
+                    { id: '3D_2', text: 'Qual é o valor verdade da proposição original (∃x ∈ U | p(x))?', options: ['Verdadeiro', 'Falso'], correct: 'Falso', explain: 'Os quadrados perfeitos vizinhos são 7² = 49 e 8² = 64. Não há quadrados perfeitos entre 50 e 59.' }
+                ]
+            }
+        ];
+
+        /* DADOS DO EXERCÍCIO 4: CONTRAEXEMPLOS E VALIDAÇÃO NUMÉRICA */
+        const ex4Questions = [
+            {
+                id: '4A',
+                desc: 'Seja o domínio discreto U = {-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5}. Analise as proposições:',
+                subItems: [
+                    { id: '4A_1', text: 'Qual o valor lógico de ∀x ∈ U, |x| > 0?', options: ['Verdadeiro', 'Falso'], correct: 'Falso', explain: 'Contraexemplo: para x = 0 ∈ U, |0| = 0, que não é estritamente maior que 0.' },
+                    { id: '4A_2', text: 'Qual o valor lógico de ∃!x ∈ U | x² = 0?', options: ['Verdadeiro', 'Falso'], correct: 'Verdadeiro', explain: 'x = 0 é o único elemento em U cujo quadrado resulta em 0. V<sub>p</sub> = {0}, logo |V<sub>p</sub>| = 1.' }
+                ]
+            },
+            {
+                id: '4B',
+                desc: 'Sobre o mesmo domínio U = {-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5}:',
+                subItems: [
+                    { id: '4B_1', text: 'Qual o valor lógico de ∀x ∈ U, -10 ≤ 2x ≤ 10?', options: ['Verdadeiro', 'Falso'], correct: 'Verdadeiro', explain: 'Para o menor elemento (x = -5), 2(-5) = -10. Para o maior (x = 5), 2(5) = 10. A desigualdade vale para todos.' },
+                    { id: '4B_2', text: 'Qual o valor lógico de ∃x ∈ U | x² = -25?', options: ['Verdadeiro', 'Falso'], correct: 'Falso', explain: 'Não existe número real (e portanto nenhum inteiro em U) cujo quadrado resulte em número negativo.' }
+                ]
+            },
+            {
+                id: '4C',
+                desc: 'Considere a proposição universal P: "A soma de quaisquer dois inteiros ímpares é sempre par":',
+                subItems: [
+                    { id: '4C_1', text: 'A afirmação ∀x, y ∈ Ímpares, par(x + y) é:', options: ['Verdadeiro', 'Falso'], correct: 'Verdadeiro', explain: 'Sejam x = 2k + 1 e y = 2m + 1. Sua soma é 2k + 2m + 2 = 2(k + m + 1), que é sempre par.' },
+                    { id: '4C_2', text: 'A negação dessa proposição afirmaria que:', options: ['Existem dois inteiros ímpares cuja soma é ímpar', 'A soma de dois inteiros quaisquer é par', 'Nenhum número ímpar pode ser somado', 'A soma de pares é sempre ímpar'], correct: 'Existem dois inteiros ímpares cuja soma é ímpar', explain: 'A negação de ∀x, y, p(x,y) é ∃x, y | ~p(x,y).' }
+                ]
+            },
+            {
+                id: '4D',
+                desc: 'Analise a afirmação: "Existe pelo menos um número primo entre 20 e 30":',
+                subItems: [
+                    { id: '4D_1', text: 'Qual o valor de verdade da proposição?', options: ['Verdadeiro', 'Falso'], correct: 'Verdadeiro', explain: 'Os números 23 e 29 pertencem ao intervalo e são ambos números primos.' },
+                    { id: '4D_2', text: 'A proposição com quantificador de unicidade (∃!x | primo(x) no intervalo) seria:', options: ['Verdadeiro', 'Falso'], correct: 'Falso', explain: 'Como existem dois primos (23 e 29), a unicidade falha (|V<sub>p</sub>| = 2).' }
+                ]
+            }
+        ];
+
+        /* DADOS DO EXERCÍCIO 5: QUANTIFICADORES EM PSEUDOCÓDIGO */
+        const ex5Questions = [
+            {
+                id: '5A',
+                desc: 'Analise a rotina em pseudocódigo que valida os requisitos de segurança de um cluster de servidores:',
+                code: `// Servidores U = {s1, s2, s3, s4}
+s1 = { fw_ativo: verdadeiro, portas: 2 }
+s2 = { fw_ativo: verdadeiro, portas: 0 }
+s3 = { fw_ativo: falso,      portas: 1 }
+s4 = { fw_ativo: verdadeiro, portas: 3 }
+
+funcao todos_seguros(servidores):
+    para cada s em servidores:
+        se (s.fw_ativo == falso):
+            retorne falso
+    retorne verdadeiro`,
+                subItems: [
+                    { id: '5A_1', text: 'Qual proposição lógica quantificada a função todos_seguros avalia?', options: ['∀s ∈ U, s.fw_ativo == verdadeiro', '∃s ∈ U | s.fw_ativo == verdadeiro', '∃!s ∈ U | s.fw_ativo == falso', '∀s ∈ U, s.portas == 0'], correct: '∀s ∈ U, s.fw_ativo == verdadeiro', explain: 'A função verifica a universalidade (∀). Basta encontrar um único contraexemplo (s3) para retornar falso.' },
+                    { id: '5A_2', text: 'Qual o resultado retornado pela chamada todos_seguros(U)?', options: ['Verdadeiro', 'Falso'], correct: 'Falso', explain: 's3 é o contraexemplo com fw_ativo == falso.' }
+                ]
+            },
+            {
+                id: '5B',
+                desc: 'Avalie a função de busca de transações suspeitas em um sistema bancário:',
+                code: `// Transacoes U = {t1, t2, t3}
+t1 = { valor: 450.0,   origem: "BR" }
+t2 = { valor: 12000.0, origem: "BR" }
+t3 = { valor: 80.0,    origem: "US" }
+
+funcao existe_alerta_fraude(lista):
+    para cada t em lista:
+        se (t.valor > 10000.0):
+            retorne verdadeiro
+    retorne falso`,
+                subItems: [
+                    { id: '5B_1', text: 'Qual quantificador rege o critério de parada imediata da função?', options: ['Existencial (∃)', 'Universal (∀)', 'Unicidade (∃!)', 'Negação Universal (~∀)'], correct: 'Existencial (∃)', explain: 'O loop interrompe assim que encontra uma única testemunha satisfazendo o predicado t.valor > 10000.' },
+                    { id: '5B_2', text: 'Qual elemento atua como testemunha de verdade para o predicado?', options: ['t1', 't2', 't3', 'Nenhum'], correct: 't2', explain: 't2 possui valor 12000.0 > 10000.0.' }
+                ]
+            },
+            {
+                id: '5C',
+                desc: 'Validação de Chave Primária Única (Invariante de Integridade):',
+                code: `// Tabela de Contas U = {c1, c2, c3, c4}
+c1 = { id_conta: 101, titular: "Ana" }
+c2 = { id_conta: 102, titular: "Bruno" }
+c3 = { id_conta: 101, titular: "Carlos" } // Erro de duplicacao!
+c4 = { id_conta: 104, titular: "Diana" }
+
+// Predicado de integridade: p(x): "x.id_conta == 101"`,
+                subItems: [
+                    { id: '5C_1', text: 'A proposição ∃!x ∈ U | (x.id_conta == 101) é avaliada como:', options: ['Verdadeiro', 'Falso'], correct: 'Falso', explain: 'Como tanto c1 quanto c3 possuem id_conta == 101, |V<sub>p</sub>| = 2, violando a exigência de unicidade.' },
+                    { id: '5C_2', text: 'A proposição ∃x ∈ U | (x.id_conta == 101) é avaliada como:', options: ['Verdadeiro', 'Falso'], correct: 'Verdadeiro', explain: 'Como o conjunto verdade {c1, c3} é não-vazio, a existência simples é satisfeita.' }
+                ]
+            },
+            {
+                id: '5D',
+                desc: 'Refatoração e Negação de Invariantes em Algoritmos de Monitoramento de Rede:',
+                code: `// Invariante I: "Todo pacote recebido tem checksum valido"
+// I = ∀p em Pacotes, eh_valido(p.checksum)
+
+funcao monitorar_alarme(pacotes):
+    para cada p em pacotes:
+        se (nao eh_valido(p.checksum)):
+            disparar_alarme()
+            retorne verdadeiro
+    retorne falso`,
+                subItems: [
+                    { id: '5D_1', text: 'Qual condição lógica quantificada expressa o critério para disparar_alarme() (~I)?', options: ['∃p ∈ Pacotes | ~eh_valido(p.checksum)', '∀p ∈ Pacotes, ~eh_valido(p.checksum)', '∀p ∈ Pacotes, eh_valido(p.checksum)', '∃!p ∈ Pacotes | eh_valido(p.checksum)'], correct: '∃p ∈ Pacotes | ~eh_valido(p.checksum)', explain: 'Pela Lei de De Morgan, ~[∀p, V(p)] ⇔ ∃p | ~V(p). O alarme dispara caso exista pelo menos um pacote inválido.' }
+                ]
+            }
+        ];
+
+        /* RENDERIZADOR PADRONIZADO DOS EXERCÍCIOS AGRUPADOS (3, 4 E 5) */
+        function renderGroupedExercises(data, containerId, stateKey) {
+            const isGabaritoVisible = document.getElementById('toggle-gabarito-checkbox')?.checked;
+            const container = document.getElementById(containerId);
+
+            container.innerHTML = data.map(card => `
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-200 border-l-8 border-[#003B71] exercise-card space-y-3.5 shadow-sm" id="card-${stateKey}-${card.id}">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+                        <span class="bg-[#003B71] text-white font-extrabold text-[11px] px-2.5 py-0.5 rounded">
+                            ${card.id}
+                        </span>
+                        <button type="button" onclick="toggleAnswer('${stateKey}', '${card.id}')" class="gabarito-btn ${isGabaritoVisible ? '' : 'hidden'} text-[11px] font-bold text-[#00AEEF] hover:underline flex items-center gap-1 transition">
+                            <i class="fas fa-eye text-[10px]"></i> Gabarito
+                        </button>
+                    </div>
+                    
+                    <p class="text-xs text-gray-800 font-semibold leading-relaxed whitespace-pre-line">${card.desc}</p>
+
+                    ${card.code ? `
+                        <div class="bg-slate-900 text-slate-100 rounded-xl p-3.5 border border-slate-800 font-mono text-[11px] leading-relaxed shadow-inner overflow-x-auto">
+                            <div class="flex items-center gap-1.5 pb-2 mb-2 border-b border-slate-800/80 text-[10px] text-slate-400 select-none">
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block"></span>
+                                <span class="ml-2 font-sans font-semibold text-cyan-400">pseudocodigo</span>
+                            </div>
+                            <pre class="whitespace-pre overflow-x-auto text-emerald-300"><code>${card.code.replace(/(\/\/.*)/g, '<span class="text-slate-500 italic">$1</span>').replace(/\b(funcao|retorne|se|para cada|em)\b/g, '<span class="text-pink-400 font-bold">$1</span>').replace(/\b(verdadeiro|falso)\b/g, '<span class="text-amber-300 font-bold">$1</span>')}</code></pre>
+                        </div>
+                    ` : ''}
+
+                    <div class="space-y-3 pt-1">
+                        ${card.subItems.map(sub => {
+                            const isBoolean = sub.options.length === 2 && sub.options.includes('Verdadeiro') && sub.options.includes('Falso');
+                            const gridClass = isBoolean ? 'grid grid-cols-1 sm:grid-cols-2 gap-1.5' : 'grid grid-cols-1 gap-1.5';
+
+                            return `
+                            <div class="bg-gray-50 border border-gray-200 p-2.5 rounded-xl space-y-2" id="box-sub-${sub.id}">
+                                <span class="text-xs font-bold text-gray-800 block">${sub.text}</span>
+                                <div class="${gridClass} text-xs">
+                                    ${sub.options.map(opt => `
+                                        <label class="flex items-center gap-2 bg-white p-2 rounded-lg border border-gray-200 hover:border-[#00AEEF] cursor-pointer shadow-2xs">
+                                            <input type="radio" name="radio-${sub.id}" value="${opt}" onchange="selectSubItem('${stateKey}', '${sub.id}', this.value)" class="accent-[#00AEEF] cursor-pointer">
+                                            <span class="font-mono text-gray-700 text-[11px]">${opt}</span>
+                                        </label>
+                                    `).join('')}
+                                </div>
+                                <div id="feedback-sub-${sub.id}" class="hidden text-[10px] p-1.5 rounded-lg font-bold"></div>
+                            </div>
+                        `;}).join('')}
+                    </div>
+
+                    <div id="answer-${stateKey}-${card.id}" class="hidden bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs space-y-2 mt-2">
+                        <strong class="text-emerald-950 uppercase font-extrabold text-[11px] flex items-center gap-1 border-b border-emerald-200 pb-1">
+                            <i class="fas fa-check-circle text-emerald-600"></i> Respostas e Justificativas:
+                        </strong>
+                        <div class="space-y-1">
+                            ${card.subItems.map(sub => `
+                                <div class="bg-white p-2 rounded border border-emerald-200">
+                                    <span class="font-bold text-indigo-950 font-mono text-[11px] block">${sub.text} &rarr; <span class="text-emerald-700">${sub.correct}</span></span>
+                                    <span class="text-[10px] text-gray-600 block mt-0.5">${sub.explain}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectSubItem(stateKey, subId, val) {
+            state[stateKey][subId] = val;
+            document.getElementById(`feedback-sub-${subId}`)?.classList.add('hidden');
+        }
+
+        function checkFormGroup(data, stateKey) {
+            data.forEach(card => {
+                card.subItems.forEach(sub => {
+                    const userVal = state[stateKey][sub.id];
+                    const feedback = document.getElementById(`feedback-sub-${sub.id}`);
+                    const box = document.getElementById(`box-sub-${sub.id}`);
+                    if (!feedback) return;
+
+                    feedback.classList.remove('hidden');
+
+                    if (!userVal) {
+                        feedback.className = 'text-[10px] p-1.5 rounded-lg font-bold bg-amber-50 text-amber-800 border border-amber-200';
+                        feedback.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Selecione uma opção.';
+                    } else if (userVal === sub.correct) {
+                        box.classList.remove('border-rose-300', 'bg-rose-50/20');
+                        box.classList.add('border-emerald-300', 'bg-emerald-50/20');
+                        feedback.className = 'text-[10px] p-1.5 rounded-lg font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+                        feedback.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Correto!';
+                    } else {
+                        box.classList.remove('border-emerald-300', 'bg-emerald-50/20');
+                        box.classList.add('border-rose-300', 'bg-rose-50/20');
+                        feedback.className = 'text-[10px] p-1.5 rounded-lg font-bold bg-rose-100 text-rose-800 border border-rose-200';
+                        feedback.innerHTML = '<i class="fas fa-times-circle mr-1"></i> Incorreto.';
+                    }
+                });
+            });
+        }
+
+        function checkEx3Form() { checkFormGroup(ex3Questions, 'ex3'); }
+        function checkEx4Form() { checkFormGroup(ex4Questions, 'ex4'); }
+        function checkEx5Form() { checkFormGroup(ex5Questions, 'ex5'); }
+
+        function resetFormGroup(data, stateKey, containerId) {
+            state[stateKey] = {};
+            renderGroupedExercises(data, containerId, stateKey);
+        }
+
+        function resetEx3Form() { resetFormGroup(ex3Questions, 'ex3', 'ex3-cards-container'); }
+        function resetEx4Form() { resetFormGroup(ex4Questions, 'ex4', 'ex4-cards-container'); }
+        function resetEx5Form() { resetFormGroup(ex5Questions, 'ex5', 'ex5-cards-container'); }
+
+        function toggleAnswer(stateKey, id) {
+            document.getElementById(`answer-${stateKey}-${id}`)?.classList.toggle('hidden');
+        }
+
+        /* SIMULADOR DE QUANTIFICADORES */
+        const simulatorDomains = {
+            simetricos: {
+                name: "U = {-4, -3, -2, -1, 0, 1, 2, 3, 4}",
+                elements: [-4, -3, -2, -1, 0, 1, 2, 3, 4],
+                predicates: [
+                    { id: 'quad_maior_igual_0', name: 'p(x): x² ≥ 0', formula: 'x * x >= 0', fn: x => (x * x) >= 0, desc: 'O quadrado de qualquer número real é sempre maior ou igual a zero.' },
+                    { id: 'modulo_maior_0', name: 'p(x): |x| > 0', formula: 'Math.abs(x) > 0', fn: x => Math.abs(x) > 0, desc: 'Falso para o zero (|0| = 0), verdadeiro para todos os demais.' },
+                    { id: 'quad_igual_16', name: 'p(x): x² = 16', formula: 'x * x === 16', fn: x => (x * x) === 16, desc: 'Satisfeito por dois elementos: x = -4 e x = 4.' },
+                    { id: 'cubo_igual_8', name: 'p(x): x³ = 8', formula: 'Math.pow(x, 3) === 8', fn: x => Math.pow(x, 3) === 8, desc: 'Satisfeito por exatamente um elemento: x = 2.' },
+                    { id: 'impossivel', name: 'p(x): x² + 1 = 0', formula: 'x * x + 1 === 0', fn: x => (x * x + 1) === 0, desc: 'Nenhum número real satisfaz a equação.' }
+                ]
+            },
+            naturais10: {
+                name: "U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}",
+                elements: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                predicates: [
+                    { id: 'menor_igual_10', name: 'p(x): x ≤ 10', formula: 'x <= 10', fn: x => x <= 10, desc: 'Todos os elementos da amostra são menores ou iguais a 10.' },
+                    { id: 'par_sim', name: 'p(x): "x é par"', formula: 'x % 2 === 0', fn: x => x % 2 === 0, desc: 'Subconjunto de números pares {2, 4, 6, 8, 10}.' },
+                    { id: 'divisor_7', name: 'p(x): "x divide 7 de forma exata"', formula: '7 % x === 0', fn: x => 7 % x === 0, desc: 'Como 7 é primo, os divisores são 1 e 7.' },
+                    { id: 'igual_1', name: 'p(x): x = 1', formula: 'x === 1', fn: x => x === 1, desc: 'Existe exatamente um elemento igual a 1.' }
+                ]
+            },
+            primosAmostra: {
+                name: "U = {2, 3, 5, 7, 11, 13}",
+                elements: [2, 3, 5, 7, 11, 13],
+                predicates: [
+                    { id: 'todos_impares_nao', name: 'p(x): "x é ímpar"', formula: 'x % 2 !== 0', fn: x => x % 2 !== 0, desc: 'O elemento x = 2 é par, atuando como contraexemplo da universalidade.' },
+                    { id: 'existe_par', name: 'p(x): "x é par"', formula: 'x % 2 === 0', fn: x => x % 2 === 0, desc: 'O elemento x = 2 é o único primo par existente no domínio.' },
+                    { id: 'maior_que_1', name: 'p(x): x > 1', formula: 'x > 1', fn: x => x > 1, desc: 'Todos os números primos são estritamente maiores do que 1.' }
+                ]
+            },
+            usuarios: {
+                name: 'U = {"admin", "dev_backend", "dev_frontend", "qa_lead"}',
+                elements: ["admin", "dev_backend", "dev_frontend", "qa_lead"],
+                predicates: [
+                    { id: 'tem_dev', name: 'p(x): "x começa com dev_"', formula: 'x.startsWith("dev_")', fn: x => x.startsWith("dev_"), desc: 'Desenvolvedores na equipe {dev_backend, dev_frontend}.' },
+                    { id: 'is_admin', name: 'p(x): x == "admin"', formula: 'x === "admin"', fn: x => x === "admin", desc: 'Identificador único de superusuário administrativo.' }
+                ]
+            }
+        };
+
+        function populateSimulatorPredicates() {
+            const domainKey = document.getElementById('sim-domain')?.value || 'simetricos';
+            const domainObj = simulatorDomains[domainKey];
+            const selectPred = document.getElementById('sim-predicate');
+            if (!selectPred || !domainObj) return;
+
+            selectPred.innerHTML = domainObj.predicates.map((p, idx) => `
+                <option value="${p.id}" ${idx === 0 ? 'selected' : ''}>${p.name}</option>
+            `).join('');
+        }
+
+        function updateSimulator() {
+            const domainSelect = document.getElementById('sim-domain');
+            const predSelect = document.getElementById('sim-predicate');
+            if (!domainSelect || !predSelect) return;
+
+            const domainKey = domainSelect.value;
+            const domainObj = simulatorDomains[domainKey];
+            if (!domainObj) return;
+
+            let predObj = domainObj.predicates.find(p => p.id === predSelect.value);
+            if (!predObj) {
+                populateSimulatorPredicates();
+                predObj = domainObj.predicates[0];
+            }
+
+            document.getElementById('sim-formula-tag').innerText = predObj.formula;
+
+            const truthSet = [];
+            const grid = document.getElementById('sim-elements-grid');
+
+            grid.innerHTML = domainObj.elements.map(el => {
+                const isTrue = predObj.fn(el);
+                const formattedEl = typeof el === 'string' ? `"${el}"` : el;
+                if (isTrue) truthSet.push(formattedEl);
+
+                return `
+                    <div class="p-2.5 rounded-xl border text-center transition-all ${
+                        isTrue 
+                            ? 'bg-emerald-50 border-emerald-300 shadow-2xs' 
+                            : 'bg-rose-50/60 border-rose-200 opacity-80'
+                    }">
+                        <div class="code-font font-black text-xs ${isTrue ? 'text-emerald-950' : 'text-gray-600'}">
+                            x = ${formattedEl}
+                        </div>
+                        <div class="text-[10px] font-bold mt-1 ${isTrue ? 'text-emerald-700' : 'text-rose-700'}">
+                            ${isTrue ? 'Verdadeiro (p(x) = V)' : 'Falso (p(x) = F)'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const total = domainObj.elements.length;
+            const size = truthSet.length;
+
+            // Atualiza Conjunto Verdade
+            document.getElementById('sim-truth-set').innerHTML = size > 0 
+                ? `V<sub>p</sub> = { ${truthSet.join(', ')} }`
+                : `V<sub>p</sub> = ∅ (Conjunto Vazio)`;
+            document.getElementById('sim-cardinality').innerText = `|Vp| = ${size} de ${total}`;
+            document.getElementById('sim-count-tag').innerText = `${size} de ${total} elementos satisfazem p(x)`;
+            document.getElementById('sim-explanation').innerText = predObj.desc;
+
+            // Avalia Quantificador Universal: V_p == U
+            const isUniversal = size === total;
+            const cardUniv = document.getElementById('sim-card-universal');
+            const statusUniv = document.getElementById('sim-status-universal');
+            const noteUniv = document.getElementById('sim-note-universal');
+            if (isUniversal) {
+                cardUniv.className = 'p-3.5 rounded-xl border text-center bg-emerald-50 border-emerald-300 text-emerald-900';
+                statusUniv.innerText = 'Verdadeiro (V)';
+                noteUniv.innerHTML = 'V<sub>p</sub> = U (Todos cumprem)';
+            } else {
+                cardUniv.className = 'p-3.5 rounded-xl border text-center bg-rose-50 border-rose-200 text-rose-900';
+                statusUniv.innerText = 'Falso (F)';
+                noteUniv.innerText = `${total - size} contraexemplo(s) encontrado(s)`;
+            }
+
+            // Avalia Quantificador Existencial: V_p != ∅
+            const isExistential = size > 0;
+            const cardExist = document.getElementById('sim-card-existencial');
+            const statusExist = document.getElementById('sim-status-existencial');
+            const noteExist = document.getElementById('sim-note-existencial');
+            if (isExistential) {
+                cardExist.className = 'p-3.5 rounded-xl border text-center bg-emerald-50 border-emerald-300 text-emerald-900';
+                statusExist.innerText = 'Verdadeiro (V)';
+                noteExist.innerHTML = `V<sub>p</sub> ≠ ∅ (${size} testemunha(s))`;
+            } else {
+                cardExist.className = 'p-3.5 rounded-xl border text-center bg-rose-50 border-rose-200 text-rose-900';
+                statusExist.innerText = 'Falso (F)';
+                noteExist.innerHTML = 'V<sub>p</sub> = ∅ (Nenhuma testemunha)';
+            }
+
+            // Avalia Quantificador de Unicidade: |V_p| == 1
+            const isUnique = size === 1;
+            const cardUniq = document.getElementById('sim-card-unicidade');
+            const statusUniq = document.getElementById('sim-status-unicidade');
+            const noteUniq = document.getElementById('sim-note-unicidade');
+            if (isUnique) {
+                cardUniq.className = 'p-3.5 rounded-xl border text-center bg-emerald-50 border-emerald-300 text-emerald-900';
+                statusUniq.innerText = 'Verdadeiro (V)';
+                noteUniq.innerHTML = `|V<sub>p</sub>| = 1 (Exatamente um)`;
+            } else {
+                cardUniq.className = 'p-3.5 rounded-xl border text-center bg-rose-50 border-rose-200 text-rose-900';
+                statusUniq.innerText = 'Falso (F)';
+                noteUniq.innerHTML = size === 0 ? 'Nenhum (|V<sub>p</sub>| = 0)' : `Múltiplos (|V<sub>p</sub>| = ${size})`;
+            }
+        }
+
+        /* QUIZ RÁPIDO DE FIXAÇÃO */
+        const fastQuizQuestions = [
+            {
+                q: "1. Para refutar categoricamente uma proposição universal (∀x ∈ U, p(x)), é necessário:",
+                options: [
+                    "Provar que a sentença é falsa para absolutamente todos os elementos de U.",
+                    "Encontrar pelo menos um único contraexemplo em U que torne p(x) falsa.",
+                    "Demonstrar que U é um conjunto infinito.",
+                    "Aplicar a regra da simplificação."
+                ],
+                answer: 1
+            },
+            {
+                q: "2. Segundo as Leis de De Morgan para quantificadores, qual é a negação de ~[∀x ∈ U, p(x)]?",
+                options: [
+                    "∀x ∈ U, ~p(x) (Nenhum elemento satisfaz p)",
+                    "∃x ∈ U | ~p(x) (Existe pelo menos um que não satisfaz p)",
+                    "∃!x ∈ U | p(x)",
+                    "~p(x) para todo x fora de U"
+                ],
+                answer: 1
+            },
+            {
+                q: "3. O quantificador existencial de unicidade (∃!x ∈ U | p(x)) produz valor Verdadeiro quando:",
+                options: [
+                    "O conjunto verdade é vazio: V_p = ∅",
+                    "O conjunto verdade é o próprio universo: V_p = U",
+                    "A cardinalidade do conjunto verdade é exatamente 1: |V_p| = 1",
+                    "A propriedade p(x) for uma tautologia."
+                ].map(opt => opt.replace(/V_p/g, 'V<sub>p</sub>')),
+                answer: 2
+            },
+            {
+                q: "4. Qual é a forma correta de negar formalmente a frase: 'Existe um aluno nesta turma que tirou nota 10'?",
+                options: [
+                    "Nenhum aluno nesta turma tirou nota 10 (Todos os alunos não tiraram nota 10).",
+                    "Existe um aluno nesta turma que não tirou nota 10.",
+                    "Todos os alunos nesta turma tiraram nota 10.",
+                    "Apenas um aluno tirou nota 10."
+                ],
+                answer: 0
+            },
+            {
+                q: "5. Se o domínio for U = ℝ e o predicado p(x): x² = -4, quais os valores de verdade de ∀x, ∃x e ∃!x?",
+                options: [
+                    "∀x é V, ∃x é V, ∃!x é F",
+                    "Todos são Falsos, pois V_p = ∅ no domínio dos números reais.",
+                    "∃x é Verdadeiro com testemunha x = 2i.",
+                    "∃!x é Verdadeiro pois a raiz é única."
+                ].map(opt => opt.replace(/V_p/g, 'V<sub>p</sub>')),
+                answer: 1
+            }
+        ];
+
+        function renderFastQuiz() {
+            const container = document.getElementById('fast-quiz-container');
+            container.innerHTML = fastQuizQuestions.map((q, qIdx) => `
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2">
+                    <p class="font-bold text-xs text-[#003B71]">${q.q}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        ${q.options.map((opt, oIdx) => `
+                            <button type="button" onclick="answerFastQuiz(${qIdx}, ${oIdx})" id="btn-quiz-${qIdx}-${oIdx}" class="text-left p-2.5 rounded-lg border border-gray-200 bg-white hover:border-[#00AEEF] transition">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function answerFastQuiz(qIdx, oIdx) {
+            if (state.quiz[qIdx] !== undefined) return;
+            state.quiz[qIdx] = oIdx;
+
+            const q = fastQuizQuestions[qIdx];
+            const isCorrect = (oIdx === q.answer);
+            const btn = document.getElementById(`btn-quiz-${qIdx}-${oIdx}`);
+
+            if (isCorrect) {
+                btn.className = 'text-left p-2.5 rounded-lg border border-emerald-500 bg-emerald-100 text-emerald-800 font-bold';
+                state.quizScore++;
+            } else {
+                btn.className = 'text-left p-2.5 rounded-lg border border-rose-500 bg-rose-100 text-rose-800 font-bold';
+                const correctBtn = document.getElementById(`btn-quiz-${qIdx}-${q.answer}`);
+                correctBtn.className = 'text-left p-2.5 rounded-lg border border-emerald-500 bg-emerald-100 text-emerald-800 font-bold';
+            }
+
+            document.getElementById('quiz-score-badge').innerText = `Pontuação: ${state.quizScore} / ${fastQuizQuestions.length}`;
+        }
+
+        /* CAÇA-NÍQUEIS DE EMOJIS (SENHA AULA 13: 🎯 • 🔬 • 💎 [ÍNDICES 9, 6, 4]) */
+        const slotReels = [
+            ['🎲', '🤖', '⚖️', '⚡', '🔒', '💡', '🧠', '🛠️', '🚀', '🎯'],
+            ['🎮', '💻', '🌐', '🔥', '🧩', '⚙️', '🔬', '🎨', '🔍', '🏆'],
+            ['⭐', '🏆', '🎯', '🔑', '💎', '🧪', '🛡️', '👑', '🚨', '🧭']
+        ];
+        const slotTargetIndices = [9, 6, 4]; // 🎯, 🔬, 💎
+        const currentSlotIndices = [0, 0, 0];
+
+        function spinSlot(slotIndex) {
+            const btn = document.getElementById(`slot-${slotIndex}`);
+            if (!btn) return;
+
+            currentSlotIndices[slotIndex] = (currentSlotIndices[slotIndex] + 1) % slotReels[slotIndex].length;
+            const newEmoji = slotReels[slotIndex][currentSlotIndices[slotIndex]];
+
+            btn.classList.remove('slot-spinning');
+            void btn.offsetWidth;
+            btn.classList.add('slot-spinning');
+            btn.innerText = newEmoji;
+
+            checkSlotPassword();
+        }
+
+        function checkSlotPassword() {
+            const isUnlocked = currentSlotIndices[0] === slotTargetIndices[0] &&
+                               currentSlotIndices[1] === slotTargetIndices[1] &&
+                               currentSlotIndices[2] === slotTargetIndices[2];
+
+            const wrapper = document.getElementById('gabarito-checkbox-wrapper');
+            if (isUnlocked) {
+                if (wrapper && wrapper.classList.contains('hidden')) {
+                    playFaahSound();
+                }
+                wrapper?.classList.remove('hidden');
+            } else {
+                wrapper?.classList.add('hidden');
+                const checkbox = document.getElementById('toggle-gabarito-checkbox');
+                if (checkbox && checkbox.checked) {
+                    checkbox.checked = false;
+                    onToggleGabaritoCheckbox();
+                }
+            }
+        }
+
+        function onToggleGabaritoCheckbox() {
+            const isChecked = document.getElementById('toggle-gabarito-checkbox')?.checked;
+            const gabaritoBtns = document.querySelectorAll('.gabarito-btn');
+            gabaritoBtns.forEach(btn => {
+                if (isChecked) btn.classList.remove('hidden');
+                else btn.classList.add('hidden');
+            });
+
+            if (!isChecked) {
+                ex1Data.forEach(item => document.getElementById(`answer-ex1-${item.id}`)?.classList.add('hidden'));
+                ex2Data.forEach(item => document.getElementById(`answer-ex2-${item.id}`)?.classList.add('hidden'));
+                ex3Questions.forEach(q => document.getElementById(`answer-ex3-${q.id}`)?.classList.add('hidden'));
+                ex4Questions.forEach(q => document.getElementById(`answer-ex4-${q.id}`)?.classList.add('hidden'));
+                ex5Questions.forEach(q => document.getElementById(`answer-ex5-${q.id}`)?.classList.add('hidden'));
+            }
+        }
+
+        /* INICIALIZAÇÃO NA CARGA */
+        window.onload = function() {
+            renderEx1();
+            populateSimulatorPredicates();
+            updateSimulator();
+            renderEx2();
+            renderGroupedExercises(ex3Questions, 'ex3-cards-container', 'ex3');
+            renderGroupedExercises(ex4Questions, 'ex4-cards-container', 'ex4');
+            renderGroupedExercises(ex5Questions, 'ex5-cards-container', 'ex5');
+            renderFastQuiz();
+        };
+    </script>
+</body>
+</html>
