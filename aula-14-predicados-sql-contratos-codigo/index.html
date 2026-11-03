@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 14: Predicados em SQL &amp; Contratos de Código (DbC)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f4f8;
+            padding-top: 20px;
+        }
+        .main-header {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo-container {
+            width: 180px;
+        }
+        .header-info {
+            text-align: right;
+            border-left: 2px solid #e5e7eb;
+            padding-left: 20px;
+        }
+        .header-info h2 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #254a8d;
+        }
+        .header-info p {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+        .header-info .sub-p {
+            font-size: 0.75rem;
+            color: #00AEEF;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .code-font {
+            font-family: 'Roboto Mono', monospace;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 59, 113, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04);
+        }
+        .slot-spinning {
+            animation: slotRotate 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes slotRotate {
+            0% { transform: translateY(-12px) scale(0.85); opacity: 0.4; }
+            50% { transform: translateY(6px) scale(1.1); opacity: 0.8; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .interactive-btn-val {
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+            user-select: none;
+        }
+        .interactive-btn-val:active {
+            transform: scale(0.94);
+        }
+        sub {
+            font-size: 0.72em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+            bottom: -0.22em;
+            margin-left: 0.5px;
+            margin-right: 0.5px;
+        }
+        .exercise-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00AEEF;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="text-gray-700 antialiased selection:bg-cyan-500 selection:text-white pb-20">
+
+    <!-- CABEÇALHO DA INSTITUIÇÃO -->
+    <header class="main-header flex-col md:flex-row gap-4 md:gap-0">
+        <div class="logo-container">
+            <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 801.70135 613.78265" height="100%" width="100%"
+                xml:space="preserve" id="svg2" version="1.1">
+                <g transform="matrix(1.3333333,0,0,-1.3333333,0,613.78267)" id="g10">
+                    <g id="g12">
+                        <g clip-path="url(#clipPath18)" id="g14">
+                            <g transform="translate(252.3749,80.1607)" id="g20">
+                                <path id="path22" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -4.711,0 -8.12,3.901 -8.12,8.718 v 0.069 c 0,4.817 3.446,8.68 8.12,8.68 2.81,0 4.92,-1.227 6.889,-3.056 l 2.776,3.196 c -2.355,2.25 -5.097,3.833 -9.631,3.833 -7.45,0 -12.688,-5.73 -12.688,-12.722 V 8.646 c 0,-7.063 5.344,-12.653 12.514,-12.653 4.605,0 7.415,1.689 9.98,4.359 L 7.064,3.162 C 4.957,1.197 3.022,0 0,0" />
+                            </g>
+                            <g transform="translate(272.8636,92.0402)" id="g24">
+                                <path id="path26" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 2.81,0 4.428,-2.144 4.708,-4.886 H -4.817 C -4.428,-2.004 -2.602,0 0,0 m 8.082,-12.407 -2.495,2.215 c -1.474,-1.443 -2.951,-2.215 -5.026,-2.215 -2.742,0 -4.886,1.689 -5.341,4.711 H 8.855 c 0.038,0.42 0.072,0.807 0.072,1.197 0,5.34 -2.988,9.979 -8.893,9.979 -5.306,0 -9.067,-4.359 -9.067,-9.665 v -0.072 c 0,-5.726 4.147,-9.628 9.525,-9.628 3.409,0 5.833,1.368 7.59,3.478" />
+                            </g>
+                            <g transform="translate(301.3308,76.5763)" id="g28">
+                                <path id="path30" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 v 11.843 c 0,4.287 -2.424,7.101 -6.609,7.101 -2.879,0 -4.602,-1.511 -5.798,-3.234 v 2.848 h -4.254 V 0 h 4.254 v 10.472 c 0,2.882 1.723,4.605 4.184,4.605 2.53,0 3.97,-1.651 3.97,-4.533 L -4.253,0 Z" />
+                            </g>
+                            <g transform="translate(310.1876,100.2299)" id="g32">
+                                <path id="path34" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -4.253 v -5.098 h -2.356 v -3.655 h 2.356 v -9.771 c 0,-4.075 2.212,-5.446 5.344,-5.446 1.613,0 2.772,0.352 3.829,0.95 v 3.477 c -0.845,-0.42 -1.689,-0.632 -2.636,-0.632 -1.443,0 -2.284,0.666 -2.284,2.321 v 9.101 h 4.992 v 3.655 l -4.992,0 z" />
+                            </g>
+                            <g transform="translate(322.3457,90.9505)" id="g36">
+                                <path id="path38" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 V 4.181 H -4.253 V -14.373 H 0 v 7.063 c 0,4.92 2.602,7.344 6.328,7.344 H 6.571 V 4.533 C 3.303,4.674 1.159,2.776 0,0" />
+                            </g>
+                            <g transform="translate(334.4361,85.8899)" id="g40">
+                                <path id="path42" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,3.234 2.178,5.904 5.587,5.904 3.34,0 5.695,-2.707 5.695,-5.976 V -0.14 c 0,-3.2 -2.181,-5.871 -5.624,-5.871 C 2.356,-6.011 0,-3.303 0,-0.072 Z m 5.587,-9.734 c 5.73,0 9.949,4.39 9.949,9.662 V 0 c 0,5.306 -4.185,9.631 -9.878,9.631 -5.692,0 -9.911,-4.393 -9.911,-9.703 V -0.14 c 0,-5.272 4.181,-9.594 9.84,-9.594" />
+                            </g>
+                            <g transform="translate(383.1821,87.2253)" id="g44">
+                                <path id="path46" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 V 13.953 H -4.325 V -0.209 c 0,-4.536 -2.352,-6.82 -6.181,-6.82 -3.867,0 -6.223,2.424 -6.223,6.995 V 13.953 H -21.05 V -0.209 c 0,-7.135 4.075,-10.827 10.472,-10.827 C -4.147,-11.036 0,-7.344 0,0" />
+                            </g>
+                            <g transform="translate(391.4741,87.05)" id="g48">
+                                <path id="path50" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,2.882 1.723,4.605 4.181,4.605 2.534,0 3.973,-1.651 3.973,-4.533 v -10.544 h 4.253 V 1.371 c 0,4.287 -2.424,7.098 -6.608,7.098 C 2.916,8.469 1.197,6.961 0,5.238 V 8.082 H -4.253 V -10.472 H 0 Z" />
+                            </g>
+                            <path id="path52" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 407.674,97.98 h 4.568 v 4.041 h -4.568 z" />
+                            <path id="path54" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 407.852,76.577 h 4.253 v 18.558 h -4.253 z" />
+                            <g transform="translate(425.9518,76.4355)" id="g56">
+                                <path id="path58" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 7.59,18.698 H 3.128 L -1.898,5.06 -6.889,18.698 h -4.568 L -3.833,0 Z" />
+                            </g>
+                            <g transform="translate(443.7699,92.0402)" id="g60">
+                                <path id="path62" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 2.81,0 4.428,-2.144 4.708,-4.886 H -4.814 C -4.428,-2.004 -2.602,0 0,0 m 0.492,-15.885 c 3.409,0 5.833,1.368 7.59,3.478 l -2.495,2.215 c -1.474,-1.443 -2.951,-2.215 -5.026,-2.215 -2.739,0 -4.886,1.689 -5.341,4.711 H 8.855 c 0.038,0.42 0.072,0.807 0.072,1.197 0,5.34 -2.988,9.979 -8.893,9.979 -5.306,0 -9.067,-4.359 -9.067,-9.665 v -0.072 c 0,-5.726 4.147,-9.628 9.525,-9.628" />
+                            </g>
+                            <g transform="translate(459.8304,83.6406)" id="g64">
+                                <path id="path66" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,4.92 2.602,7.347 6.328,7.347 h 0.243 v 4.496 C 3.303,11.987 1.159,10.086 0,7.31 v 4.181 H -4.253 V -7.064 H 0 Z" />
+                            </g>
+                            <g transform="translate(476.1727,87.5416)" id="g68">
+                                <path id="path70" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -2.178,0.704 -4.181,1.265 -4.181,2.636 v 0.072 c 0,1.053 0.947,1.825 2.601,1.825 1.546,0 3.443,-0.666 5.235,-1.757 l 1.689,3.022 c -1.97,1.303 -4.5,2.11 -6.821,2.11 -3.689,0 -6.605,-2.144 -6.605,-5.658 V 2.178 c 0,-3.549 3.056,-4.674 5.798,-5.447 2.178,-0.666 4.147,-1.159 4.147,-2.598 v -0.072 c 0,-1.231 -1.056,-2.003 -2.882,-2.003 -1.897,0 -4.041,0.772 -6.082,2.284 l -1.898,-2.883 c 2.322,-1.825 5.238,-2.776 7.874,-2.776 3.867,0 6.889,1.932 6.889,5.836 v 0.069 C 5.764,-2.072 2.708,-0.841 0,0" />
+                            </g>
+                            <path id="path72" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 484.956,97.98 h 4.568 v 4.041 h -4.568 z" />
+                            <path id="path74" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 485.134,76.577 h 4.253 v 18.558 h -4.253 z" />
+                            <g transform="translate(494.4117,81.7074)" id="g76">
+                                <path id="path78" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-4.075 2.212,-5.446 5.344,-5.446 1.614,0 2.773,0.348 3.829,0.947 v 3.48 c -0.844,-0.42 -1.689,-0.632 -2.636,-0.632 -1.443,0 -2.284,0.666 -2.284,2.318 v 9.104 h 4.992 v 3.655 H 4.253 v 5.098 H 0 V 13.426 H -2.356 V 9.771 l 2.356,0 z" />
+                            </g>
+                            <g transform="translate(520.0675,101.5304)" id="g80">
+                                <path id="path82" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 -3.863,1.723 -3.659,-5.764 h 3.2 z" />
+                            </g>
+                            <g transform="translate(509.4892,82.1647)" id="g84">
+                                <path id="path86" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,1.932 1.617,3.094 4.359,3.094 1.686,0 3.128,-0.318 4.216,-0.738 V 1.091 C 8.575,-1.265 6.431,-2.882 3.621,-2.882 1.58,-2.882 0,-1.863 0,-0.072 Z m 2.424,-5.976 c 2.848,0 4.78,1.196 6.045,2.707 v -2.318 h 4.15 V 5.412 c 0,2.424 -0.632,4.393 -2.003,5.73 -1.303,1.334 -3.375,2.072 -6.151,2.072 -2.954,0 -4.957,-0.595 -6.995,-1.511 L -1.405,8.366 C 0.28,9.067 1.829,9.525 3.901,9.525 6.889,9.525 8.506,8.12 8.506,5.484 V 5.026 C 7.064,5.484 5.587,5.798 3.515,5.798 c -4.534,0 -7.662,-1.969 -7.662,-5.972 v -0.072 c 0,-3.727 3.091,-5.73 6.571,-5.73" />
+                            </g>
+                            <g transform="translate(536.3751,90.9864)" id="g88">
+                                <path id="path90" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h 0.246 v 4.499 c -3.268,0.14 -5.412,-1.757 -6.574,-4.533 v 4.181 h -4.254 v -18.558 h 4.254 v 7.064 C -6.328,-2.424 -3.727,0 0,0" />
+                            </g>
+                            <path id="path92" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 543.543,102.021 h -4.568 V 97.98 h 4.568 z" />
+                            <path id="path94" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="M 543.403,95.132 H 539.15 V 76.574 h 4.253 z" />
+                            <g transform="translate(562.0655,85.7491)" id="g96">
+                                <path id="path98" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.197 -2.181,-5.867 -5.624,-5.867 -3.303,0 -5.659,2.704 -5.659,5.939 V 0.14 c 0,3.234 2.178,5.905 5.587,5.905 C -2.356,6.045 0,3.34 0,0.072 Z m -5.624,9.771 c -5.693,0 -9.912,-4.393 -9.912,-9.699 V 0 c 0,-5.272 4.182,-9.594 9.84,-9.594 5.73,0 9.949,4.394 9.949,9.666 V 0.14 c 0,5.306 -4.185,9.631 -9.877,9.631" />
+                            </g>
+                            <g transform="translate(282.0353,53.8006)" id="g100">
+                                <path id="path102" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 -7.487,11.635 h -4.602 v -24.603 h 4.253 V 4.605 L -0.14,-6.923 H 0 L 7.768,4.674 v -17.642 h 4.321 V 11.635 H 7.487 Z" />
+                            </g>
+                            <g transform="translate(310.045,47.5098)" id="g104">
+                                <path id="path106" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.356 -2.144,-3.969 -4.957,-3.969 -2.038,0 -3.618,1.018 -3.618,2.81 v 0.068 c 0,1.935 1.614,3.094 4.359,3.094 1.686,0 3.125,-0.314 4.216,-0.738 z m -4.113,12.123 c -2.951,0 -4.954,-0.594 -6.992,-1.507 L -9.98,7.275 c 1.686,0.705 3.231,1.159 5.306,1.159 2.985,0 4.602,-1.405 4.602,-4.041 V 3.935 c -1.439,0.458 -2.916,0.776 -4.988,0.776 -4.534,0 -7.662,-1.969 -7.662,-5.976 v -0.072 c 0,-3.723 3.091,-5.727 6.571,-5.727 2.848,0 4.78,1.194 6.045,2.705 V -6.677 H 4.041 V 4.325 c 0,2.424 -0.632,4.39 -2.003,5.726 -1.3,1.337 -3.375,2.072 -6.151,2.072" />
+                            </g>
+                            <g transform="translate(322.0294,55.2064)" id="g108">
+                                <path id="path110" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 V 4.181 H -4.253 V -14.373 H 0 v 7.063 c 0,4.92 2.602,7.344 6.328,7.344 H 6.571 V 4.533 C 3.303,4.677 1.159,2.776 0,0" />
+                            </g>
+                            <path id="path112" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 331.131,40.832 h 4.253 V 59.39 h -4.253 z" />
+                            <path id="path114" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 330.957,62.238 h 4.568 v 4.041 h -4.568 z" />
+                            <g transform="translate(354.0468,50.005)" id="g116">
+                                <path id="path118" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.197 -2.181,-5.867 -5.624,-5.867 -3.303,0 -5.659,2.704 -5.659,5.939 V 0.14 c 0,3.234 2.178,5.905 5.587,5.905 C -2.356,6.045 0,3.34 0,0.072 Z m -5.624,9.771 c -5.693,0 -9.912,-4.393 -9.912,-9.699 V 0 c 0,-5.272 4.182,-9.594 9.84,-9.594 5.73,0 9.949,4.394 9.949,9.666 V 0.14 c 0,5.306 -4.185,9.631 -9.877,9.631" />
+                            </g>
+                            <g transform="translate(385.5005,57.0346)" id="g120">
+                                <path id="path122" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.564 -2.041,-4.393 -5.31,-4.393 h -5.022 V 4.462 H -5.31 C -2.075,4.462 0,2.954 0,0.072 Z m -4.957,8.4 h -9.7 v -24.602 h 4.325 v 7.908 h 4.886 c 5.408,0 9.839,2.882 9.839,8.4 v 0.068 c 0,4.958 -3.586,8.226 -9.35,8.226" />
+                            </g>
+                            <g transform="translate(406.9393,50.005)" id="g124">
+                                <path id="path126" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.197 -2.181,-5.867 -5.624,-5.867 -3.303,0 -5.659,2.704 -5.659,5.939 V 0.14 c 0,3.234 2.178,5.905 5.587,5.905 C -2.356,6.045 0,3.34 0,0.072 Z m -5.624,9.771 c -5.693,0 -9.912,-4.393 -9.912,-9.699 V 0 c 0,-5.272 4.182,-9.594 9.84,-9.594 5.73,0 9.949,4.394 9.949,9.666 V 0.14 c 0,5.306 -4.185,9.631 -9.877,9.631" />
+                            </g>
+                            <g transform="translate(424.1581,59.7756)" id="g128">
+                                <path id="path130" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -2.882,0 -4.605,-1.511 -5.799,-3.231 v 2.845 h -4.253 v -18.558 h 4.253 v 10.475 c 0,2.882 1.72,4.602 4.182,4.602 2.53,0 3.973,-1.651 3.973,-4.533 V -18.944 H 6.609 V -7.098 C 6.609,-2.81 4.181,0 0,0" />
+                            </g>
+                            <g transform="translate(439.6221,64.4856)" id="g132">
+                                <path id="path134" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -4.253 v -5.098 h -2.356 v -3.655 h 2.356 v -9.771 c 0,-4.075 2.212,-5.446 5.344,-5.446 1.613,0 2.772,0.352 3.829,0.95 v 3.477 c -0.845,-0.42 -1.689,-0.632 -2.636,-0.632 -1.443,0 -2.284,0.666 -2.284,2.321 v 9.101 h 4.992 v 3.655 l -4.992,0 z" />
+                            </g>
+                            <g transform="translate(450.7282,51.4104)" id="g136">
+                                <path id="path138" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 0.386,2.882 2.212,4.886 4.814,4.886 7.628,4.886 9.245,2.742 9.525,0 Z m 4.848,8.366 c -5.306,0 -9.067,-4.359 -9.067,-9.665 v -0.072 c 0,-5.727 4.147,-9.628 9.525,-9.628 3.409,0 5.833,1.368 7.594,3.477 l -2.496,2.216 C 8.927,-6.749 7.45,-7.522 5.378,-7.522 c -2.742,0 -4.886,1.689 -5.344,4.712 h 13.638 c 0.035,0.42 0.069,0.806 0.069,1.193 0,5.344 -2.988,9.983 -8.893,9.983" />
+                            </g>
+                            <g transform="translate(474.8372,51.7971)" id="g140">
+                                <path id="path142" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -2.178,0.704 -4.181,1.265 -4.181,2.636 v 0.072 c 0,1.053 0.947,1.825 2.601,1.825 1.546,0 3.443,-0.666 5.235,-1.757 l 1.689,3.022 c -1.97,1.303 -4.5,2.11 -6.821,2.11 -3.689,0 -6.605,-2.144 -6.605,-5.658 V 2.178 c 0,-3.549 3.056,-4.674 5.798,-5.447 2.178,-0.666 4.147,-1.159 4.147,-2.598 v -0.072 c 0,-1.231 -1.056,-2.003 -2.882,-2.003 -1.897,0 -4.041,0.772 -6.082,2.284 l -1.898,-2.883 c 2.322,-1.825 5.238,-2.776 7.874,-2.776 3.867,0 6.889,1.932 6.889,5.836 v 0.069 C 5.764,-2.072 2.708,-0.841 0,0" />
+                            </g>
+                            <g transform="translate(502.4592,49.3378)" id="g144">
+                                <path id="path146" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.303 -1.58,-4.852 -3.901,-4.852 -2.075,0 -3.515,1.057 -4.954,2.92 l -2.848,-2.954 c 1.617,-2.215 4.075,-3.973 7.874,-3.973 2.458,0 4.533,0.739 5.973,2.182 1.442,1.439 2.321,3.617 2.321,6.537 V 16.096 H 0 Z" />
+                            </g>
+                            <g transform="translate(523.1606,48.9153)" id="g148">
+                                <path id="path150" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.882 -1.723,-4.568 -4.181,-4.568 -2.534,0 -3.973,1.614 -3.973,4.496 v 10.544 h -4.253 V -1.337 c 0,-4.321 2.424,-7.132 6.608,-7.132 2.883,0 4.602,1.508 5.799,3.269 v -2.882 h 4.287 v 18.554 l -4.287,0 z" />
+                            </g>
+                            <g transform="translate(540.1353,44.1364)" id="g152">
+                                <path id="path154" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C -3.269,0 -5.552,2.636 -5.552,5.939 V 6.01 c 0,3.235 2.283,5.905 5.374,5.905 2.11,0 3.481,-0.951 4.783,-2.322 l 2.671,2.848 c -1.758,1.898 -3.936,3.197 -7.416,3.197 -5.59,0 -9.666,-4.427 -9.666,-9.699 V 5.867 c 0,-5.272 4.076,-9.594 9.594,-9.594 3.621,0 5.764,1.443 7.594,3.481 L 4.814,2.284 C 3.48,0.913 2.004,0 0,0" />
+                            </g>
+                            <g transform="translate(561.5034,47.5098)" id="g156">
+                                <path id="path158" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.356 -2.144,-3.969 -4.958,-3.969 -2.037,0 -3.617,1.018 -3.617,2.81 v 0.068 c 0,1.935 1.614,3.094 4.356,3.094 1.689,0 3.128,-0.314 4.219,-0.738 z m -4.113,12.123 c -2.951,0 -4.954,-0.594 -6.995,-1.507 l 1.125,-3.341 c 1.689,0.705 3.234,1.159 5.306,1.159 2.988,0 4.605,-1.405 4.605,-4.041 V 3.935 c -1.439,0.458 -2.916,0.776 -4.991,0.776 -4.534,0 -7.659,-1.969 -7.659,-5.976 v -0.072 c 0,-3.723 3.091,-5.727 6.571,-5.727 2.848,0 4.78,1.194 6.045,2.705 V -6.677 H 4.041 V 4.325 c 0,2.424 -0.632,4.39 -2.003,5.726 -1.3,1.337 -3.375,2.072 -6.151,2.072" />
+                            </g>
+                            <g transform="translate(563.3729,65.919)" id="g160">
+                                <path id="path162" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 -3.863,1.723 -3.659,-5.764 h 3.2 z" />
+                            </g>
+                            <g transform="translate(537.2679,367.7308)" id="g164">
+                                <path id="path166" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 15.207,0 26.548,11.334 26.548,25.351 26.548,40.863 15.207,52.197 0,52.197 -14.319,52.197 -25.656,40.863 -25.656,25.351 -25.656,11.334 -14.319,0 0,0" />
+                            </g>
+                            <g transform="translate(352.1446,245.0517)" id="g168">
+                                <path id="path170" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -1.125 l -37.543,106.698 h -70.075 V -94.681 h 43.301 V 55.322 h 1.689 L -20.309,-67.47 H 15.255 L 59.343,55.322 h 1.094 V -94.616 h 43.448 V 106.698 H 37.01 Z" />
+                            </g>
+                            <g transform="translate(564.5794,351.8964)" id="g172">
+                                <path id="path174" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -60.502 v -6.113 l 17.492,-29.465 1.172,-83.015 c -0.003,-21.447 -16.694,-39.191 -38.104,-40.501 l 10.879,-42.576 c 40.802,6.51 70.817,41.711 70.8,83.029 z" />
+                            </g>
+                            <g transform="translate(162.3982,225.3562)" id="g176">
+                                <path id="path178" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-27.355 -11.023,-38.456 -31.666,-38.456 -25.441,0 -35.403,15.542 -35.403,43.83 v 121.021 h -60.372 v -6.113 l 16.992,-28.771 0.161,-0.273 V -3.104 c 0,-40.727 21.481,-71.542 72.666,-71.542 18.199,0 35.225,3.522 48.918,11.97 l 25.841,-15.252 h 6.116 V 126.429 L 0,126.395 Z" />
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+        </div>
+        <div class="header-info">
+            <h2>Lógica Aplicada à Computação</h2>
+            <p class="sub-p">Análise e Desenvolvimento de Sistemas</p>
+            <p class="mt-1"><i class="fas fa-chalkboard-teacher text-[#00AEEF] mr-1"></i> Prof. Iran Rodrigues</p>
+        </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <main class="max-w-5xl mx-auto px-4 space-y-10">
+
+        <!-- INTRODUÇÃO TEÓRICA DA AULA 14 -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-t-4 border-[#003B71] space-y-6">
+            <div class="border-b border-gray-200 pb-4">
+                <span class="bg-[#003B71] text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                    Aula 14
+                </span>
+                <h1 class="text-3xl font-black text-[#003B71] mt-3">Predicados em SQL &amp; Contratos de Código (DbC)</h1>
+                <p class="text-sm text-gray-600 font-medium mt-1">
+                    A formalização da Lógica de Predicados em Bancos de Dados Relacionais (<span class="code-font font-bold text-[#003B71]">WHERE</span>, <span class="code-font font-bold text-[#003B71]">EXISTS</span>, <span class="code-font font-bold text-[#003B71]">HAVING</span>) e na Engenharia de Software com Design by Contract (Pré-condições, Pós-condições e Invariantes).
+                </p>
+            </div>
+
+            <!-- PARTE I: PREDICADOS EM BANCOS DE DADOS RELACIONAIS -->
+            <div class="space-y-4">
+                <h2 class="text-xl font-black text-[#003B71] flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-[#00AEEF]"></span>
+                    1. A Cláusula WHERE como Função de Verdade e Conjunto Verdade
+                </h2>
+                
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                    Em bancos de dados relacionais (RDBMS), uma tabela é uma relação matemática formal: um subconjunto do produto cartesiano dos domínios de seus atributos. Cada linha da tabela é uma <strong>tupla</strong> <span class="code-font font-bold">t</span>. 
+                </p>
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                    O domínio de discurso <span class="code-font font-bold">U</span> é o conjunto de todas as tuplas da tabela. A cláusula <span class="code-font font-bold text-[#003B71]">WHERE</span> nada mais é do que uma <strong>função proposicional / predicado p(t)</strong>. Quando o motor relacional processa uma consulta, ele calcula exatamente o <strong>Conjunto Verdade V<sub>p</sub></strong>:
+                </p>
+
+                <div class="bg-blue-50/80 p-4 rounded-xl border border-blue-200 space-y-2">
+                    <div class="code-font text-xs sm:text-sm text-[#003B71] font-bold text-center">
+                        SELECT * FROM Clientes WHERE saldo &gt; 1000 AND status = 'ATIVO';
+                    </div>
+                    <div class="text-center font-mono text-xs text-indigo-950 font-bold">
+                        V<sub>p</sub> = { t &in; Clientes | (t.saldo &gt; 1000) &and; (t.status = 'ATIVO') }
+                    </div>
+                </div>
+
+                <!-- CARDS REORGANIZADOS: ÁLGEBRA BOOLEANA, QUANTIFICADORES E LÓGICA TRIVALENTE -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1 items-stretch">
+                    <!-- COLUNA 1: DOIS BLOCOS MENORES EMPILHADOS VERTICALMENTE -->
+                    <div class="md:col-span-1 flex flex-col justify-between gap-4">
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5 shadow-2xs flex-1">
+                            <strong class="text-xs font-black text-[#003B71] block uppercase">AND, OR, NOT &hArr; Conjuntos</strong>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                <span class="code-font font-bold">AND</span> opera a interseção de tuplas (<span class="font-mono text-sm">V<sub>p</sub> &#8745; V<sub>q</sub></span>). <span class="code-font font-bold">OR</span> opera a união (<span class="font-mono text-sm">V<sub>p</sub> &#8746; V<sub>q</sub></span>) e <span class="code-font font-bold">NOT</span> calcula o complemento por diferença de conjuntos (<span class="font-mono text-sm">U &mdash; V<sub>p</sub></span>).
+                            </p>
+                        </div>
+
+                        <div class="bg-cyan-50/80 p-4 rounded-xl border border-cyan-200 space-y-1.5 shadow-2xs flex-1">
+                            <strong class="text-xs font-black text-cyan-900 block uppercase">Quantificadores em SQL</strong>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                <span class="code-font font-bold text-cyan-800">EXISTS</span> implementa diretamente o quantificador existencial (&exist;). Já o quantificador universal (&forall;) é formulado via dupla negação com as Leis de De Morgan: <span class="code-font font-bold">NOT EXISTS (... WHERE NOT ...)</span>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- COLUNA 2 (OCUPANDO 2 COLUNAS): LÓGICA TRIVALENTE COM CONTEXTO COMPLETO -->
+                    <div class="md:col-span-2 bg-amber-50/80 p-4 rounded-xl border border-amber-200 space-y-2 shadow-2xs flex flex-col justify-between">
+                        <div>
+                            <strong class="text-xs font-black text-amber-900 block uppercase flex items-center gap-1.5">
+                                <i class="fas fa-exclamation-circle text-amber-600"></i> Lógica Trivalente (3VL): Por que ela existe e o que é UNKNOWN?
+                            </strong>
+                            <p class="text-xs text-gray-700 leading-relaxed mt-1">
+                                Na lógica clássica proposicional, toda sentença é estritamente <span class="font-bold text-emerald-700">Verdadeira (TRUE)</span> ou <span class="font-bold text-rose-700">Falsa (FALSE)</span> &mdash; o chamado <em>Princípio do Terceiro Excluído</em>. Contudo, em bancos de dados relacionais reais, informações do mundo físico podem estar ausentes, incompletas ou não preenchidas (ex.: um cliente que não cadastrou seu telefone).
+                            </p>
+                            <p class="text-xs text-gray-700 leading-relaxed mt-1">
+                                Para lidar com dados ausentes, o SQL introduziu o marcador <span class="code-font font-bold text-amber-900">NULL</span> (que não é um número nem um texto, mas um estado de ausência). Ao avaliar um predicado como <span class="code-font font-bold">salario &gt; 5000</span> para um registro cujo salário é desconhecido, o motor não pode afirmar com certeza nem que é <span class="code-font font-bold">TRUE</span> nem que é <span class="code-font font-bold">FALSE</span>. Surge então a necessidade da <strong>Lógica Trivalente de Kleene (3VL)</strong>, que introduz um terceiro valor lógico de verdade: o <span class="code-font font-bold text-amber-900">UNKNOWN</span> (indeterminado).
+                            </p>
+                            <p class="text-xs text-gray-700 leading-relaxed mt-1">
+                                <strong>Atenção para a distinção fundamental:</strong> <span class="code-font font-bold">NULL</span> é um <em>marcador de dados ausentes</em> em colunas, enquanto <span class="code-font font-bold">UNKNOWN</span> é um <em>valor de verdade lógico booleano</em>. Em SGBDs como o <strong>PostgreSQL</strong>, o tipo de dado <span class="code-font font-bold">BOOLEAN</span> implementa 3 estados: <span class="code-font text-emerald-700 font-bold">true</span>, <span class="code-font text-rose-700 font-bold">false</span> e <span class="code-font text-amber-800 font-bold">null</span> (onde o valor lógico <span class="code-font">UNKNOWN</span> é exibido textualmente na saída como <span class="code-font font-bold">null</span>).
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-2.5 rounded-lg border border-amber-300 font-mono text-[11px] space-y-1 text-gray-800 mt-2">
+                            <span class="text-[10px] text-gray-500 font-sans font-bold uppercase block">Consultas reais no PostgreSQL demonstrando expressões avaliadas como UNKNOWN:</span>
+                            <div><span class="text-blue-700 font-bold">SELECT</span> (1 = NULL); <span class="text-gray-500">-- Resultado exibido: null (valor lógico: UNKNOWN)</span></div>
+                            <div><span class="text-blue-700 font-bold">SELECT</span> (NULL = NULL); <span class="text-gray-500">-- Resultado: null (não é true! Duas incógnitas não são iguais)</span></div>
+                            <div><span class="text-blue-700 font-bold">SELECT</span> NOT(NULL); <span class="text-gray-500">-- Resultado: null (a negação do desconhecido segue desconhecida)</span></div>
+                            <div><span class="text-blue-700 font-bold">SELECT</span> true AND NULL; <span class="text-gray-500">-- Resultado: null (pois depende do valor desconhecido)</span></div>
+                            <div><span class="text-blue-700 font-bold">SELECT</span> false AND NULL; <span class="text-gray-500">-- Resultado: false (falso com qualquer coisa no AND é false)</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PARTE II: DESIGN BY CONTRACT (DBC) -->
+            <div class="space-y-4 pt-4 border-t border-gray-200">
+                <h2 class="text-xl font-black text-[#003B71] flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-emerald-600"></span>
+                    2. Contratos de Software: Design by Contract (DbC)
+                </h2>
+
+                <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                    Criado por Bertrand Meyer na linguagem Eiffel, o paradigma <strong>Design by Contract (DbC)</strong> estabelece que a interação entre módulos de software é governada por um contrato formal baseado na <strong>implicação lógica</strong>:
+                </p>
+
+                <div class="bg-emerald-50/90 border border-emerald-300 p-4 rounded-xl text-center font-mono font-bold text-xs sm:text-sm text-emerald-950">
+                    Pré-condição (P) &rArr; Pós-condição (Q) &and; Invariante de Classe (I)
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 space-y-2 shadow-2xs">
+                        <div class="flex items-center justify-between border-b border-blue-100 pb-1.5">
+                            <span class="bg-blue-600 text-white code-font font-bold text-xs px-2 py-0.5 rounded">require</span>
+                            <span class="text-[10px] font-bold text-blue-900 uppercase">Pré-condição</span>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Obrigações do <strong>chamador (cliente)</strong>. Se a pré-condição for falsa, o método <em>não</em> é obrigado a executar e lança exceção imediata.
+                        </p>
+                        <span class="text-[10px] text-gray-500 font-mono block">Ex: valor_saque &gt; 0 &and; saldo &ge; valor_saque</span>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-emerald-200 space-y-2 shadow-2xs">
+                        <div class="flex items-center justify-between border-b border-emerald-100 pb-1.5">
+                            <span class="bg-emerald-600 text-white code-font font-bold text-xs px-2 py-0.5 rounded">ensure</span>
+                            <span class="text-[10px] font-bold text-emerald-900 uppercase">Pós-condição</span>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Garantias do <strong>fornecedor (método)</strong> ao término da execução, desde que a pré-condição tenha sido respeitada.
+                        </p>
+                        <span class="text-[10px] text-gray-500 font-mono block">Ex: saldo == saldo_anterior - valor_saque</span>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-purple-200 space-y-2 shadow-2xs">
+                        <div class="flex items-center justify-between border-b border-purple-100 pb-1.5">
+                            <span class="bg-purple-600 text-white code-font font-bold text-xs px-2 py-0.5 rounded">invariant</span>
+                            <span class="text-[10px] font-bold text-purple-900 uppercase">Invariante</span>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Predicado universal (&forall;) sobre o estado do objeto ou loop. Deve ser verdadeiro antes e depois de qualquer operação pública.
+                        </p>
+                        <span class="text-[10px] text-gray-500 font-mono block">Ex: limite_cheque_especial &ge; 0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIMULADOR: LABORATÓRIO RELACIONAL & VERIFICADOR DE CONTRATOS -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-cyan-500 shadow-sm space-y-6">
+            <div class="border-b border-gray-200 pb-3">
+                <span class="bg-cyan-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                    Laboratório
+                </span>
+                <h2 class="text-2xl font-black text-[#003B71] mt-1">Laboratório de Consultas SQL &amp; Contratos de Código</h2>
+            </div>
+
+            <p class="text-xs text-gray-600 leading-relaxed">
+                Interaja com o simulador selecionando predicados na base de dados relacional ou disparando transações bancárias contra as asserções de contrato de código:
+            </p>
+
+            <!-- TABS DE MODO DO LABORATÓRIO -->
+            <div class="flex items-center gap-2 border-b border-gray-200 pb-2">
+                <button type="button" onclick="switchLabTab('sql')" id="tab-btn-sql" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#003B71] text-white transition shadow-xs">
+                    <i class="fas fa-database mr-1.5"></i> 1. Predicados SQL &amp; Conjunto Verdade
+                </button>
+                <button type="button" onclick="switchLabTab('dbc')" id="tab-btn-dbc" class="px-4 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
+                    <i class="fas fa-file-contract mr-1.5"></i> 2. Verificador de Contratos (DbC)
+                </button>
+            </div>
+
+            <!-- PAINEL 1: SQL RELACIONAL -->
+            <div id="lab-panel-sql" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200 items-center">
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-gray-700 block">Predicado de Filtro (Cláusula WHERE):</label>
+                        <select id="sql-pred-select" onchange="runSqlSimulator()" class="w-full bg-white border border-gray-300 rounded-lg p-2 text-xs font-mono focus:ring-2 focus:ring-[#00AEEF] focus:outline-none">
+                            <option value="ativos_com_saldo">saldo &gt;= 5000 AND status = 'ATIVO'</option>
+                            <option value="bloqueados_ou_zerados">saldo &lt;= 0 OR status = 'BLOQUEADO'</option>
+                            <option value="nulos_unknown">limite_credito IS NULL</option>
+                            <option value="operacao_complexa">saldo &gt; 1000 AND (status = 'ATIVO' OR limite_credito &gt;= 5000)</option>
+                        </select>
+                    </div>
+
+                    <div class="bg-[#003B71] text-white p-3 rounded-lg font-mono text-xs shadow-inner">
+                        <span class="text-cyan-400">SELECT</span> id, titular, saldo, status <span class="text-cyan-400">FROM</span> Contas
+                        <br><span class="text-pink-400">WHERE</span> <span id="sql-query-display" class="text-yellow-300 font-bold"></span>;
+                    </div>
+                </div>
+
+                <!-- TABELA DE RESULTADOS DO BANCO -->
+                <div class="overflow-x-auto rounded-xl border border-gray-200">
+                    <table class="w-full text-left text-xs font-mono">
+                        <thead class="bg-[#003B71] text-white">
+                            <tr>
+                                <th class="p-2.5">ID (t.id)</th>
+                                <th class="p-2.5">Titular</th>
+                                <th class="p-2.5">Saldo (R$)</th>
+                                <th class="p-2.5">Status</th>
+                                <th class="p-2.5">Limite Crédito</th>
+                                <th class="p-2.5 text-center">Predicado p(t)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sql-table-body" class="divide-y divide-gray-200 bg-white">
+                            <!-- Preenchido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 p-3 rounded-xl flex items-center justify-between text-xs text-[#003B71]">
+                    <span id="sql-truth-set-summary" class="font-bold"></span>
+                    <span id="sql-count-badge" class="bg-blue-600 text-white px-2 py-0.5 rounded font-mono text-[11px]"></span>
+                </div>
+            </div>
+
+            <!-- PAINEL 2: DESIGN BY CONTRACT (DBC) -->
+            <div id="lab-panel-dbc" class="hidden space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- FORMULÁRIO DE SIMULAÇÃO DE SAQUE COM CONTRATOS SELECIONÁVEIS -->
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
+                        <strong class="text-xs font-black text-[#003B71] block uppercase">Parâmetros &amp; Cláusulas do Contrato</strong>
+                        
+                        <div class="space-y-2 border-b border-gray-200 pb-2.5">
+                            <div>
+                                <label class="text-[11px] font-bold text-gray-600 block">Saldo Atual em Conta (R$):</label>
+                                <input type="number" id="dbc-saldo-input" value="1000" class="w-full p-1.5 rounded-lg border border-gray-300 text-xs font-mono font-bold">
+                            </div>
+                            <div>
+                                <label class="text-[11px] font-bold text-gray-600 block">Valor do Saque (R$):</label>
+                                <input type="number" id="dbc-saque-input" value="300" class="w-full p-1.5 rounded-lg border border-gray-300 text-xs font-mono font-bold">
+                            </div>
+                            <div>
+                                <label class="text-[11px] font-bold text-gray-600 block">Status da Conta:</label>
+                                <select id="dbc-status-input" class="w-full p-1.5 rounded-lg border border-gray-300 text-xs font-mono">
+                                    <option value="ATIVA">ATIVA</option>
+                                    <option value="BLOQUEADA">BLOQUEADA</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- SELEÇÃO DE CLÁUSULAS CONTRATUAIS -->
+                        <div class="space-y-2">
+                            <div>
+                                <label class="text-[11px] font-bold text-blue-900 block">Pré-condição (requires):</label>
+                                <select id="dbc-req-select" onchange="executeDbcSimulation()" class="w-full p-1.5 rounded-lg border border-blue-300 text-[11px] font-mono bg-white">
+                                    <option value="padrao">valor &gt; 0 AND saldo &gt;= valor AND status == 'ATIVA'</option>
+                                    <option value="sem_status">valor &gt; 0 AND saldo &gt;= valor (ignora status)</option>
+                                    <option value="permite_negativo">valor &gt; 0 (permite saldo insuficiente)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="text-[11px] font-bold text-emerald-900 block">Pós-condição (ensures):</label>
+                                <select id="dbc-ens-select" onchange="executeDbcSimulation()" class="w-full p-1.5 rounded-lg border border-emerald-300 text-[11px] font-mono bg-white">
+                                    <option value="exato">saldo_final == saldo_inicial - valor</option>
+                                    <option value="com_tarifa">saldo_final == saldo_inicial - valor - 5.0 (com tarifa)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="text-[11px] font-bold text-purple-900 block">Invariante de Classe (invariant):</label>
+                                <select id="dbc-inv-select" onchange="executeDbcSimulation()" class="w-full p-1.5 rounded-lg border border-purple-300 text-[11px] font-mono bg-white">
+                                    <option value="nao_negativo">&forall;t, saldo(t) &gt;= 0</option>
+                                    <option value="limite_cheque_especial">&forall;t, saldo(t) &gt;= -500 (cheque especial)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="executeDbcSimulation()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2 rounded-xl shadow-xs transition">
+                            <i class="fas fa-play mr-1"></i> Avaliar Contrato
+                        </button>
+                    </div>
+
+                    <!-- MONITOR DE ASSERÇÕES -->
+                    <div class="md:col-span-2 space-y-2">
+                        <strong class="text-xs font-black text-gray-800 block uppercase">Monitor do Contrato de Software</strong>
+                        
+                        <div id="dbc-check-require" class="p-3 rounded-xl border text-xs transition-all flex items-center justify-between">
+                            <div>
+                                <span class="font-bold block">1. Pré-condição (requires):</span>
+                                <span id="dbc-req-formula-display" class="font-mono text-[11px] text-gray-600">valor &gt; 0 AND saldo &gt;= valor AND status == 'ATIVA'</span>
+                            </div>
+                            <span id="dbc-badge-require" class="font-bold text-[11px] px-2 py-0.5 rounded">---</span>
+                        </div>
+
+                        <div id="dbc-check-ensure" class="p-3 rounded-xl border text-xs transition-all flex items-center justify-between">
+                            <div>
+                                <span class="font-bold block">2. Pós-condição (ensures):</span>
+                                <span id="dbc-ens-formula-display" class="font-mono text-[11px] text-gray-600">saldo_final == saldo_inicial - valor</span>
+                            </div>
+                            <span id="dbc-badge-ensure" class="font-bold text-[11px] px-2 py-0.5 rounded">---</span>
+                        </div>
+
+                        <div id="dbc-check-inv" class="p-3 rounded-xl border text-xs transition-all flex items-center justify-between">
+                            <div>
+                                <span class="font-bold block">3. Invariante de Classe (invariant):</span>
+                                <span id="dbc-inv-formula-display" class="font-mono text-[11px] text-gray-600">&forall;t, saldo(t) &gt;= 0</span>
+                            </div>
+                            <span id="dbc-badge-inv" class="font-bold text-[11px] px-2 py-0.5 rounded">---</span>
+                        </div>
+
+                        <div id="dbc-result-box" class="p-3 rounded-xl border text-xs font-mono font-bold">
+                            Aguardando execução...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 1: PREDICADOS SQL E LÓGICA TRIVALENTE -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-[#003B71] space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span class="bg-[#003B71] text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 1
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Predicados em SQL e Lógica Tri-valorada (3VL)</h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Determine o valor de verdade lógico ou a inclusão de tuplas no conjunto verdade V<sub>p</sub> das consultas SQL:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center shrink-0">
+                    <button onclick="checkEx1()" class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx1()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5" id="ex1-items-container">
+                <!-- Injetado dinamicamente via JS (1A a 1F) -->
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 2: FORMALIZAÇÃO LÓGICA DE CLÁUSULAS WHERE E EXISTS -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-indigo-600 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span class="bg-indigo-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 2
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Formalização com WHERE, EXISTS e De Morgan</h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Traduza requisitos de negócio para a representação formal equivalente em predicados relacionais e SQL:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center shrink-0">
+                    <button onclick="checkEx2()" class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx2()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start" id="ex2-items-container">
+                <!-- Injetado dinamicamente via JS (2A a 2D) -->
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 3: IDENTIFICAÇÃO DE ELEMENTOS DE CONTRATOS (DBC) -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-[#003B71] space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span class="bg-[#003B71] text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 3
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Classificação de Cláusulas em Contratos de Código</h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Classifique assertivas em Pré-condições, Pós-condições ou Invariantes de Estado e identifique o responsável pela garantia:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center shrink-0">
+                    <button onclick="checkEx3Form()" class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx3Form()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start" id="ex3-cards-container">
+                <!-- Injetado via JS no padrão unificado (3A a 3D) -->
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 4: DIAGNÓSTICO DE FALHAS E VIOLAÇÕES DE CONTRATO -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-indigo-600 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span class="bg-indigo-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 4
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Diagnóstico de Falhas em Execução (Quem Quebrou o Contrato?)</h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Com base no princípio da implicação lógica (P &rArr; Q), identifique a causa-raiz e o culpado em falhas de produção:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center shrink-0">
+                    <button onclick="checkEx4Form()" class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx4Form()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start" id="ex4-cards-container">
+                <!-- Injetado via JS no padrão unificado (4A a 4D) -->
+            </div>
+        </section>
+
+        <!-- EXERCÍCIO 5: PSEUDOCÓDIGO COM ASSERÇÕES E INVARIANTES -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 border-emerald-600 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200 pb-3">
+                <div>
+                    <span class="bg-emerald-600 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                        Exercício 5
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#003B71] mt-1">Asserções Formais e Invariantes em Algoritmos</h2>
+                    <p class="text-xs text-gray-600 font-medium mt-0.5">
+                        Analise rotinas com pré/pós-condições e invariantes de laço formalizadas em pseudocódigo estilo console:
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-center shrink-0">
+                    <button onclick="checkEx5Form()" class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                        <i class="fas fa-check-double"></i> Corrigir
+                    </button>
+                    <button onclick="resetEx5Form()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                        <i class="fas fa-undo"></i> Resetar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start" id="ex5-cards-container">
+                <!-- Injetado via JS no padrão unificado (5A a 5D) -->
+            </div>
+        </section>
+
+        <!-- QUIZ DE FIXAÇÃO RÁPIDA -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-2 border-cyan-500 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-cyan-200 pb-3">
+                <div>
+                    <span class="bg-cyan-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded uppercase">Fixação Rápida</span>
+                    <h3 class="font-black text-xl text-[#003B71] mt-1">Quiz: Predicados em Banco de Dados &amp; DbC</h3>
+                </div>
+                <span id="quiz-score-badge" class="text-xs font-extrabold text-cyan-800 bg-cyan-50 px-3 py-1 rounded-full border border-cyan-200 self-start sm:self-auto">
+                    Pontuação: 0 / 5
+                </span>
+            </div>
+
+            <div class="space-y-4" id="fast-quiz-container">
+                <!-- Injetado via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ INSTITUCIONAL COM O SISTEMA DE CAÇA-NÍQUEIS DE EMOJIS (SENHA AULA 14: 🔒 • 💻 • 🛡️) -->
+    <footer id="main-footer" class="text-center mt-16 text-gray-400 text-xs pb-8 space-y-3 select-none border-t border-gray-200/50 pt-8">
+        <p>Lógica Aplicada à Computação &bull; Análise e Desenvolvimento de Sistemas</p>
+        <p class="text-gray-500 font-semibold">Material Didático Interativo &bull; Prof. Iran Rodrigues</p>
+
+        <!-- CAÇA-NÍQUEIS DE EMOJIS (SENHA: 🔒 • 💻 • 🛡️ [ÍNDICES 4, 1, 6]) -->
+        <div class="pt-2 flex flex-col items-center justify-center gap-2">
+            <div class="inline-flex items-center gap-2 bg-white px-3 py-1.5 rounded-2xl border border-gray-200 shadow-sm">
+                <button type="button" onclick="spinSlot(0)" id="slot-0" class="slot-reel text-lg w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 hover:bg-cyan-50 border border-gray-200 active:scale-90 transition-all cursor-pointer select-none">
+                    🎲
+                </button>
+                <button type="button" onclick="spinSlot(1)" id="slot-1" class="slot-reel text-lg w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 hover:bg-cyan-50 border border-gray-200 active:scale-90 transition-all cursor-pointer select-none">
+                    🎮
+                </button>
+                <button type="button" onclick="spinSlot(2)" id="slot-2" class="slot-reel text-lg w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 hover:bg-cyan-50 border border-gray-200 active:scale-90 transition-all cursor-pointer select-none">
+                    ⭐
+                </button>
+            </div>
+        </div>
+
+        <div id="gabarito-checkbox-wrapper" class="hidden pt-2 transition-all">
+            <label class="text-gray-600 hover:text-[#003B71] text-[11px] font-normal cursor-pointer inline-flex items-center gap-2 select-none transition-colors">
+                <input type="checkbox" id="toggle-gabarito-checkbox" onchange="onToggleGabaritoCheckbox()" class="accent-[#00AEEF] cursor-pointer">
+                <span>exibir links para o gabarito</span>
+            </label>
+        </div>
+    </footer>
+
+    <script>
+        /* ESTADO GERAL DA APLICAÇÃO */
+        const state = {
+            ex1: {},
+            ex2: {},
+            ex3: {},
+            ex4: {},
+            ex5: {},
+            quiz: {},
+            quizScore: 0
+        };
+
+        function playFaahSound() {
+            try {
+                const audio = new Audio('../common/faah.mp3');
+                audio.play().catch(err => {
+                    console.log("Não foi possível reproduzir o áudio.", err);
+                });
+            } catch (err) {
+                console.log("Áudio não disponível ou bloqueado pelo navegador.");
+            }
+        }
+
+        /* BANCO DE DADOS EM MEMÓRIA DO SIMULADOR SQL */
+        const mockAccountsDatabase = [
+            { id: 101, titular: "Carlos Silva", saldo: 8500.0, status: "ATIVO", limite_credito: 10000.0 },
+            { id: 102, titular: "Mariana Souza", saldo: 1200.0, status: "ATIVO", limite_credito: null },
+            { id: 103, titular: "Tech Logística ME", saldo: -450.0, status: "BLOQUEADO", limite_credito: 0.0 },
+            { id: 104, titular: "Roberto Dias", saldo: 6000.0, status: "ATIVO", limite_credito: 5000.0 },
+            { id: 105, titular: "Fernanda Lima", saldo: 0.0, status: "ATIVO", limite_credito: null },
+            { id: 106, titular: "Global Trade S/A", saldo: 24000.0, status: "ATIVO", limite_credito: 50000.0 }
+        ];
+
+        function switchLabTab(tab) {
+            const btnSql = document.getElementById('tab-btn-sql');
+            const btnDbc = document.getElementById('tab-btn-dbc');
+            const panelSql = document.getElementById('lab-panel-sql');
+            const panelDbc = document.getElementById('lab-panel-dbc');
+
+            if (tab === 'sql') {
+                btnSql.className = 'px-4 py-2 rounded-xl text-xs font-bold bg-[#003B71] text-white transition shadow-xs';
+                btnDbc.className = 'px-4 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition';
+                panelSql.classList.remove('hidden');
+                panelDbc.classList.add('hidden');
+            } else {
+                btnDbc.className = 'px-4 py-2 rounded-xl text-xs font-bold bg-emerald-700 text-white transition shadow-xs';
+                btnSql.className = 'px-4 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition';
+                panelDbc.classList.remove('hidden');
+                panelSql.classList.add('hidden');
+            }
+        }
+
+        function runSqlSimulator() {
+            const predKey = document.getElementById('sql-pred-select')?.value || 'ativos_com_saldo';
+            const displayEl = document.getElementById('sql-query-display');
+            const tbody = document.getElementById('sql-table-body');
+            const summaryEl = document.getElementById('sql-truth-set-summary');
+            const countEl = document.getElementById('sql-count-badge');
+
+            let predFilterFn;
+            let predText;
+
+            switch (predKey) {
+                case 'ativos_com_saldo':
+                    predText = "saldo >= 5000 AND status = 'ATIVO'";
+                    predFilterFn = t => (t.saldo >= 5000) && (t.status === 'ATIVO');
+                    break;
+                case 'bloqueados_ou_zerados':
+                    predText = "saldo <= 0 OR status = 'BLOQUEADO'";
+                    predFilterFn = t => (t.saldo <= 0) || (t.status === 'BLOQUEADO');
+                    break;
+                case 'nulos_unknown':
+                    predText = "limite_credito IS NULL";
+                    predFilterFn = t => t.limite_credito === null;
+                    break;
+                case 'operacao_complexa':
+                    predText = "saldo > 1000 AND (status = 'ATIVO' OR limite_credito >= 5000)";
+                    predFilterFn = t => (t.saldo > 1000) && (t.status === 'ATIVO' || (t.limite_credito !== null && t.limite_credito >= 5000));
+                    break;
+            }
+
+            if (displayEl) displayEl.innerText = predText;
+
+            let trueTuples = [];
+
+            tbody.innerHTML = mockAccountsDatabase.map(t => {
+                const isMatch = predFilterFn(t);
+                if (isMatch) trueTuples.push(t.id);
+
+                return `
+                    <tr class="${isMatch ? 'bg-emerald-50/80 font-bold' : 'text-gray-400 hover:bg-gray-50'}">
+                        <td class="p-2.5 border-b border-gray-100">${t.id}</td>
+                        <td class="p-2.5 border-b border-gray-100 ${isMatch ? 'text-gray-900' : ''}">${t.titular}</td>
+                        <td class="p-2.5 border-b border-gray-100 ${t.saldo < 0 ? 'text-rose-600 font-bold' : ''}">R$ ${t.saldo.toFixed(2)}</td>
+                        <td class="p-2.5 border-b border-gray-100">${t.status}</td>
+                        <td class="p-2.5 border-b border-gray-100 font-mono">${t.limite_credito === null ? '<span class="text-amber-600 italic">NULL</span>' : 'R$ ' + t.limite_credito.toFixed(2)}</td>
+                        <td class="p-2.5 border-b border-gray-100 text-center">
+                            ${isMatch 
+                                ? '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px]">TRUE (no V<sub>p</sub>)</span>'
+                                : '<span class="bg-gray-100 text-gray-500 px-2 py-0.5 rounded text-[10px]">FALSE / UNKNOWN</span>'}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            summaryEl.innerHTML = `Conjunto Verdade V<sub>p</sub> = { ${trueTuples.map(id => `ID ${id}`).join(', ')} }`;
+            countEl.innerText = `${trueTuples.length} de ${mockAccountsDatabase.length} tuplas retornadas`;
+        }
+
+        function executeDbcSimulation() {
+            const saldo = parseFloat(document.getElementById('dbc-saldo-input').value) || 0;
+            const saque = parseFloat(document.getElementById('dbc-saque-input').value) || 0;
+            const status = document.getElementById('dbc-status-input').value;
+
+            const reqType = document.getElementById('dbc-req-select')?.value || 'padrao';
+            const ensType = document.getElementById('dbc-ens-select')?.value || 'exato';
+            const invType = document.getElementById('dbc-inv-select')?.value || 'nao_negativo';
+
+            const cardReq = document.getElementById('dbc-check-require');
+            const badgeReq = document.getElementById('dbc-badge-require');
+            const cardEns = document.getElementById('dbc-check-ensure');
+            const badgeEns = document.getElementById('dbc-badge-ensure');
+            const cardInv = document.getElementById('dbc-check-inv');
+            const badgeInv = document.getElementById('dbc-badge-inv');
+            const resultBox = document.getElementById('dbc-result-box');
+
+            const reqFormulaEl = document.getElementById('dbc-req-formula-display');
+            const ensFormulaEl = document.getElementById('dbc-ens-formula-display');
+            const invFormulaEl = document.getElementById('dbc-inv-formula-display');
+
+            // Atualiza exibição das fórmulas escolhidas
+            if (reqType === 'padrao') reqFormulaEl.innerText = "valor > 0 AND saldo >= valor AND status == 'ATIVA'";
+            else if (reqType === 'sem_status') reqFormulaEl.innerText = "valor > 0 AND saldo >= valor";
+            else reqFormulaEl.innerText = "valor > 0";
+
+            if (ensType === 'exato') ensFormulaEl.innerText = "saldo_final == saldo_inicial - valor";
+            else ensFormulaEl.innerText = "saldo_final == saldo_inicial - valor - 5.0";
+
+            if (invType === 'nao_negativo') invFormulaEl.innerText = "∀t, saldo(t) >= 0";
+            else invFormulaEl.innerText = "∀t, saldo(t) >= -500";
+
+            // 1. Avaliação da Pré-condição selecionada
+            let reqOk = false;
+            if (reqType === 'padrao') {
+                reqOk = (saque > 0) && (saldo >= saque) && (status === 'ATIVA');
+            } else if (reqType === 'sem_status') {
+                reqOk = (saque > 0) && (saldo >= saque);
+            } else if (reqType === 'permite_negativo') {
+                reqOk = (saque > 0);
+            }
+
+            if (reqOk) {
+                cardReq.className = 'p-3 rounded-xl border bg-emerald-50 border-emerald-300 text-xs flex items-center justify-between text-emerald-950';
+                badgeReq.className = 'font-bold text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded';
+                badgeReq.innerText = 'CUMPRIDA';
+            } else {
+                cardReq.className = 'p-3 rounded-xl border bg-rose-50 border-rose-300 text-xs flex items-center justify-between text-rose-950';
+                badgeReq.className = 'font-bold text-[10px] bg-rose-600 text-white px-2 py-0.5 rounded';
+                badgeReq.innerText = 'VIOLADA (ERRO CLIENTE)';
+            }
+
+            if (!reqOk) {
+                cardEns.className = 'p-3 rounded-xl border bg-gray-50 border-gray-200 text-xs flex items-center justify-between text-gray-400 opacity-60';
+                badgeEns.className = 'font-bold text-[10px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded';
+                badgeEns.innerText = 'NÃO EXECUTADA';
+
+                cardInv.className = 'p-3 rounded-xl border bg-gray-50 border-gray-200 text-xs flex items-center justify-between text-gray-400 opacity-60';
+                badgeInv.className = 'font-bold text-[10px] bg-gray-300 text-gray-600 px-2 py-0.5 rounded';
+                badgeInv.innerText = 'ESTADO INALTERADO';
+
+                resultBox.className = 'p-3 rounded-xl border border-rose-300 bg-rose-50 text-rose-900 text-xs font-mono font-bold';
+                resultBox.innerHTML = `[PreconditionError] O chamador violou a pré-condição! O método foi abortado e não executou qualquer alteração de estado.`;
+                return;
+            }
+
+            // Simulação da operação conforme pós-condição
+            const tarifa = (ensType === 'com_tarifa') ? 5.0 : 0.0;
+            const saldoFinal = saldo - saque - tarifa;
+
+            cardEns.className = 'p-3 rounded-xl border bg-emerald-50 border-emerald-300 text-xs flex items-center justify-between text-emerald-950';
+            badgeEns.className = 'font-bold text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded';
+            badgeEns.innerText = 'GARANTIDA';
+
+            // Avaliação da Invariante de Classe selecionada
+            let invOk = false;
+            if (invType === 'nao_negativo') {
+                invOk = (saldoFinal >= 0);
+            } else if (invType === 'limite_cheque_especial') {
+                invOk = (saldoFinal >= -500);
+            }
+
+            if (invOk) {
+                cardInv.className = 'p-3 rounded-xl border bg-emerald-50 border-emerald-300 text-xs flex items-center justify-between text-emerald-950';
+                badgeInv.className = 'font-bold text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded';
+                badgeInv.innerText = 'PRESERVADA';
+
+                resultBox.className = 'p-3 rounded-xl border border-emerald-300 bg-emerald-50 text-emerald-900 text-xs font-mono font-bold';
+                resultBox.innerHTML = `[Sucesso] Contrato cumprido por ambas as partes! Saldo inicial: R$ ${saldo.toFixed(2)} &rarr; Saldo final: R$ ${saldoFinal.toFixed(2)}. Invariante preservada.`;
+            } else {
+                cardInv.className = 'p-3 rounded-xl border bg-rose-50 border-rose-300 text-xs flex items-center justify-between text-rose-950';
+                badgeInv.className = 'font-bold text-[10px] bg-rose-600 text-white px-2 py-0.5 rounded';
+                badgeInv.innerText = 'QUEBRADA';
+
+                resultBox.className = 'p-3 rounded-xl border border-rose-300 bg-rose-50 text-rose-900 text-xs font-mono font-bold';
+                resultBox.innerHTML = `[InvariantError] O método quebrou o invariante de classe! Saldo final de R$ ${saldoFinal.toFixed(2)} violou o limite estabelecido.`;
+            }
+        }
+
+        /* DADOS DO EXERCÍCIO 1: PREDICADOS SQL E LÓGICA TRIVALENTE */
+        const ex1Data = [
+            { id: '1A', expr: "NULL = NULL em SQL avalia como TRUE", correct: 'Falso', reason: 'Em SQL padrão, qualquer comparação direta de igualdade envolvendo NULL resulta no valor lógico UNKNOWN, e não TRUE.' },
+            { id: '1B', expr: "WHERE status = 'ATIVO' descarta linhas onde status é NULL", correct: 'Verdadeiro', reason: 'A cláusula WHERE inclui apenas tuplas cujo predicado é estritamente TRUE. Como status = NULL resulta em UNKNOWN, a linha é excluída.' },
+            { id: '1C', expr: "WHERE p OR TRUE sempre inclui a tupla, mesmo se p for UNKNOWN", correct: 'Verdadeiro', reason: 'Pela tabela de verdade trivalente de Kleene, UNKNOWN OR TRUE avalia infalivelmente como TRUE.' },
+            { id: '1D', expr: "WHERE NOT(salario > 5000) equivale exatamente a WHERE salario <= 5000", correct: 'Falso', reason: 'Se salario for NULL, salario > 5000 resulta em UNKNOWN e NOT(UNKNOWN) permanece UNKNOWN (não entra). Embora ambas excluam o NULL, a negação clássica não se preserva como complementar estrito em presença de nulos.' },
+            { id: '1E', expr: "WHERE id IN (1, 2) opera a união lógica: (id = 1) OR (id = 2)", correct: 'Verdadeiro', reason: 'O operador IN expande-se exatamente para uma disjunção de predicados de igualdade conectados pelo conectivo lógico OR.' },
+            { id: '1F', expr: "O conjunto retornado por SELECT * FROM T WHERE NOT(p) é U &mdash; V<sub>p</sub> (em dados sem nulos)", correct: 'Verdadeiro', reason: 'O operador NOT em predicados booleanos sem valores nulos seleciona precisamente o conjunto complementar das tuplas: a diferença de conjuntos U — V<sub>p</sub>.' }
+        ];
+
+        function renderEx1() {
+            const container = document.getElementById('ex1-items-container');
+            const isGabaritoVisible = document.getElementById('toggle-gabarito-checkbox')?.checked;
+
+            container.innerHTML = ex1Data.map(item => `
+                <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3" id="box-ex1-${item.id}">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+                        <span class="bg-[#003B71] text-white font-extrabold text-[11px] px-2.5 py-0.5 rounded">${item.id}</span>
+                        <button type="button" onclick="toggleAnswer('ex1', '${item.id}')" class="gabarito-btn ${isGabaritoVisible ? '' : 'hidden'} text-[10px] font-bold text-[#00AEEF] hover:underline flex items-center gap-1">
+                            <i class="fas fa-eye text-[9px]"></i> Gabarito
+                        </button>
+                    </div>
+
+                    <div class="space-y-1">
+                        <span class="code-font font-bold text-xs text-[#003B71] block">${item.expr}</span>
+                    </div>
+
+                    <div class="space-y-2 pt-1">
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="selectEx1('${item.id}', 'Verdadeiro')" id="btn-ex1-${item.id}-Verdadeiro" class="interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300">
+                                Verdadeiro
+                            </button>
+                            <button type="button" onclick="selectEx1('${item.id}', 'Falso')" id="btn-ex1-${item.id}-Falso" class="interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-rose-50 hover:border-rose-300">
+                                Falso
+                            </button>
+                        </div>
+                        <div id="feedback-ex1-${item.id}" class="hidden text-[11px] p-1.5 rounded-lg font-bold"></div>
+                        
+                        <div id="answer-ex1-${item.id}" class="hidden bg-emerald-50 border border-emerald-200 p-2.5 rounded-lg text-[11px] space-y-1">
+                            <span class="font-extrabold text-emerald-900 block">Resposta Correta: ${item.correct}</span>
+                            <p class="text-gray-600 text-[10px] leading-relaxed">${item.reason}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectEx1(id, val) {
+            state.ex1[id] = val;
+            const btnV = document.getElementById(`btn-ex1-${id}-Verdadeiro`);
+            const btnF = document.getElementById(`btn-ex1-${id}-Falso`);
+
+            btnV.className = val === 'Verdadeiro' 
+                ? 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-black bg-emerald-600 text-white border-emerald-700 shadow-xs'
+                : 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-emerald-50';
+
+            btnF.className = val === 'Falso'
+                ? 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-black bg-rose-600 text-white border-rose-700 shadow-xs'
+                : 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-rose-50';
+
+            document.getElementById(`feedback-ex1-${id}`)?.classList.add('hidden');
+        }
+
+        function checkEx1() {
+            ex1Data.forEach(item => {
+                const userVal = state.ex1[item.id];
+                const feedback = document.getElementById(`feedback-ex1-${item.id}`);
+                const box = document.getElementById(`box-ex1-${item.id}`);
+                if (!feedback) return;
+
+                feedback.classList.remove('hidden');
+
+                if (!userVal) {
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-amber-50 text-amber-800 border border-amber-200';
+                    feedback.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Escolha Verdadeiro ou Falso.';
+                } else if (userVal === item.correct) {
+                    box.classList.remove('border-rose-300', 'bg-rose-50/20');
+                    box.classList.add('border-emerald-300', 'bg-emerald-50/20');
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+                    feedback.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Correto!';
+                } else {
+                    box.classList.remove('border-emerald-300', 'bg-emerald-50/20');
+                    box.classList.add('border-rose-300', 'bg-rose-50/20');
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-rose-100 text-rose-800 border border-rose-200';
+                    feedback.innerHTML = '<i class="fas fa-times-circle mr-1"></i> Incorreto.';
+                }
+            });
+        }
+
+        function resetEx1() {
+            state.ex1 = {};
+            ex1Data.forEach(item => {
+                const box = document.getElementById(`box-ex1-${item.id}`);
+                if (box) box.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3';
+                const btnV = document.getElementById(`btn-ex1-${item.id}-Verdadeiro`);
+                const btnF = document.getElementById(`btn-ex1-${item.id}-Falso`);
+                if (btnV) btnV.className = 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300';
+                if (btnF) btnF.className = 'interactive-btn-val flex-1 py-1.5 rounded-lg border text-xs font-bold text-gray-700 bg-gray-50 hover:bg-rose-50 hover:border-rose-300';
+                document.getElementById(`feedback-ex1-${item.id}`)?.classList.add('hidden');
+                document.getElementById(`answer-ex1-${item.id}`)?.classList.add('hidden');
+            });
+        }
+
+        /* DADOS DO EXERCÍCIO 2: FORMALIZAÇÃO DE WHERE E EXISTS */
+        const ex2Data = [
+            {
+                id: '2A',
+                statement: '"Selecionar clientes que realizaram pelo menos um pedido acima de R$ 5000."',
+                options: [
+                    "SELECT * FROM Clientes c WHERE NOT EXISTS (SELECT 1 FROM Pedidos p WHERE p.cli_id = c.id)",
+                    "SELECT * FROM Clientes c WHERE EXISTS (SELECT 1 FROM Pedidos p WHERE p.cli_id = c.id AND p.valor > 5000)",
+                    "SELECT * FROM Clientes c WHERE c.limite = ALL (SELECT p.valor FROM Pedidos p)",
+                    "SELECT * FROM Clientes c WHERE c.id IN (SELECT p.cli_id FROM Pedidos p WHERE p.valor <= 5000)"
+                ],
+                correct: "SELECT * FROM Clientes c WHERE EXISTS (SELECT 1 FROM Pedidos p WHERE p.cli_id = c.id AND p.valor > 5000)",
+                reason: 'A expressão "pelo menos um pedido" formaliza a existência (∃). O operador correlacionado EXISTS verifica se o conjunto verdade da subconsulta é não-vazio.'
+            },
+            {
+                id: '2B',
+                statement: '"Selecionar departamentos onde TODOS os funcionários ganham acima de R$ 3000."',
+                options: [
+                    "SELECT * FROM Departamentos d WHERE EXISTS (SELECT 1 FROM Funcionarios f WHERE f.dept_id = d.id AND f.salario > 3000)",
+                    "SELECT * FROM Departamentos d WHERE NOT EXISTS (SELECT 1 FROM Funcionarios f WHERE f.dept_id = d.id AND f.salario <= 3000)",
+                    "SELECT * FROM Departamentos d WHERE d.orcamento > 3000",
+                    "SELECT * FROM Departamentos d WHERE d.id = ANY (SELECT f.dept_id FROM Funcionarios f)"
+                ],
+                correct: "SELECT * FROM Departamentos d WHERE NOT EXISTS (SELECT 1 FROM Funcionarios f WHERE f.dept_id = d.id AND f.salario <= 3000)",
+                reason: 'A afirmação universal (∀f, salario > 3000) é equivalente por De Morgan a ~∃f | ~(salario > 3000), o que se expressa como NOT EXISTS (... WHERE salario <= 3000).'
+            },
+            {
+                id: '2C',
+                statement: '"Encontrar produtos que nunca foram devolvidos em nenhuma venda."',
+                options: [
+                    "SELECT * FROM Produtos p WHERE EXISTS (SELECT 1 FROM Devolucoes d WHERE d.prod_id = p.id)",
+                    "SELECT * FROM Produtos p WHERE NOT EXISTS (SELECT 1 FROM Devolucoes d WHERE d.prod_id = p.id)",
+                    "SELECT * FROM Produtos p WHERE p.preco > 0",
+                    "SELECT * FROM Produtos p WHERE p.id = SOME (SELECT d.prod_id FROM Devolucoes d)"
+                ],
+                correct: "SELECT * FROM Produtos p WHERE NOT EXISTS (SELECT 1 FROM Devolucoes d WHERE d.prod_id = p.id)",
+                reason: '"Nunca devolvido" expressa a negação da existência (~∃d). Em SQL, isto é formulado diretamente com NOT EXISTS.'
+            },
+            {
+                id: '2D',
+                statement: '"Filtrar usuários ativos que possuem cadastro completo (obrigatoriamente AMBOS: telefone não é nulo E e-mail não é nulo)."',
+                options: [
+                    "WHERE status = 'ATIVO' OR telefone IS NULL OR email IS NULL",
+                    "WHERE status = 'ATIVO' AND telefone IS NOT NULL AND email IS NOT NULL",
+                    "WHERE status = 'ATIVO' AND (telefone IS NOT NULL OR email IS NOT NULL)",
+                    "WHERE status = 'ATIVO' AND NOT(telefone IS NULL AND email IS NULL)"
+                ],
+                correct: "WHERE status = 'ATIVO' AND telefone IS NOT NULL AND email IS NOT NULL",
+                reason: 'A conjunção lógica estrita de três predicados (p ∧ q ∧ r) requer o operador AND entre cada termo, e o teste correto de não-nulidade em SQL é IS NOT NULL.'
+            }
+        ];
+
+        function renderEx2() {
+            const container = document.getElementById('ex2-items-container');
+            const isGabaritoVisible = document.getElementById('toggle-gabarito-checkbox')?.checked;
+
+            container.innerHTML = ex2Data.map(item => `
+                <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3" id="box-ex2-${item.id}">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+                        <span class="bg-indigo-600 text-white font-extrabold text-[11px] px-2.5 py-0.5 rounded">${item.id}</span>
+                        <button type="button" onclick="toggleAnswer('ex2', '${item.id}')" class="gabarito-btn ${isGabaritoVisible ? '' : 'hidden'} text-[10px] font-bold text-[#00AEEF] hover:underline flex items-center gap-1">
+                            <i class="fas fa-eye text-[9px]"></i> Gabarito
+                        </button>
+                    </div>
+
+                    <div class="mt-1">
+                        <strong class="text-indigo-950 block text-xs font-bold leading-relaxed">${item.statement}</strong>
+                    </div>
+
+                    <div class="space-y-2 pt-1">
+                        <label class="text-[11px] font-bold text-gray-700 block">Selecione a consulta SQL logicamente equivalente:</label>
+                        <select onchange="selectEx2('${item.id}', this.value)" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2 text-xs font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <option value="">-- Selecione a consulta correspondente --</option>
+                            ${item.options.map(opt => `<option value="${opt.replace(/"/g, '&quot;')}">${opt}</option>`).join('')}
+                        </select>
+                        <div id="feedback-ex2-${item.id}" class="hidden text-[11px] p-1.5 rounded-lg font-bold"></div>
+
+                        <div id="answer-ex2-${item.id}" class="hidden bg-emerald-50 border border-emerald-200 p-2.5 rounded-lg text-[11px] space-y-1">
+                            <span class="font-extrabold text-emerald-900 block font-mono text-[10px]">Correta: ${item.correct}</span>
+                            <p class="text-gray-600 text-[10px] leading-relaxed">${item.reason}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectEx2(id, val) {
+            state.ex2[id] = val;
+            document.getElementById(`feedback-ex2-${id}`)?.classList.add('hidden');
+        }
+
+        function checkEx2() {
+            ex2Data.forEach(item => {
+                const userVal = state.ex2[item.id];
+                const feedback = document.getElementById(`feedback-ex2-${item.id}`);
+                const box = document.getElementById(`box-ex2-${item.id}`);
+                if (!feedback) return;
+
+                feedback.classList.remove('hidden');
+
+                if (!userVal) {
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-amber-50 text-amber-800 border border-amber-200';
+                    feedback.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Selecione uma opção.';
+                } else if (userVal === item.correct) {
+                    box.classList.remove('border-rose-300', 'bg-rose-50/20');
+                    box.classList.add('border-emerald-300', 'bg-emerald-50/20');
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+                    feedback.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Correto!';
+                } else {
+                    box.classList.remove('border-emerald-300', 'bg-emerald-50/20');
+                    box.classList.add('border-rose-300', 'bg-rose-50/20');
+                    feedback.className = 'text-[11px] p-1.5 rounded-lg font-bold bg-rose-100 text-rose-800 border border-rose-200';
+                    feedback.innerHTML = '<i class="fas fa-times-circle mr-1"></i> Incorreto.';
+                }
+            });
+        }
+
+        function resetEx2() {
+            state.ex2 = {};
+            ex2Data.forEach(item => {
+                const box = document.getElementById(`box-ex2-${item.id}`);
+                if (box) box.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3';
+                document.getElementById(`feedback-ex2-${item.id}`)?.classList.add('hidden');
+                document.getElementById(`answer-ex2-${item.id}`)?.classList.add('hidden');
+            });
+            renderEx2();
+        }
+
+        /* DADOS DO EXERCÍCIO 3: CLASSIFICAÇÃO DE CLÁUSULAS DBC */
+        const ex3Questions = [
+            {
+                id: '3A',
+                desc: 'Considere a assertiva C1 em uma classe de Pilha (Stack): "tamanho >= 0 e tamanho <= capacidade_maxima"',
+                subItems: [
+                    { id: '3A_1', text: 'Esta assertiva classifica-se formalmente como:', options: ['Pré-condição (require)', 'Pós-condição (ensure)', 'Invariante de Classe (invariant)'], correct: 'Invariante de Classe (invariant)', explain: 'O tamanho da pilha deve respeitar esses limites em todo e qualquer estado público válido da estrutura, caracterizando um invariante.' },
+                    { id: '3A_2', text: 'Quem é responsável por preservar esta condição?', options: ['O próprio objeto / método que altera o estado', 'O cliente que chama o método pop()', 'O coletor de lixo (GC)', 'O compilador estático'], correct: 'O próprio objeto / método que altera o estado', explain: 'Os invariantes de classe são garantias perpétuas sob responsabilidade do fornecedor do tipo de dado abstrato.' }
+                ]
+            },
+            {
+                id: '3B',
+                desc: 'Considere a assertiva C2 no início do método transferir(origem, destino, valor): "valor > 0 e origem.saldo >= valor e destino != null"',
+                subItems: [
+                    { id: '3B_1', text: 'Esta assertiva classifica-se formalmente como:', options: ['Pré-condição (require)', 'Pós-condição (ensure)', 'Invariante de Classe (invariant)'], correct: 'Pré-condição (require)', explain: 'São as condições de entrada indispensáveis para que a transferência possa ocorrer sem violar regras financeiras.' },
+                    { id: '3B_2', text: 'Se C2 falhar na entrada, de quem foi a falha no contrato?', options: ['Do chamador (cliente)', 'Do método transferir()', 'Do banco de dados', 'De nenhuma parte'], correct: 'Do chamador (cliente)', explain: 'A violação de pré-condição é um bug no código cliente, que invocou o serviço com dados inválidos.' }
+                ]
+            },
+            {
+                id: '3C',
+                desc: 'Considere a assertiva C3 no método ordenar(lista): "para todo i, lista[i] <= lista[i+1] e lista contem os mesmos elementos originais"',
+                subItems: [
+                    { id: '3C_1', text: 'Esta assertiva classifica-se formalmente como:', options: ['Pré-condição (require)', 'Pós-condição (ensure)', 'Invariante de Classe (invariant)'], correct: 'Pós-condição (ensure)', explain: 'É a garantia entregue ao término do método: a lista resultante está ordenada e é uma permutação da original.' }
+                ]
+            },
+            {
+                id: '3D',
+                desc: 'Considere a relação formal no Design by Contract: P => Q',
+                subItems: [
+                    { id: '3D_1', text: 'Se a pré-condição P for FALSA, o que o contrato afirma sobre a pós-condição Q?', options: ['Q deve ser obrigatoriamente verdadeira', 'Q deve ser obrigatoriamente falsa', 'O método não é obrigado a garantir Q (o contrato é satisfeito por vacuidade)', 'Gera um erro de sintaxe no compilador'], correct: 'O método não é obrigado a garantir Q (o contrato é satisfeito por vacuidade)', explain: 'Na lógica proposicional, quando o antecedente P é falso, a condicional P => Q é verdadeira por vacuidade (ex falso quodlibet). O método não é obrigado a entregar Q se P não foi satisfeita.' }
+                ]
+            }
+        ];
+
+        /* DADOS DO EXERCÍCIO 4: DIAGNÓSTICO DE FALHAS */
+        const ex4Questions = [
+            {
+                id: '4A',
+                desc: 'Cenário: A API de pagamentos lançou IllegalArgumentException: "valor_parcela deve ser maior que zero" na primeira linha de calcularJuros(valor_parcela).',
+                subItems: [
+                    { id: '4A_1', text: 'Qual tipo de cláusula contratual interceptou o problema?', options: ['Pré-condição (require)', 'Pós-condição (ensure)', 'Invariante de Classe (invariant)'], correct: 'Pré-condição (require)', explain: 'A validação inicial de argumentos na fronteira do método implementa a pré-condição.' },
+                    { id: '4A_2', text: 'Onde está localizado o defeito de software (bug)?', options: ['No módulo cliente que invocou a função com valor inválido', 'Na implementação interna do método calcularJuros', 'No hardware do servidor', 'No banco de dados'], correct: 'No módulo cliente que invocou a função com valor inválido', explain: 'Quem chama tem a obrigação contratual de garantir as pré-condições antes da chamada.' }
+                ]
+            },
+            {
+                id: '4B',
+                desc: 'Cenário: Uma rotina de reserva concluiu com sucesso, mas o banco registrou assentos_disponiveis = -1 (valor negativo).',
+                subItems: [
+                    { id: '4B_1', text: 'Qual assertiva formal de integridade foi violada?', options: ['Pré-condição (require)', 'Pós-condição (ensure)', 'Invariante de Classe (invariant)'], correct: 'Invariante de Classe (invariant)', explain: 'O sistema permitiu que o estado do domínio atingisse uma configuração que deveria ser universalmente impossível (assentos_disponiveis >= 0).' },
+                    { id: '4B_2', text: 'De quem é a responsabilidade pela quebra do invariante?', options: ['Do fornecedor (implementação do serviço de reserva que permitiu overbooking)', 'Do usuário final que clicou rápido demais', 'Do navegador web', 'Do provedor de internet'], correct: 'Do fornecedor (implementação do serviço de reserva que permitiu overbooking)', explain: 'A preservação dos invariantes públicos é dever estrito do serviço que realiza as mutações.' }
+                ]
+            },
+            {
+                id: '4C',
+                desc: 'Cenário: Um algoritmo de busca binária, cuja especificação formal requer como pré-condição mandatória que a coleção de entrada esteja previamente ordenada, recebeu um vetor desordenado v = [9, 1, 4] e falhou em encontrar o número 4.',
+                subItems: [
+                    { id: '4C_1', text: 'Por que o algoritmo não é culpado pelo erro de busca?', options: ['Porque a pré-condição mandatória de vetor ordenado foi violada pelo cliente chamador', 'Porque a busca binária só funciona para números negativos', 'Porque 4 não é um número primo', 'Porque a busca binária gera loop infinito'], correct: 'Porque a pré-condição mandatória de vetor ordenado foi violada pelo cliente chamador', explain: 'A busca binária tem como pré-condição formal estrita que a coleção de entrada esteja ordenada. Quando o cliente viola a pré-condição, a garantia de busca correta deixa de existir.' }
+                ]
+            },
+            {
+                id: '4D',
+                desc: 'Cenário: Uma função de raiz quadrada real sqrt(x) calcula retorne y tal que y * y == x.',
+                subItems: [
+                    { id: '4D_1', text: 'Qual é a pré-condição necessária sobre x no domínio dos números reais (ℝ)?', options: ['x >= 0', 'x < 0', 'x == 0 apenas', 'x != 1'], correct: 'x >= 0', explain: 'Para que a raiz quadrada real exista (y ∈ ℝ), o radicando não pode ser negativo.' },
+                    { id: '4D_2', text: 'Qual é a pós-condição garantida sobre o resultado y?', options: ['y >= 0 e y * y == x', 'y < 0', 'y == x', 'y é número par'], correct: 'y >= 0 e y * y == x', explain: 'A função garante a raiz quadrada principal (não-negativa) que reproduz x quando elevada ao quadrado.' }
+                ]
+            }
+        ];
+
+        /* DADOS DO EXERCÍCIO 5: PSEUDOCÓDIGO COM CONTRATOS */
+        const ex5Questions = [
+            {
+                id: '5A',
+                desc: 'Analise o contrato formal da rotina de saque bancário em pseudocódigo:',
+                code: `funcao sacar(conta, valor):
+    // Pre-condicao (require)
+    se (valor <= 0 OU conta.saldo < valor):
+        lancar ErroPrecondicao("Dados invalidos")
+    
+    saldo_anterior = conta.saldo
+    conta.saldo = conta.saldo - valor
+    
+    // Pos-condicao (ensure)
+    assegurar(conta.saldo == saldo_anterior - valor)
+    // Invariante de classe
+    assegurar(conta.saldo >= 0)`,
+                subItems: [
+                    { id: '5A_1', text: 'Qual das seguintes chamadas violará imediatamente a pré-condição?', options: ['sacar(conta_com_100, 50)', 'sacar(conta_com_100, 150)', 'sacar(conta_com_500, 10)', 'sacar(conta_com_200, 200)'], correct: 'sacar(conta_com_100, 150)', explain: 'O valor 150 excede o saldo disponível de 100, violando a regra conta.saldo >= valor.' },
+                    { id: '5A_2', text: 'O papel da linha "assegurar(conta.saldo >= 0)" no final é:', options: ['Garantir o invariante de que nenhuma conta fica com saldo negativo', 'Calcular o imposto sobre o saque', 'Permitir cheque especial', 'Fechar a conexão do banco'], correct: 'Garantir o invariante de que nenhuma conta fica com saldo negativo', explain: 'Verifica a consistência universal do estado após a transação.' }
+                ]
+            },
+            {
+                id: '5B',
+                desc: 'Analise o invariante de laço em um algoritmo de cálculo de somatório:',
+                code: `funcao somatorio(vetor, n):
+    // Pre-condicao: n >= 0
+    soma = 0
+    i = 0
+    enquanto (i < n):
+        // Invariante de laco:
+        // soma == soma dos elementos vetor[0..i-1]
+        soma = soma + vetor[i]
+        i = i + 1
+    // Pos-condicao: soma == soma total vetor[0..n-1]
+    retorne soma`,
+                subItems: [
+                    { id: '5B_1', text: 'Antes de entrar no loop (i = 0, soma = 0), o invariante de laço é:', options: ['Verdadeiro por vacuidade (soma de 0 elementos é 0)', 'Falso pois o loop ainda não começou', 'Indefinido', 'Erro de compilação'], correct: 'Verdadeiro por vacuidade (soma de 0 elementos é 0)', explain: 'Na inicialização (base indutiva), a soma de nenhum elemento é zero, preservando o invariante.' },
+                    { id: '5B_2', text: 'Ao término do laço (quando i == n), o invariante garante que:', options: ['A pós-condição foi alcançada com a soma de todos os n elementos', 'Ocorreu estouro de pilha', 'O vetor foi esvaziado', 'Apenas o último elemento foi somado'], correct: 'A pós-condição foi alcançada com a soma de todos os n elementos', explain: 'A conjunção do invariante com a condição de término (i == n) prova a correção da pós-condição.' }
+                ]
+            },
+            {
+                id: '5C',
+                desc: 'Verificação em Serviço de Autenticação com Token JWT:',
+                code: `funcao validar_sessao(token, timestamp_atual):
+    // Pre-condicao
+    se (token == nulo OU token.tamanho == 0):
+        retorne falso
+    
+    // Predicado de expiracao: p(token)
+    se (timestamp_atual > token.expira_em):
+        retorne falso // Token expirado
+        
+    retorne verdadeiro`,
+                subItems: [
+                    { id: '5C_1', text: 'A cláusula "token == nulo OU token.tamanho == 0" previne:', options: ['Falha de execução por ponteiro nulo (NullPointerException)', 'Que o token seja renovado', 'O login de usuários válidos', 'Criptografia fraca'], correct: 'Falha de execução por ponteiro nulo (NullPointerException)', explain: 'A pré-condição atua como salvaguarda para impedir acesso a propriedades em referências nulas.' },
+                    { id: '5C_2', text: 'O conjunto verdade dos tokens válidos no sistema é formalizado como:', options: ['V<sub>p</sub> = { t | t != null ∧ t.expira_em >= timestamp_atual }', 'V<sub>p</sub> = { t | t.expira_em < 0 }', 'V<sub>p</sub> = ∅', 'V<sub>p</sub> = { t | t.tamanho == 0 }'], correct: 'V<sub>p</sub> = { t | t != null ∧ t.expira_em >= timestamp_atual }', explain: 'Apenas tokens não-nulos com data de expiração no futuro ou presente são aceitos.' }
+                ]
+            },
+            {
+                id: '5D',
+                desc: 'Monitor de Transações Concorrentes e Locks:',
+                code: `// Tabela Transacoes: U = {t1, t2, t3}
+// Predicado: bloqueado(t) == verdadeiro
+
+funcao liberar_recursos_seguros(transacoes):
+    para cada t em transacoes:
+        se (t.esta_bloqueada == verdadeiro):
+            t.desbloquear()
+    
+    // Pos-condicao
+    // assegurar: Nenhuma transacao permanece bloqueada`,
+                subItems: [
+                    { id: '5D_1', text: 'Qual quantificador expressa formalmente a pós-condição final?', options: ['∀t ∈ U, t.esta_bloqueada == falso (ou NOT EXISTS t | t.esta_bloqueada)', '∃t ∈ U | t.esta_bloqueada == verdadeiro', '∃!t ∈ U | t.esta_bloqueada == verdadeiro', '∀t ∈ U, t.esta_bloqueada == verdadeiro'], correct: '∀t ∈ U, t.esta_bloqueada == falso (ou NOT EXISTS t | t.esta_bloqueada)', explain: 'Garantir que nenhuma transação permaneça bloqueada equivale a universalmente todas estarem desbloqueadas.' }
+                ]
+            }
+        ];
+
+        /* FORMATADOR DE CÓDIGO COM PROTEÇÃO DE COMENTÁRIOS */
+        function formatPseudocodeSafe(code) {
+            const lines = code.split('\n');
+            const formattedLines = lines.map(line => {
+                const commentIdx = line.indexOf('//');
+                if (commentIdx !== -1) {
+                    const codePart = line.substring(0, commentIdx);
+                    const commentPart = line.substring(commentIdx);
+                    const highlightedCode = highlightKeywords(codePart);
+                    return `${highlightedCode}<span class="text-slate-500 italic">${commentPart}</span>`;
+                } else {
+                    return highlightKeywords(line);
+                }
+            });
+            return formattedLines.join('\n');
+        }
+
+        function highlightKeywords(str) {
+            return str
+                .replace(/\b(funcao|retorne|se|para cada|em|enquanto|assegurar)\b/g, '<span class="text-pink-400 font-bold">$1</span>')
+                .replace(/\b(verdadeiro|falso|nulo)\b/g, '<span class="text-amber-300 font-bold">$1</span>');
+        }
+
+        /* RENDERIZADOR PADRONIZADO DOS EXERCÍCIOS AGRUPADOS */
+        function renderGroupedExercises(data, containerId, stateKey) {
+            const isGabaritoVisible = document.getElementById('toggle-gabarito-checkbox')?.checked;
+            const container = document.getElementById(containerId);
+
+            container.innerHTML = data.map(card => `
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-200 border-l-8 border-[#003B71] exercise-card space-y-3.5 shadow-sm" id="card-${stateKey}-${card.id}">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+                        <span class="bg-[#003B71] text-white font-extrabold text-[11px] px-2.5 py-0.5 rounded">
+                            ${card.id}
+                        </span>
+                        <button type="button" onclick="toggleAnswer('${stateKey}', '${card.id}')" class="gabarito-btn ${isGabaritoVisible ? '' : 'hidden'} text-[11px] font-bold text-[#00AEEF] hover:underline flex items-center gap-1 transition">
+                            <i class="fas fa-eye text-[10px]"></i> Gabarito
+                        </button>
+                    </div>
+                    
+                    <p class="text-xs text-gray-800 font-semibold leading-relaxed whitespace-pre-line">${card.desc}</p>
+
+                    ${card.code ? `
+                        <div class="bg-slate-900 text-slate-100 rounded-xl p-3.5 border border-slate-800 font-mono text-[11px] leading-relaxed shadow-inner overflow-x-auto">
+                            <div class="flex items-center gap-1.5 pb-2 mb-2 border-b border-slate-800/80 text-[10px] text-slate-400 select-none">
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block"></span>
+                                <span class="ml-2 font-sans font-semibold text-cyan-400">pseudocodigo</span>
+                            </div>
+                            <pre class="whitespace-pre overflow-x-auto text-emerald-300"><code>${formatPseudocodeSafe(card.code)}</code></pre>
+                        </div>
+                    ` : ''}
+
+                    <div class="space-y-3 pt-1">
+                        ${card.subItems.map(sub => {
+                            const isBoolean = sub.options.length === 2 && sub.options.includes('Verdadeiro') && sub.options.includes('Falso');
+                            const gridClass = isBoolean ? 'grid grid-cols-1 sm:grid-cols-2 gap-1.5' : 'grid grid-cols-1 gap-1.5';
+
+                            return `
+                            <div class="bg-gray-50 border border-gray-200 p-2.5 rounded-xl space-y-2" id="box-sub-${sub.id}">
+                                <span class="text-xs font-bold text-gray-800 block">${sub.text}</span>
+                                <div class="${gridClass} text-xs">
+                                    ${sub.options.map(opt => `
+                                        <label class="flex items-center gap-2 bg-white p-2 rounded-lg border border-gray-200 hover:border-[#00AEEF] cursor-pointer shadow-2xs">
+                                            <input type="radio" name="radio-${sub.id}" value="${opt}" onchange="selectSubItem('${stateKey}', '${sub.id}', this.value)" class="accent-[#00AEEF] cursor-pointer">
+                                            <span class="font-mono text-gray-700 text-[11px]">${opt}</span>
+                                        </label>
+                                    `).join('')}
+                                </div>
+                                <div id="feedback-sub-${sub.id}" class="hidden text-[10px] p-1.5 rounded-lg font-bold"></div>
+                            </div>
+                        `;}).join('')}
+                    </div>
+
+                    <div id="answer-${stateKey}-${card.id}" class="hidden bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs space-y-2 mt-2">
+                        <strong class="text-emerald-950 uppercase font-extrabold text-[11px] flex items-center gap-1 border-b border-emerald-200 pb-1">
+                            <i class="fas fa-check-circle text-emerald-600"></i> Respostas e Justificativas:
+                        </strong>
+                        <div class="space-y-1">
+                            ${card.subItems.map(sub => `
+                                <div class="bg-white p-2 rounded border border-emerald-200">
+                                    <span class="font-bold text-indigo-950 font-mono text-[11px] block">${sub.text} &rarr; <span class="text-emerald-700">${sub.correct}</span></span>
+                                    <span class="text-[10px] text-gray-600 block mt-0.5">${sub.explain}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectSubItem(stateKey, subId, val) {
+            state[stateKey][subId] = val;
+            document.getElementById(`feedback-sub-${subId}`)?.classList.add('hidden');
+        }
+
+        function checkFormGroup(data, stateKey) {
+            data.forEach(card => {
+                card.subItems.forEach(sub => {
+                    const userVal = state[stateKey][sub.id];
+                    const feedback = document.getElementById(`feedback-sub-${sub.id}`);
+                    const box = document.getElementById(`box-sub-${sub.id}`);
+                    if (!feedback) return;
+
+                    feedback.classList.remove('hidden');
+
+                    if (!userVal) {
+                        feedback.className = 'text-[10px] p-1.5 rounded-lg font-bold bg-amber-50 text-amber-800 border border-amber-200';
+                        feedback.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Selecione uma opção.';
+                    } else if (userVal === sub.correct) {
+                        box.classList.remove('border-rose-300', 'bg-rose-50/20');
+                        box.classList.add('border-emerald-300', 'bg-emerald-50/20');
+                        feedback.className = 'text-[10px] p-1.5 rounded-lg font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+                        feedback.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Correto!';
+                    } else {
+                        box.classList.remove('border-emerald-300', 'bg-emerald-50/20');
+                        box.classList.add('border-rose-300', 'bg-rose-50/20');
+                        feedback.className = 'text-[10px] p-1.5 rounded-lg font-bold bg-rose-100 text-rose-800 border border-rose-200';
+                        feedback.innerHTML = '<i class="fas fa-times-circle mr-1"></i> Incorreto.';
+                    }
+                });
+            });
+        }
+
+        function checkEx3Form() { checkFormGroup(ex3Questions, 'ex3'); }
+        function checkEx4Form() { checkFormGroup(ex4Questions, 'ex4'); }
+        function checkEx5Form() { checkFormGroup(ex5Questions, 'ex5'); }
+
+        function resetFormGroup(data, stateKey, containerId) {
+            state[stateKey] = {};
+            renderGroupedExercises(data, containerId, stateKey);
+        }
+
+        function resetEx3Form() { resetFormGroup(ex3Questions, 'ex3', 'ex3-cards-container'); }
+        function resetEx4Form() { resetFormGroup(ex4Questions, 'ex4', 'ex4-cards-container'); }
+        function resetEx5Form() { resetFormGroup(ex5Questions, 'ex5', 'ex5-cards-container'); }
+
+        function toggleAnswer(stateKey, id) {
+            document.getElementById(`answer-${stateKey}-${id}`)?.classList.toggle('hidden');
+        }
+
+        /* QUIZ RÁPIDO DE FIXAÇÃO */
+        const fastQuizQuestions = [
+            {
+                q: "1. No modelo relacional, o conjunto de linhas retornado por uma consulta com WHERE p(t) corresponde a:",
+                options: [
+                    "Ao Domínio de Discurso completo da tabela (U).",
+                    "Ao Conjunto Verdade V_p contendo apenas as tuplas que avaliam p(t) como TRUE.",
+                    "Às tuplas que avaliam como UNKNOWN.",
+                    "A uma tabela temporária sem esquema."
+                ].map(opt => opt.replace(/V_p/g, 'V<sub>p</sub>')),
+                answer: 1
+            },
+            {
+                q: "2. Como o quantificador universal (∀) é formulado em SQL sobre tabelas relacionadas?",
+                options: [
+                    "Diretamente através da palavra-chave FOR ALL.",
+                    "Através de dupla negação: NOT EXISTS (... WHERE NOT ...).",
+                    "Apenas através do comando ALTER TABLE.",
+                    "Com o operador LIKE '%ALL%'."
+                ],
+                answer: 1
+            },
+            {
+                q: "3. No paradigma Design by Contract (DbC), quem tem a obrigação de satisfazer a pré-condição (requires)?",
+                options: [
+                    "O fornecedor (o próprio método que está sendo chamado).",
+                    "O cliente / chamador que está invocando o método.",
+                    "O sistema operacional.",
+                    "O driver do banco de dados."
+                ],
+                answer: 1
+            },
+            {
+                q: "4. Se um método lança uma exceção de quebra de invariante de classe logo após sua execução:",
+                options: [
+                    "O cliente enviou argumentos inválidos.",
+                    "O próprio método falhou em manter o estado do objeto consistente.",
+                    "O banco de dados desconectou.",
+                    "A pré-condição não foi checada."
+                ],
+                answer: 1
+            },
+            {
+                q: "5. Se uma expressão booleana no WHERE resulta no valor UNKNOWN (devido a comparações com NULL):",
+                options: [
+                    "A tupla é exibida normalmente.",
+                    "A consulta é abortada com erro de sintaxe.",
+                    "A tupla é descartada da resposta, pois o WHERE exige valor estritamente TRUE.",
+                    "O banco de dados substitui o valor por zero."
+                ],
+                answer: 2
+            }
+        ];
+
+        function renderFastQuiz() {
+            const container = document.getElementById('fast-quiz-container');
+            container.innerHTML = fastQuizQuestions.map((q, qIdx) => `
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2">
+                    <p class="font-bold text-xs text-[#003B71]">${q.q}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        ${q.options.map((opt, oIdx) => `
+                            <button type="button" onclick="answerFastQuiz(${qIdx}, ${oIdx})" id="btn-quiz-${qIdx}-${oIdx}" class="text-left p-2.5 rounded-lg border border-gray-200 bg-white hover:border-[#00AEEF] transition">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function answerFastQuiz(qIdx, oIdx) {
+            if (state.quiz[qIdx] !== undefined) return;
+            state.quiz[qIdx] = oIdx;
+
+            const q = fastQuizQuestions[qIdx];
+            const isCorrect = (oIdx === q.answer);
+            const btn = document.getElementById(`btn-quiz-${qIdx}-${oIdx}`);
+
+            if (isCorrect) {
+                btn.className = 'text-left p-2.5 rounded-lg border border-emerald-500 bg-emerald-100 text-emerald-800 font-bold';
+                state.quizScore++;
+            } else {
+                btn.className = 'text-left p-2.5 rounded-lg border border-rose-500 bg-rose-100 text-rose-800 font-bold';
+                const correctBtn = document.getElementById(`btn-quiz-${qIdx}-${q.answer}`);
+                correctBtn.className = 'text-left p-2.5 rounded-lg border border-emerald-500 bg-emerald-100 text-emerald-800 font-bold';
+            }
+
+            document.getElementById('quiz-score-badge').innerText = `Pontuação: ${state.quizScore} / ${fastQuizQuestions.length}`;
+        }
+
+        /* CAÇA-NÍQUEIS DE EMOJIS */
+        const slotReels = [
+            ['🎲', '🤖', '⚖️', '⚡', '🔒', '💡', '🧠', '🛠️', '🚀', '🎯'],
+            ['🎮', '💻', '🌐', '🔥', '🧩', '⚙️', '🔬', '🎨', '🔍', '🏆'],
+            ['⭐', '🏆', '🎯', '🔑', '💎', '🧪', '🛡️', '👑', '🚨', '🧭']
+        ];
+        const slotTargetIndices = [4, 1, 6];
+        const currentSlotIndices = [0, 0, 0];
+
+        function spinSlot(slotIndex) {
+            const btn = document.getElementById(`slot-${slotIndex}`);
+            if (!btn) return;
+
+            currentSlotIndices[slotIndex] = (currentSlotIndices[slotIndex] + 1) % slotReels[slotIndex].length;
+            const newEmoji = slotReels[slotIndex][currentSlotIndices[slotIndex]];
+
+            btn.classList.remove('slot-spinning');
+            void btn.offsetWidth;
+            btn.classList.add('slot-spinning');
+            btn.innerText = newEmoji;
+
+            checkSlotPassword();
+        }
+
+        function checkSlotPassword() {
+            const isUnlocked = currentSlotIndices[0] === slotTargetIndices[0] &&
+                               currentSlotIndices[1] === slotTargetIndices[1] &&
+                               currentSlotIndices[2] === slotTargetIndices[2];
+
+            const wrapper = document.getElementById('gabarito-checkbox-wrapper');
+            if (isUnlocked) {
+                if (wrapper && wrapper.classList.contains('hidden')) {
+                    playFaahSound();
+                }
+                wrapper?.classList.remove('hidden');
+            } else {
+                wrapper?.classList.add('hidden');
+                const checkbox = document.getElementById('toggle-gabarito-checkbox');
+                if (checkbox && checkbox.checked) {
+                    checkbox.checked = false;
+                    onToggleGabaritoCheckbox();
+                }
+            }
+        }
+
+        function onToggleGabaritoCheckbox() {
+            const isChecked = document.getElementById('toggle-gabarito-checkbox')?.checked;
+            const gabaritoBtns = document.querySelectorAll('.gabarito-btn');
+            gabaritoBtns.forEach(btn => {
+                if (isChecked) btn.classList.remove('hidden');
+                else btn.classList.add('hidden');
+            });
+
+            if (!isChecked) {
+                ex1Data.forEach(item => document.getElementById(`answer-ex1-${item.id}`)?.classList.add('hidden'));
+                ex2Data.forEach(item => document.getElementById(`answer-ex2-${item.id}`)?.classList.add('hidden'));
+                ex3Questions.forEach(q => document.getElementById(`answer-ex3-${q.id}`)?.classList.add('hidden'));
+                ex4Questions.forEach(q => document.getElementById(`answer-ex4-${q.id}`)?.classList.add('hidden'));
+                ex5Questions.forEach(q => document.getElementById(`answer-ex5-${q.id}`)?.classList.add('hidden'));
+            }
+        }
+
+        /* INICIALIZAÇÃO NA CARGA */
+        window.onload = function() {
+            renderEx1();
+            renderEx2();
+            runSqlSimulator();
+            renderGroupedExercises(ex3Questions, 'ex3-cards-container', 'ex3');
+            renderGroupedExercises(ex4Questions, 'ex4-cards-container', 'ex4');
+            renderGroupedExercises(ex5Questions, 'ex5-cards-container', 'ex5');
+            renderFastQuiz();
+        };
+    </script>
+</body>
+</html>
