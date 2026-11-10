@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 15: Revisão Geral VA2 - Lógica Aplicada à Computação</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f4f8;
+            padding-top: 20px;
+        }
+        .main-header {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo-container {
+            width: 180px;
+        }
+        .header-info {
+            text-align: right;
+            border-left: 2px solid #e5e7eb;
+            padding-left: 20px;
+        }
+        .header-info h2 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #254a8d;
+        }
+        .header-info p {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+        .header-info .sub-p {
+            font-size: 0.75rem;
+            color: #00AEEF;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .code-font {
+            font-family: 'Roboto Mono', monospace;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 59, 113, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04);
+        }
+        .slot-spinning {
+            animation: slotRotate 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes slotRotate {
+            0% { transform: translateY(-12px) scale(0.85); opacity: 0.4; }
+            50% { transform: translateY(6px) scale(1.1); opacity: 0.8; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .exercise-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
+        }
+        sub {
+            font-size: 0.72em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+            bottom: -0.22em;
+            margin-left: 0.5px;
+            margin-right: 0.5px;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00AEEF;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="text-gray-700 antialiased selection:bg-cyan-500 selection:text-white pb-20">
+
+    <!-- CABEÇALHO DA INSTITUIÇÃO -->
+    <header class="main-header flex-col md:flex-row gap-4 md:gap-0">
+        <div class="logo-container">
+            <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 801.70135 613.78265" height="100%" width="100%"
+                xml:space="preserve" id="svg2" version="1.1">
+                <g transform="matrix(1.3333333,0,0,-1.3333333,0,613.78267)" id="g10">
+                    <g id="g12">
+                        <g clip-path="url(#clipPath18)" id="g14">
+                            <g transform="translate(252.3749,80.1607)" id="g20">
+                                <path id="path22" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -4.711,0 -8.12,3.901 -8.12,8.718 v 0.069 c 0,4.817 3.446,8.68 8.12,8.68 2.81,0 4.92,-1.227 6.889,-3.056 l 2.776,3.196 c -2.355,2.25 -5.097,3.833 -9.631,3.833 -7.45,0 -12.688,-5.73 -12.688,-12.722 V 8.646 c 0,-7.063 5.344,-12.653 12.514,-12.653 4.605,0 7.415,1.689 9.98,4.359 L 7.064,3.162 C 4.957,1.197 3.022,0 0,0" />
+                            </g>
+                            <g transform="translate(272.8636,92.0402)" id="g24">
+                                <path id="path26" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 2.81,0 4.428,-2.144 4.708,-4.886 H -4.817 C -4.428,-2.004 -2.602,0 0,0 m 8.082,-12.407 -2.495,2.215 c -1.474,-1.443 -2.951,-2.215 -5.026,-2.215 -2.742,0 -4.886,1.689 -5.341,4.711 H 8.855 c 0.038,0.42 0.072,0.807 0.072,1.197 0,5.34 -2.988,9.979 -8.893,9.979 -5.306,0 -9.067,-4.359 -9.067,-9.665 v -0.072 c 0,-5.726 4.147,-9.628 9.525,-9.628 3.409,0 5.833,1.368 7.59,3.478" />
+                            </g>
+                            <g transform="translate(301.3308,76.5763)" id="g28">
+                                <path id="path30" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 v 11.843 c 0,4.287 -2.424,7.101 -6.609,7.101 -2.879,0 -4.602,-1.511 -5.798,-3.234 v 2.848 h -4.254 V 0 h 4.254 v 10.472 c 0,2.882 1.723,4.605 4.184,4.605 2.53,0 3.97,-1.651 3.97,-4.533 L -4.253,0 Z" />
+                            </g>
+                            <g transform="translate(310.1876,100.2299)" id="g32">
+                                <path id="path34" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -4.253 v -5.098 h -2.356 v -3.655 h 2.356 v -9.771 c 0,-4.075 2.212,-5.446 5.344,-5.446 1.613,0 2.772,0.352 3.829,0.95 v 3.477 c -0.845,-0.42 -1.689,-0.632 -2.636,-0.632 -1.443,0 -2.284,0.666 -2.284,2.321 v 9.101 h 4.992 v 3.655 l -4.992,0 z" />
+                            </g>
+                            <g transform="translate(322.3457,90.9505)" id="g36">
+                                <path id="path38" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 V 4.181 H -4.253 V -14.373 H 0 v 7.063 c 0,4.92 2.602,7.344 6.328,7.344 H 6.571 V 4.533 C 3.303,4.674 1.159,2.776 0,0" />
+                            </g>
+                            <g transform="translate(334.4361,85.8899)" id="g40">
+                                <path id="path42" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,3.234 2.178,5.904 5.587,5.904 3.34,0 5.695,-2.707 5.695,-5.976 V -0.14 c 0,-3.2 -2.181,-5.871 -5.624,-5.871 C 2.356,-6.011 0,-3.303 0,-0.072 Z m 5.587,-9.734 c 5.73,0 9.949,4.39 9.949,9.662 V 0 c 0,5.306 -4.185,9.631 -9.878,9.631 -5.692,0 -9.911,-4.393 -9.911,-9.703 V -0.14 c 0,-5.272 4.181,-9.594 9.84,-9.594" />
+                            </g>
+                            <g transform="translate(383.1821,87.2253)" id="g44">
+                                <path id="path46" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 V 13.953 H -4.325 V -0.209 c 0,-4.536 -2.352,-6.82 -6.181,-6.82 -3.867,0 -6.223,2.424 -6.223,6.995 V 13.953 H -21.05 V -0.209 c 0,-7.135 4.075,-10.827 10.472,-10.827 C -4.147,-11.036 0,-7.344 0,0" />
+                            </g>
+                            <g transform="translate(391.4741,87.05)" id="g48">
+                                <path id="path50" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,2.882 1.723,4.605 4.181,4.605 2.534,0 3.973,-1.651 3.973,-4.533 v -10.544 h 4.253 V 1.371 c 0,4.287 -2.424,7.098 -6.608,7.098 C 2.916,8.469 1.197,6.961 0,5.238 V 8.082 H -4.253 V -10.472 H 0 Z" />
+                            </g>
+                            <path id="path52" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 407.674,97.98 h 4.568 v 4.041 h -4.568 z" />
+                            <path id="path54" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 407.852,76.577 h 4.253 v 18.558 h -4.253 z" />
+                            <g transform="translate(425.9518,76.4355)" id="g56">
+                                <path id="path58" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 7.59,18.698 H 3.128 L -1.898,5.06 -6.889,18.698 h -4.568 L -3.833,0 Z" />
+                            </g>
+                            <g transform="translate(443.7699,92.0402)" id="g60">
+                                <path id="path62" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 2.81,0 4.428,-2.144 4.708,-4.886 H -4.814 C -4.428,-2.004 -2.602,0 0,0 m 0.492,-15.885 c 3.409,0 5.833,1.368 7.59,3.478 l -2.495,2.215 c -1.474,-1.443 -2.951,-2.215 -5.026,-2.215 -2.739,0 -4.886,1.689 -5.341,4.711 H 8.855 c 0.038,0.42 0.072,0.807 0.072,1.197 0,5.34 -2.988,9.979 -8.893,9.979 -5.306,0 -9.067,-4.359 -9.067,-9.665 v -0.072 c 0,-5.726 4.147,-9.628 9.525,-9.628" />
+                            </g>
+                            <g transform="translate(459.8304,83.6406)" id="g64">
+                                <path id="path66" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,4.92 2.602,7.347 6.328,7.347 h 0.243 v 4.496 C 3.303,11.987 1.159,10.086 0,7.31 v 4.181 H -4.253 V -7.064 H 0 Z" />
+                            </g>
+                            <g transform="translate(476.1727,87.5416)" id="g68">
+                                <path id="path70" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -2.178,0.704 -4.181,1.265 -4.181,2.636 v 0.072 c 0,1.053 0.947,1.825 2.601,1.825 1.546,0 3.443,-0.666 5.235,-1.757 l 1.689,3.022 c -1.97,1.303 -4.5,2.11 -6.821,2.11 -3.689,0 -6.605,-2.144 -6.605,-5.658 V 2.178 c 0,-3.549 3.056,-4.674 5.798,-5.447 2.178,-0.666 4.147,-1.159 4.147,-2.598 v -0.072 c 0,-1.231 -1.056,-2.003 -2.882,-2.003 -1.897,0 -4.041,0.772 -6.082,2.284 l -1.898,-2.883 c 2.322,-1.825 5.238,-2.776 7.874,-2.776 3.867,0 6.889,1.932 6.889,5.836 v 0.069 C 5.764,-2.072 2.708,-0.841 0,0" />
+                            </g>
+                            <path id="path72" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 484.956,97.98 h 4.568 v 4.041 h -4.568 z" />
+                            <path id="path74" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 485.134,76.577 h 4.253 v 18.558 h -4.253 z" />
+                            <g transform="translate(494.4117,81.7074)" id="g76">
+                                <path id="path78" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-4.075 2.212,-5.446 5.344,-5.446 1.614,0 2.773,0.348 3.829,0.947 v 3.48 c -0.844,-0.42 -1.689,-0.632 -2.636,-0.632 -1.443,0 -2.284,0.666 -2.284,2.318 v 9.104 h 4.992 v 3.655 H 4.253 v 5.098 H 0 V 13.426 H -2.356 V 9.771 l 2.356,0 z" />
+                            </g>
+                            <g transform="translate(520.0675,101.5304)" id="g80">
+                                <path id="path82" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 -3.863,1.723 -3.659,-5.764 h 3.2 z" />
+                            </g>
+                            <g transform="translate(509.4892,82.1647)" id="g84">
+                                <path id="path86" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,1.932 1.617,3.094 4.359,3.094 1.686,0 3.128,-0.318 4.216,-0.738 V 1.091 C 8.575,-1.265 6.431,-2.882 3.621,-2.882 1.58,-2.882 0,-1.863 0,-0.072 Z m 2.424,-5.976 c 2.848,0 4.78,1.196 6.045,2.707 v -2.318 h 4.15 V 5.412 c 0,2.424 -0.632,4.393 -2.003,5.73 -1.303,1.334 -3.375,2.072 -6.151,2.072 -2.954,0 -4.957,-0.595 -6.995,-1.511 L -1.405,8.366 C 0.28,9.067 1.829,9.525 3.901,9.525 6.889,9.525 8.506,8.12 8.506,5.484 V 5.026 C 7.064,5.484 5.587,5.798 3.515,5.798 c -4.534,0 -7.662,-1.969 -7.662,-5.972 v -0.072 c 0,-3.727 3.091,-5.73 6.571,-5.73" />
+                            </g>
+                            <g transform="translate(536.3751,90.9864)" id="g88">
+                                <path id="path90" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h 0.246 v 4.499 c -3.268,0.14 -5.412,-1.757 -6.574,-4.533 v 4.181 h -4.254 v -18.558 h 4.254 v 7.064 C -6.328,-2.424 -3.727,0 0,0" />
+                            </g>
+                            <path id="path92" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 543.543,102.021 h -4.568 V 97.98 h 4.568 z" />
+                            <path id="path94" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="M 543.403,95.132 H 539.15 V 76.574 h 4.253 z" />
+                            <g transform="translate(562.0655,85.7491)" id="g96">
+                                <path id="path98" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.197 -2.181,-5.867 -5.624,-5.867 -3.303,0 -5.659,2.704 -5.659,5.939 V 0.14 c 0,3.234 2.178,5.905 5.587,5.905 C -2.356,6.045 0,3.34 0,0.072 Z m -5.624,9.771 c -5.693,0 -9.912,-4.393 -9.912,-9.699 V 0 c 0,-5.272 4.182,-9.594 9.84,-9.594 5.73,0 9.949,4.394 9.949,9.666 V 0.14 c 0,5.306 -4.185,9.631 -9.877,9.631" />
+                            </g>
+                            <g transform="translate(282.0353,53.8006)" id="g100">
+                                <path id="path102" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 -7.487,11.635 h -4.602 v -24.603 h 4.253 V 4.605 L -0.14,-6.923 H 0 L 7.768,4.674 v -17.642 h 4.321 V 11.635 H 7.487 Z" />
+                            </g>
+                            <g transform="translate(310.045,47.5098)" id="g104">
+                                <path id="path106" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.356 -2.144,-3.969 -4.957,-3.969 -2.038,0 -3.618,1.018 -3.618,2.81 v 0.068 c 0,1.935 1.614,3.094 4.359,3.094 1.686,0 3.125,-0.314 4.216,-0.738 z m -4.113,12.123 c -2.951,0 -4.954,-0.594 -6.992,-1.507 L -9.98,7.275 c 1.686,0.705 3.231,1.159 5.306,1.159 2.985,0 4.602,-1.405 4.602,-4.041 V 3.935 c -1.439,0.458 -2.916,0.776 -4.988,0.776 -4.534,0 -7.662,-1.969 -7.662,-5.976 v -0.072 c 0,-3.723 3.091,-5.727 6.571,-5.727 2.848,0 4.78,1.194 6.045,2.705 V -6.677 H 4.041 V 4.325 c 0,2.424 -0.632,4.39 -2.003,5.726 -1.3,1.337 -3.375,2.072 -6.151,2.072" />
+                            </g>
+                            <g transform="translate(322.0294,55.2064)" id="g108">
+                                <path id="path110" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 V 4.181 H -4.253 V -14.373 H 0 v 7.063 c 0,4.92 2.602,7.344 6.328,7.344 H 6.571 V 4.533 C 3.303,4.677 1.159,2.776 0,0" />
+                            </g>
+                            <path id="path112" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 331.131,40.832 h 4.253 V 59.39 h -4.253 z" />
+                            <path id="path114" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                d="m 330.957,62.238 h 4.568 v 4.041 h -4.568 z" />
+                            <g transform="translate(354.0468,50.005)" id="g116">
+                                <path id="path118" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.197 -2.181,-5.867 -5.624,-5.867 -3.303,0 -5.659,2.704 -5.659,5.939 V 0.14 c 0,3.234 2.178,5.905 5.587,5.905 C -2.356,6.045 0,3.34 0,0.072 Z m -5.624,9.771 c -5.693,0 -9.912,-4.393 -9.912,-9.699 V 0 c 0,-5.272 4.182,-9.594 9.84,-9.594 5.73,0 9.949,4.394 9.949,9.666 V 0.14 c 0,5.306 -4.185,9.631 -9.877,9.631" />
+                            </g>
+                            <g transform="translate(385.5005,57.0346)" id="g120">
+                                <path id="path122" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.564 -2.041,-4.393 -5.31,-4.393 h -5.022 V 4.462 H -5.31 C -2.075,4.462 0,2.954 0,0.072 Z m -4.957,8.4 h -9.7 v -24.602 h 4.325 v 7.908 h 4.886 c 5.408,0 9.839,2.882 9.839,8.4 v 0.068 c 0,4.958 -3.586,8.226 -9.35,8.226" />
+                            </g>
+                            <g transform="translate(406.9393,50.005)" id="g124">
+                                <path id="path126" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.197 -2.181,-5.867 -5.624,-5.867 -3.303,0 -5.659,2.704 -5.659,5.939 V 0.14 c 0,3.234 2.178,5.905 5.587,5.905 C -2.356,6.045 0,3.34 0,0.072 Z m -5.624,9.771 c -5.693,0 -9.912,-4.393 -9.912,-9.699 V 0 c 0,-5.272 4.182,-9.594 9.84,-9.594 5.73,0 9.949,4.394 9.949,9.666 V 0.14 c 0,5.306 -4.185,9.631 -9.877,9.631" />
+                            </g>
+                            <g transform="translate(424.1581,59.7756)" id="g128">
+                                <path id="path130" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -2.882,0 -4.605,-1.511 -5.799,-3.231 v 2.845 h -4.253 v -18.558 h 4.253 v 10.475 c 0,2.882 1.72,4.602 4.182,4.602 2.53,0 3.973,-1.651 3.973,-4.533 V -18.944 H 6.609 V -7.098 C 6.609,-2.81 4.181,0 0,0" />
+                            </g>
+                            <g transform="translate(439.6221,64.4856)" id="g132">
+                                <path id="path134" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -4.253 v -5.098 h -2.356 v -3.655 h 2.356 v -9.771 c 0,-4.075 2.212,-5.446 5.344,-5.446 1.613,0 2.772,0.352 3.829,0.95 v 3.477 c -0.845,-0.42 -1.689,-0.632 -2.636,-0.632 -1.443,0 -2.284,0.666 -2.284,2.321 v 9.101 h 4.992 v 3.655 l -4.992,0 z" />
+                            </g>
+                            <g transform="translate(450.7282,51.4104)" id="g136">
+                                <path id="path138" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 0.386,2.882 2.212,4.886 4.814,4.886 7.628,4.886 9.245,2.742 9.525,0 Z m 4.848,8.366 c -5.306,0 -9.067,-4.359 -9.067,-9.665 v -0.072 c 0,-5.727 4.147,-9.628 9.525,-9.628 3.409,0 5.833,1.368 7.594,3.477 l -2.496,2.216 C 8.927,-6.749 7.45,-7.522 5.378,-7.522 c -2.742,0 -4.886,1.689 -5.344,4.712 h 13.638 c 0.035,0.42 0.069,0.806 0.069,1.193 0,5.344 -2.988,9.983 -8.893,9.983" />
+                            </g>
+                            <g transform="translate(474.8372,51.7971)" id="g140">
+                                <path id="path142" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c -2.178,0.704 -4.181,1.265 -4.181,2.636 v 0.072 c 0,1.053 0.947,1.825 2.601,1.825 1.546,0 3.443,-0.666 5.235,-1.757 l 1.689,3.022 c -1.97,1.303 -4.5,2.11 -6.821,2.11 -3.689,0 -6.605,-2.144 -6.605,-5.658 V 2.178 c 0,-3.549 3.056,-4.674 5.798,-5.447 2.178,-0.666 4.147,-1.159 4.147,-2.598 v -0.072 c 0,-1.231 -1.056,-2.003 -2.882,-2.003 -1.897,0 -4.041,0.772 -6.082,2.284 l -1.898,-2.883 c 2.322,-1.825 5.238,-2.776 7.874,-2.776 3.867,0 6.889,1.932 6.889,5.836 v 0.069 C 5.764,-2.072 2.708,-0.841 0,0" />
+                            </g>
+                            <g transform="translate(502.4592,49.3378)" id="g144">
+                                <path id="path146" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-3.303 -1.58,-4.852 -3.901,-4.852 -2.075,0 -3.515,1.057 -4.954,2.92 l -2.848,-2.954 c 1.617,-2.215 4.075,-3.973 7.874,-3.973 2.458,0 4.533,0.739 5.973,2.182 1.442,1.439 2.321,3.617 2.321,6.537 V 16.096 H 0 Z" />
+                            </g>
+                            <g transform="translate(523.1606,48.9153)" id="g148">
+                                <path id="path150" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.882 -1.723,-4.568 -4.181,-4.568 -2.534,0 -3.973,1.614 -3.973,4.496 v 10.544 h -4.253 V -1.337 c 0,-4.321 2.424,-7.132 6.608,-7.132 2.883,0 4.602,1.508 5.799,3.269 v -2.882 h 4.287 v 18.554 l -4.287,0 z" />
+                            </g>
+                            <g transform="translate(540.1353,44.1364)" id="g152">
+                                <path id="path154" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C -3.269,0 -5.552,2.636 -5.552,5.939 V 6.01 c 0,3.235 2.283,5.905 5.374,5.905 2.11,0 3.481,-0.951 4.783,-2.322 l 2.671,2.848 c -1.758,1.898 -3.936,3.197 -7.416,3.197 -5.59,0 -9.666,-4.427 -9.666,-9.699 V 5.867 c 0,-5.272 4.076,-9.594 9.594,-9.594 3.621,0 5.764,1.443 7.594,3.481 L 4.814,2.284 C 3.48,0.913 2.004,0 0,0" />
+                            </g>
+                            <g transform="translate(561.5034,47.5098)" id="g156">
+                                <path id="path158" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-2.356 -2.144,-3.969 -4.958,-3.969 -2.037,0 -3.617,1.018 -3.617,2.81 v 0.068 c 0,1.935 1.614,3.094 4.356,3.094 1.689,0 3.128,-0.314 4.219,-0.738 z m -4.113,12.123 c -2.951,0 -4.954,-0.594 -6.995,-1.507 l 1.125,-3.341 c 1.689,0.705 3.234,1.159 5.306,1.159 2.988,0 4.605,-1.405 4.605,-4.041 V 3.935 c -1.439,0.458 -2.916,0.776 -4.991,0.776 -4.534,0 -7.659,-1.969 -7.659,-5.976 v -0.072 c 0,-3.723 3.091,-5.727 6.571,-5.727 2.848,0 4.78,1.194 6.045,2.705 V -6.677 H 4.041 V 4.325 c 0,2.424 -0.632,4.39 -2.003,5.726 -1.3,1.337 -3.375,2.072 -6.151,2.072" />
+                            </g>
+                            <g transform="translate(563.3729,65.919)" id="g160">
+                                <path id="path162" style="fill:#31bad7;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 -3.863,1.723 -3.659,-5.764 h 3.2 z" />
+                            </g>
+                            <g transform="translate(537.2679,367.7308)" id="g164">
+                                <path id="path166" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="M 0,0 C 15.207,0 26.548,11.334 26.548,25.351 26.548,40.863 15.207,52.197 0,52.197 -14.319,52.197 -25.656,40.863 -25.656,25.351 -25.656,11.334 -14.319,0 0,0" />
+                            </g>
+                            <g transform="translate(352.1446,245.0517)" id="g168">
+                                <path id="path170" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -1.125 l -37.543,106.698 h -70.075 V -94.681 h 43.301 V 55.322 h 1.689 L -20.309,-67.47 H 15.255 L 59.343,55.322 h 1.094 V -94.616 h 43.448 V 106.698 H 37.01 Z" />
+                            </g>
+                            <g transform="translate(564.5794,351.8964)" id="g172">
+                                <path id="path174" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 h -60.502 v -6.113 l 17.492,-29.465 1.172,-83.015 c -0.003,-21.447 -16.694,-39.191 -38.104,-40.501 l 10.879,-42.576 c 40.802,6.51 70.817,41.711 70.8,83.029 z" />
+                            </g>
+                            <g transform="translate(162.3982,225.3562)" id="g176">
+                                <path id="path178" style="fill:#254a8d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                                    d="m 0,0 c 0,-27.355 -11.023,-38.456 -31.666,-38.456 -25.441,0 -35.403,15.542 -35.403,43.83 v 121.021 h -60.372 v -6.113 l 16.992,-28.771 0.161,-0.273 V -3.104 c 0,-40.727 21.481,-71.542 72.666,-71.542 18.199,0 35.225,3.522 48.918,11.97 l 25.841,-15.252 h 6.116 V 126.429 L 0,126.395 Z" />
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+        </div>
+        <div class="header-info">
+            <h2>Lógica Aplicada à Computação</h2>
+            <p class="sub-p">Análise e Desenvolvimento de Sistemas</p>
+            <p class="mt-1"><i class="fas fa-chalkboard-teacher text-[#00AEEF] mr-1"></i> Prof. Iran Rodrigues</p>
+        </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <main class="max-w-5xl mx-auto px-4 space-y-12">
+
+        <!-- INTRODUÇÃO DA AULA 15 -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 border-t-4 border-[#003B71] space-y-5">
+            <div class="border-b border-gray-200 pb-4">
+                <span class="bg-[#003B71] text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                    Aula 15
+                </span>
+                <h1 class="text-3xl font-black text-[#003B71] mt-3">Revisão Geral VA2</h1>
+                <p class="text-sm text-gray-600 font-medium mt-1">
+                    Preparação intensiva para a VA2 com questões práticas distribuídas pelos conteúdos avaliados.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-center code-font text-xs">
+                <div class="bg-blue-50/80 p-3 rounded-xl border border-blue-200">
+                    <span class="text-[10px] text-blue-700 font-bold uppercase block">Tópico 1</span>
+                    <strong class="text-[#003B71] text-xs block mt-0.5">Argumentos &amp; Validade</strong>
+                </div>
+                <div class="bg-indigo-50/80 p-3 rounded-xl border border-indigo-200">
+                    <span class="text-[10px] text-indigo-700 font-bold uppercase block">Tópico 2</span>
+                    <strong class="text-indigo-950 text-xs block mt-0.5">Regras de Inferência</strong>
+                </div>
+                <div class="bg-cyan-50/80 p-3 rounded-xl border border-cyan-200">
+                    <span class="text-[10px] text-cyan-700 font-bold uppercase block">Tópico 3</span>
+                    <strong class="text-cyan-950 text-xs block mt-0.5">Predicados &amp; Domínio U</strong>
+                </div>
+                <div class="bg-purple-50/80 p-3 rounded-xl border border-purple-200">
+                    <span class="text-[10px] text-purple-700 font-bold uppercase block">Tópico 4</span>
+                    <strong class="text-purple-950 text-xs block mt-0.5">Quantificadores &amp; De Morgan</strong>
+                </div>
+                <div class="bg-emerald-50/80 p-3 rounded-xl border border-emerald-200">
+                    <span class="text-[10px] text-emerald-700 font-bold uppercase block">Tópico 5</span>
+                    <strong class="text-emerald-950 text-xs block mt-0.5">SQL &amp; Contratos DbC</strong>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-50/70 to-indigo-50/70 p-4 rounded-xl border border-blue-200 text-xs text-gray-700 leading-relaxed flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-pencil-alt text-[#00AEEF] text-lg"></i>
+                    <span><strong>Orientação de Estudo:</strong> Tenha papel e caneta para construir tabelas-verdade, rascunhar deduções e testar contraexemplos. Clique em <em>Corrigir Tópico</em> ou <em>Corrigir Todos os Tópicos</em> a qualquer momento.</span>
+                </div>
+                <button type="button" onclick="correctAllModules()" class="bg-[#003B71] hover:bg-blue-900 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-xs transition flex items-center gap-1.5">
+                    <i class="fas fa-check-double"></i> Corrigir Todos os Tópicos
+                </button>
+            </div>
+        </section>
+
+        <!-- CONTAINER DINÂMICO DE TÓPICOS E BLOCOS DE EXERCÍCIOS -->
+        <div id="modules-container" class="space-y-12">
+            <!-- Injetado dinamicamente via JavaScript -->
+        </div>
+
+    </main>
+
+    <!-- RODAPÉ COM CAÇA-NÍQUEIS DE EMOJIS (SENHA AULA 15: 🧠 • 🚀 • 🏆 [ÍNDICES 6, 8, 9]) -->
+    <footer id="main-footer" class="text-center mt-16 text-gray-400 text-xs pb-8 space-y-3 select-none border-t border-gray-200/50 pt-8">
+        <p>Lógica Aplicada à Computação &bull; Análise e Desenvolvimento de Sistemas</p>
+        <p class="text-gray-500 font-semibold">Material Didático Interativo &bull; Prof. Iran Rodrigues</p>
+
+        <!-- CAÇA-NÍQUEIS DE EMOJIS (SENHA: 🧠 • 🚀 • 🏆) -->
+        <div class="pt-2 flex flex-col items-center justify-center gap-2">
+            <div class="inline-flex items-center gap-2 bg-white px-3 py-1.5 rounded-2xl border border-gray-200 shadow-sm">
+                <button type="button" onclick="spinSlot(0)" id="slot-0" class="slot-reel text-lg w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 hover:bg-cyan-50 border border-gray-200 active:scale-90 transition-all cursor-pointer select-none">
+                    🎲
+                </button>
+                <button type="button" onclick="spinSlot(1)" id="slot-1" class="slot-reel text-lg w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 hover:bg-cyan-50 border border-gray-200 active:scale-90 transition-all cursor-pointer select-none">
+                    🎮
+                </button>
+                <button type="button" onclick="spinSlot(2)" id="slot-2" class="slot-reel text-lg w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 hover:bg-cyan-50 border border-gray-200 active:scale-90 transition-all cursor-pointer select-none">
+                    ⭐
+                </button>
+            </div>
+        </div>
+
+        <div id="gabarito-checkbox-wrapper" class="hidden pt-2 transition-all">
+            <label class="text-gray-600 hover:text-[#003B71] text-[11px] font-normal cursor-pointer inline-flex items-center gap-2 select-none transition-colors">
+                <input type="checkbox" id="toggle-gabarito-checkbox" onchange="onToggleGabaritoCheckbox()" class="accent-[#00AEEF] cursor-pointer">
+                <span>exibir links para o gabarito</span>
+            </label>
+        </div>
+    </footer>
+
+    <!-- SCRIPT DE DADOS E LÓGICA DE CORREÇÃO -->
+    <script>
+        const userState = {};
+
+        function playFaahSound() {
+            try {
+                const audio = new Audio('../common/faah.mp3');
+                audio.play().catch(err => {
+                    console.log("Não foi possível reproduzir o áudio.", err);
+                });
+            } catch (err) {
+                console.log("Áudio não disponível ou bloqueado pelo navegador.");
+            }
+        }
+
+        /* BANCO DE DADOS INTEGRADO: 5 TÓPICOS */
+        const reviewTopics = [
+            /* ========================================================================= */
+            /* TÓPICO 1: ARGUMENTOS E VALIDADE POR TABELA-VERDADE */
+            /* ========================================================================= */
+            {
+                id: 'topico1',
+                theme: 'Argumentos e Validade por Tabela-Verdade',
+                badgeTitle: 'Tópico 1',
+                badgeColor: 'bg-[#003B71]',
+                borderColor: 'border-[#003B71]',
+                blocks: [
+                    {
+                        blockNum: 1,
+                        title: '1.1: Formalização e Estrutura Simbólica Sequencial',
+                        desc: 'Modele o encadeamento dedutivo dos cenários práticos identificando as premissas e a conclusão exata:',
+                        cards: [
+                            {
+                                id: '1A',
+                                desc: 'Considere o seguinte relatório do serviço de autenticação:\n"Se as credenciais são válidas e o token de autenticação não está expirado, a sessão de usuário é liberada. A sessão de usuário NÃO foi liberada, mas as credenciais de fato são válidas. Portanto, o token de autenticação está expirado."\nQual formalização simbólica traduz rigorosamente o argumento?',
+                                options: [
+                                    '(p ∨ ~q) → r, ~r, p ⊢ q',
+                                    '(p ∧ ~q) → r, ~r, p ⊢ q',
+                                    'p → (~q ∧ r), ~r, ~p ⊢ q',
+                                    '(p ∧ q) → r, r, ~p ⊢ ~q'
+                                ],
+                                correct: '(p ∧ ~q) → r, ~r, p ⊢ q',
+                                reason: 'Sejam p = "credenciais válidas", q = "token expirado" (~q = "não expirado") e r = "sessão liberada". A condicional inicial é (p ∧ ~q) → r. Com ~r e p como fatos, deduz-se que ~q é falso por Modus Tollens associado à conjunção, o que acarreta q ("token expirado").'
+                            },
+                            {
+                                id: '1B',
+                                desc: 'Considere a seguinte regra de negócio:\n"A transação é confirmada se e somente se o saldo é debitado e o recibo fiscal é assinado. O saldo NÃO foi debitado. Portanto, a transação NÃO foi confirmada."\nIdentifique a formalização simbólica correspondente:',
+                                options: [
+                                    'p → (q ∨ r), ~q ⊢ ~p',
+                                    'p ↔ (q → r), ~q ⊢ ~p',
+                                    'p ↔ (q ∧ r), ~q ⊢ ~p',
+                                    '(p ∧ q) ↔ r, ~q ⊢ ~p'
+                                ],
+                                correct: 'p ↔ (q ∧ r), ~q ⊢ ~p',
+                                reason: 'A locução "se e somente se" impõe bicondicional p ↔ (q ∧ r). Sabendo que q é falso, a conjunção (q ∧ r) é falsa; logo, pela definição do bicondicional, p é necessariamente falso (~p).'
+                            },
+                            {
+                                id: '1C',
+                                desc: 'Considere o diagnóstico operacional da rede:\n"Se a porta 443 está bloqueada, as requisições sofrem timeout. Se as requisições sofrem timeout ou o certificado TLS expirou, o monitor de rede gera alerta sonoro. A porta 443 está bloqueada."\nQual conclusão decorre validamente desse encadeamento?',
+                                options: [
+                                    'O monitor de rede gera alerta sonoro',
+                                    'O certificado TLS expirou',
+                                    'O certificado TLS não expirou',
+                                    'A porta 443 não está bloqueada'
+                                ],
+                                correct: 'O monitor de rede gera alerta sonoro',
+                                reason: 'Seja p = porta bloqueada, q = timeout, r = certificado expirou, s = alerta sonoro. De p e p → q deduz-se q. Como q é verdadeiro, a disjunção (q ∨ r) é verdadeira. Pelo Modus Ponens em (q ∨ r) → s, conclui-se s.'
+                            },
+                            {
+                                id: '1D',
+                                desc: 'Considere as premissas de um sistema:\nP₁: Se o pagamento é aprovado, a nota fiscal é emitida.\nP₂: A nota fiscal NÃO foi emitida.\nQual conclusão decorre diretamente por dedução válida?',
+                                options: [
+                                    'O pagamento foi aprovado',
+                                    'O pagamento foi cancelado pelo cliente',
+                                    'O pagamento NÃO foi aprovado',
+                                    'A nota fiscal será emitida em contingência'
+                                ],
+                                correct: 'O pagamento NÃO foi aprovado',
+                                reason: 'Trata-se de uma aplicação direta de Modus Tollens: p → q com ~q conclui legitimamente ~p.'
+                            }
+                        ]
+                    },
+                    {
+                        blockNum: 2,
+                        title: '1.2: Linhas Críticas e Detecção de Contraexemplos',
+                        desc: 'Analise o comportamento de linhas na tabela-verdade e comprove a validade ou invalidade:',
+                        cards: [
+                            {
+                                id: '2A',
+                                desc: 'Considere o argumento: p → q, r → ~q, r ⊢ ~p.\nConstruindo a tabela-verdade para as premissas e a conclusão, quantas linhas críticas (linhas onde TODAS as 3 premissas são simultaneamente V) existem?',
+                                options: [
+                                    'Exatamente 2 linhas críticas: (p=V, q=V, r=V) e (p=F, q=F, r=V)',
+                                    'Exatamente 3 linhas críticas',
+                                    'Exatamente 1 linha crítica: (p=F, q=F, r=V)',
+                                    'Nenhuma linha crítica (as premissas são contraditórias)'
+                                ],
+                                correct: 'Exatamente 1 linha crítica: (p=F, q=F, r=V)',
+                                reason: 'Para as premissas serem V: r precisa ser V. Com r=V, r → ~q ser V força ~q=V, logo q=F. Para p → q ser V com q=F, p obrigatoriamente deve ser F. Essa linha única (F, F, V) gera conclusão ~p verdadeira.'
+                            },
+                            {
+                                id: '2B',
+                                desc: 'Dado o argumento: p ∨ q, p → r, q → s ⊢ r ∧ s.\nQual atribuição de valoração atua como CONTRAEXEMPLO na tabela-verdade comprovando que o argumento é INVÁLIDO?',
+                                options: [
+                                    'V(p) = V, V(q) = F, V(r) = V, V(s) = F',
+                                    'V(p) = V, V(q) = V, V(r) = V, V(s) = V',
+                                    'V(p) = F, V(q) = F, V(r) = F, V(s) = F',
+                                    'V(p) = F, V(q) = V, V(r) = V, V(s) = V'
+                                ],
+                                correct: 'V(p) = V, V(q) = F, V(r) = V, V(s) = F',
+                                reason: 'Com p=V e q=F: p ∨ q é V; p → r (V → V) é V; q → s (F → F) é V. Premissas todas V! Mas a conclusão r ∧ s (V ∧ F) resulta em F. Linha contraexemplo direta.'
+                            },
+                            {
+                                id: '2C',
+                                desc: 'Inspecionando a tabela-verdade do argumento p → (q ∧ r), q ⊢ p, qual é o status lógico da linha em que V(p) = F, V(q) = V e V(r) = V?',
+                                options: [
+                                    'É uma linha onde a premissa condicional é falsa, portanto irrelevante',
+                                    'É uma linha crítica com conclusão FALSA (contraexemplo que invalida o argumento)',
+                                    'É uma linha crítica com conclusão verdadeira que valida o argumento',
+                                    'É uma linha de contingência trivial'
+                                ],
+                                correct: 'É uma linha crítica com conclusão FALSA (contraexemplo que invalida o argumento)',
+                                reason: 'Com p=F, q=V e r=V: p → (q ∧ r) resulta em F → V = V; a premissa q é V. Ambas as premissas são V! Contudo, a conclusão p vale F. É um contraexemplo direto.'
+                            },
+                            {
+                                id: '2D',
+                                desc: 'Ao analisar a tabela-verdade de um argumento com premissas P₁, P₂ e conclusão Q, identificamos 3 linhas críticas. Em duas dessas linhas a conclusão Q é V, mas em uma delas a conclusão Q é F. Qual o veredito formal sobre o argumento?',
+                                options: [
+                                    'O argumento é válido por maioria de linhas críticas verdadeiras (2 a 1)',
+                                    'O argumento é uma tautologia',
+                                    'O argumento é inválido, pois a existência de sequer uma linha crítica com conclusão falsa invalida o argumento',
+                                    'O argumento é válido desde que as premissas sejam empiricamente plausíveis'
+                                ],
+                                correct: 'O argumento é inválido, pois a existência de sequer uma linha crítica com conclusão falsa invalida o argumento',
+                                reason: 'Por definição de validade semântica, a conclusão deve ser verdadeira em TODAS as linhas críticas. Basta uma linha com premissas verdadeiras e conclusão falsa para refutar a validade do argumento.'
+                            }
+                        ]
+                    },
+                    {
+                        blockNum: 3,
+                        title: '1.3: Análise Crítica de Falácias e Validade Semântica',
+                        desc: 'Diferencie argumentos formais válidos de falácias dedutivas clássicas:',
+                        cards: [
+                            {
+                                id: '3A',
+                                desc: 'Considere o argumento de segurança:\n"Se a permissão for concedida por token JWT, o endpoint libera acesso. O endpoint liberou acesso. Logo, a permissão foi concedida por token JWT."\nPor que essa dedução é formalmente uma falácia?',
+                                options: [
+                                    'Porque comete a Falácia da Negação do Antecedente',
+                                    'O argumento não é falacioso; é uma instância válida de Modus Ponens',
+                                    'Porque comete a Falácia da Afirmação do Consequente (o acesso pode ter sido liberado por outro mecanismo)',
+                                    'Porque é uma aplicação incorreta de Silogismo Hipotético'
+                                ],
+                                correct: 'Porque comete a Falácia da Afirmação do Consequente (o acesso pode ter sido liberado por outro mecanismo)',
+                                reason: 'p → q e q não garantem p. Na tabela-verdade, a linha p=F e q=V torna as premissas verdadeiras, mas a conclusão p falsa.'
+                            },
+                            {
+                                id: '3B',
+                                desc: 'Considere o argumento de build:\n"Se o compilador acusar erro de sintaxe, o pipeline aborta. O compilador NÃO acusou erro de sintaxe. Logo, o pipeline NÃO abortou."\nQual vício de inferência compromete a validade desta dedução?',
+                                options: [
+                                    'Falácia da Afirmação do Consequente',
+                                    'Falácia da Negação do Antecedente (o pipeline pode abortar por falha em testes ou falta de memória)',
+                                    'Falácia do Terceiro Excluído',
+                                    'O argumento é válido por Modus Tollens'
+                                ],
+                                correct: 'Falácia da Negação do Antecedente (o pipeline pode abortar por falha em testes ou falta de memória)',
+                                reason: 'Negar o antecedente (~p) não garante a negação do consequente (~q). Outros motivos podem causar q.'
+                            },
+                            {
+                                id: '3C',
+                                desc: 'Qual dos seguintes argumentos representa uma forma lógica DEDUTIVAMENTE VÁLIDA?',
+                                options: [
+                                    'p → q, ~p ⊢ ~q',
+                                    'p ∨ q, p ⊢ ~q',
+                                    'p → (q ∨ r), q ⊢ p',
+                                    'p → (q → r), p, ~r ⊢ ~q'
+                                ],
+                                correct: 'p → (q → r), p, ~r ⊢ ~q',
+                                reason: 'De p → (q → r) e p decorre q → r por Modus Ponens. Com q → r e ~r decorre ~q por Modus Tollens. Dedução puramente válida.'
+                            },
+                            {
+                                id: '3D',
+                                desc: 'Considere o argumento:\n"Todo peixe sabe programar em Python. O professor é um peixe. Logo, o professor sabe programar em Python."\nDo ponto de vista estritamente da LÓGICA FORMAL DEDUTIVA, esse argumento é:',
+                                options: [
+                                    'Inválido, pois peixes não programam computadores na realidade',
+                                    'Válido, pois a forma lógica garante que se as premissas fossem verdadeiras, a conclusão seria inevitavelmente verdadeira',
+                                    'Inválido, pois uma das premissas é factualmente falsa no mundo real',
+                                    'Uma falácia formal de afirmação do consequente'
+                                ],
+                                correct: 'Válido, pois a forma lógica garante que se as premissas fossem verdadeiras, a conclusão seria inevitavelmente verdadeira',
+                                reason: 'A validade dedutiva diz respeito unicamente à estrutura lógica do encadeamento: se as premissas fossem verdadeiras, a conclusão não poderia ser falsa.'
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            /* ========================================================================= */
+            /* TÓPICO 2: REGRAS DE INFERÊNCIA E PROVA FORMAL DE VALIDADE */
+            /* ========================================================================= */
+            {
+                id: 'topico2',
+                theme: 'Regras de Inferência e Prova Formal de Validade',
+                badgeTitle: 'Tópico 2',
+                badgeColor: 'bg-indigo-600',
+                borderColor: 'border-indigo-600',
+                blocks: [
+                    {
+                        blockNum: 1,
+                        title: '2.1: Reconhecimento de Regras Unitárias em Fórmulas Complexas',
+                        desc: 'Identifique a regra de inferência que opera legítima e unicamente sobre as premissas fornecidas:',
+                        cards: [
+                            {
+                                id: '1A',
+                                desc: 'Considere o argumento:\nP₁: (A ∧ B) → (C ∨ D)\nP₂: ~(C ∨ D)\nQ: ~(A ∧ B)\nQual regra de inferência autoriza esta conclusão em uma única etapa?',
+                                options: [
+                                    'Modus Ponens (MP)',
+                                    'Silogismo Disjuntivo (SD)',
+                                    'Modus Tollens (MT)',
+                                    'Dilema Destrutivo (DD)'
+                                ],
+                                correct: 'Modus Tollens (MT)',
+                                reason: 'Considerando p = (A ∧ B) e q = (C ∨ D), a estrutura é p → q com ~q derivando ~p. Modus Tollens direto.'
+                            },
+                            {
+                                id: '1B',
+                                desc: 'Considere o argumento:\nP₁: (p → q) ∨ (r ∧ s)\nP₂: ~(p → q)\nQ: r ∧ s\nQual regra de inferência foi aplicada?',
+                                options: [
+                                    'Simplificação (SIMP)',
+                                    'Silogismo Disjuntivo (SD)',
+                                    'Modus Tollens (MT)',
+                                    'Adição (AD)'
+                                ],
+                                correct: 'Silogismo Disjuntivo (SD)',
+                                reason: 'Em uma disjunção α ∨ β, a negação do primeiro termo ~α acarreta a afirmação do segundo termo β.'
+                            },
+                            {
+                                id: '1C',
+                                desc: 'Considere o argumento:\nP₁: p → (q → r)\nQ: p → (p ∧ (q → r))\nQual regra de inferência fundamental justifica essa transformação?',
+                                options: [
+                                    'Conjunção (CONJ)',
+                                    'Adição (AD)',
+                                    'Simplificação (SIMP)',
+                                    'Absorção (ABS)'
+                                ],
+                                correct: 'Absorção (ABS)',
+                                reason: 'A regra da Absorção afirma que se p → α, então p → (p ∧ α). Aqui α é a subfórmula (q → r).'
+                            },
+                            {
+                                id: '1D',
+                                desc: 'Considere o argumento:\nP₁: p → (q ∨ r)\nP₂: s → (t ∧ u)\nP₃: ~(q ∨ r) ∨ ~(t ∧ u)\nQ: ~p ∨ ~s\nQual regra de inferência deduz esta disjunção em um único passo?',
+                                options: [
+                                    'Dilema Destrutivo (DD)',
+                                    'Dilema Construtivo (DC)',
+                                    'Silogismo Disjuntivo (SD)',
+                                    'Silogismo Hipotético (SH)'
+                                ],
+                                correct: 'Dilema Destrutivo (DD)',
+                                reason: 'Com duas condicionais p → α e s → β, a disjunção das negações dos consequentes (~α ∨ ~β) deduz a disjunção das negações dos antecedentes (~p ∨ ~s).'
+                            }
+                        ]
+                    },
+                    {
+                        blockNum: 2,
+                        title: '2.2: Reconstituição e Justificativa de Passos em Deduções',
+                        desc: 'Analise demonstrações formais alinhadas e determine a linha ou regra requerida:',
+                        cards: [
+                            {
+                                id: '2A',
+                                desc: 'Demonstração Formal:\n<div class="bg-slate-900 text-cyan-100 p-3 rounded-lg font-mono text-[11px] space-y-1 my-2 border border-slate-700 shadow-inner">\n<div class="flex justify-between"><span>(1) p → q</span><span class="text-blue-300 font-bold">P</span></div>\n<div class="flex justify-between"><span>(2) r → s</span><span class="text-blue-300 font-bold">P</span></div>\n<div class="flex justify-between"><span>(3) p ∨ r</span><span class="text-blue-300 font-bold">P</span></div>\n<div class="flex justify-between"><span>(4) q ∨ s</span><span class="text-emerald-300 font-bold">1, 2, 3 - DC</span></div>\n<div class="flex justify-between"><span>(5) ~q</span><span class="text-blue-300 font-bold">P</span></div>\n<div class="flex justify-between text-yellow-300 font-bold"><span>(6) ???</span><span>???</span></div>\n</div>\nQual fórmula e justificativa completam a linha (6) para deduzir s?',
+                                options: [
+                                    's [2, 5 - MT]',
+                                    '~r [1, 5 - MT]',
+                                    's [4, 5 - SD]',
+                                    's ∨ ~q [5 - AD]'
+                                ],
+                                correct: 's [4, 5 - SD]',
+                                reason: 'Na linha (4) temos q ∨ s e na linha (5) temos ~q. Aplicando Silogismo Disjuntivo entre 4 e 5, deduz-se diretamente s.'
+                            },
+                            {
+                                id: '2B',
+                                desc: 'Demonstração Formal:\n<div class="bg-slate-900 text-cyan-100 p-3 rounded-lg font-mono text-[11px] space-y-1 my-2 border border-slate-700 shadow-inner">\n<div class="flex justify-between"><span>(1) p ∧ q</span><span class="text-blue-300 font-bold">P</span></div>\n<div class="flex justify-between"><span>(2) p → (r ∧ s)</span><span class="text-blue-300 font-bold">P</span></div>\n<div class="flex justify-between"><span>(3) p</span><span class="text-emerald-300 font-bold">1 - SIMP</span></div>\n<div class="flex justify-between"><span>(4) r ∧ s</span><span class="text-emerald-300 font-bold">2, 3 - MP</span></div>\n<div class="flex justify-between"><span>(5) s</span><span class="text-emerald-300 font-bold">4 - SIMP</span></div>\n<div class="flex justify-between"><span>(6) q</span><span class="text-emerald-300 font-bold">1 - SIMP</span></div>\n<div class="flex justify-between text-yellow-300 font-bold"><span>(7) s ∧ q</span><span>???</span></div>\n</div>\nQual justificativa ampara a linha final (7)?',
+                                options: [
+                                    '5, 6 - CONJ',
+                                    '4, 6 - CONJ',
+                                    '1, 4 - SIMP',
+                                    '5, 6 - AD'
+                                ],
+                                correct: '5, 6 - CONJ',
+                                reason: 'A proposição s está na linha 5 e q está na linha 6. A união por ∧ de duas linhas previamente deduzidas é a Regra da Conjunção (5, 6 - CONJ).'
+                            },
+                            {
+                                id: '2C',
+                                desc: 'Analise o seguinte passo dedutivo proposto por um aluno:\n<div class="bg-slate-900 text-cyan-100 p-3 rounded-lg font-mono text-[11px] space-y-1 my-2 border border-slate-700 shadow-inner">\n<div class="flex justify-between"><span>(1) ~(p ∧ q)</span><span class="text-blue-300 font-bold">P</span></div>\n<div class="flex justify-between text-rose-300 font-bold"><span>(2) ~p</span><span>1 - SIMP</span></div>\n</div>\nEsse passo é formalmente VÁLIDO pelas regras de inferência?',
+                                options: [
+                                    'Sim, a negação distribui normalmente pela regra de simplificação',
+                                    'Sim, desde que acompanhado da regra de adição',
+                                    'Não, pois deveria deduzir ~q obrigatoriamente',
+                                    'Não! A Simplificação só pode ser aplicada a conjunções afirmativas (p ∧ q), e não à negação de conjunções ~(p ∧ q)'
+                                ],
+                                correct: 'Não! A Simplificação só pode ser aplicada a conjunções afirmativas (p ∧ q), e não à negação de conjunções ~(p ∧ q)',
+                                reason: '~(p ∧ q) equivale a ~p ∨ ~q (De Morgan). Extrair ~p de uma disjunção é incorreto; SIMP exige que o operador principal seja ∧ afirmativo.'
+                            },
+                            {
+                                id: '2D',
+                                desc: 'Demonstração Formal de p → (q → r), ~r, p ⊢ ~q:\n<div class="bg-slate-900 text-cyan-100 p-3 rounded-lg font-mono text-[11px] space-y-1 my-2 border border-slate-700 shadow-inner">\n<div class="flex justify-between"><span>(1) p → (q → r)</span><span class="text-blue-300 font-bold">P</span></div>\n<div class="flex justify-between"><span>(2) ~r</span><span class="text-blue-300 font-bold">P</span></div>\n<div class="flex justify-between"><span>(3) p</span><span class="text-blue-300 font-bold">P</span></div>\n</div>\nQual sequência de passos atinge a conclusão em apenas duas derivações?',
+                                options: [
+                                    '(4) q → r [1, 3 - MP]; (5) ~q [2, 4 - MT]',
+                                    '(4) p → ~r [2, 3 - CONJ]; (5) ~q [1, 4 - MT]',
+                                    '(4) ~p ∨ ~r [2, 3 - AD]; (5) ~q [1, 4 - SD]',
+                                    '(4) q ∧ ~r [2, 3 - CONJ]; (5) ~q [1, 4 - SIMP]'
+                                ],
+                                correct: '(4) q → r [1, 3 - MP]; (5) ~q [2, 4 - MT]',
+                                reason: 'Aplicando MP com 1 e 3, obtém-se q → r na linha 4. Com a linha 4 e a premissa ~r (linha 2), aplica-se MT deduzindo ~q na linha 5.'
+                            }
+                        ]
+                    },
+                    {
+                        blockNum: 3,
+                        title: '2.3: Deduções Completas em Linguagem Natural',
+                        desc: 'Conduza a prova dedutiva para isolar causas e consequências operacionais expressas em linguagem natural:',
+                        cards: [
+                            {
+                                id: '3A',
+                                desc: 'Considere o encadeamento operacional:\n"Se a rota principal de rede sofre perda de pacotes, as requisições sofrem lentidão. Se as requisições sofrem lentidão, o monitor de integridade reinicia o serviço. O monitor de integridade NÃO reiniciou o serviço. Logo, a rota principal de rede NÃO sofreu perda de pacotes."\nQual estratégia dedutiva comprova essa conclusão?',
+                                options: [
+                                    'Aplica-se Modus Ponens na primeira condicional e Silogismo Disjuntivo na segunda',
+                                    'Aplica-se Silogismo Hipotético entre as duas condicionais para ligar perda de pacotes à reinicialização do serviço; em seguida, aplica-se Modus Tollens com o fato de que o serviço não foi reiniciado',
+                                    'Aplica-se a regra da Adição com a perda de pacotes e depois Conjunção',
+                                    'Aplica-se Dilema Construtivo entre as três frases'
+                                ],
+                                correct: 'Aplica-se Silogismo Hipotético entre as duas condicionais para ligar perda de pacotes à reinicialização do serviço; em seguida, aplica-se Modus Tollens com o fato de que o serviço não foi reiniciado',
+                                reason: 'p → q e q → r geram p → r via Silogismo Hipotético. Como temos ~r ("não reiniciou"), por Modus Tollens conclui-se ~p ("não sofreu perda de pacotes").'
+                            },
+                            {
+                                id: '3B',
+                                desc: 'Considere o diagnóstico da infraestrutura:\n"O sistema apresentou timeout de conexão ou o banco de dados atingiu o limite de conexões abertas. Se o banco de dados atingiu o limite de conexões abertas, o log do sistema gerou um alerta crítico de saturação. O log do sistema NÃO gerou alerta crítico de saturação."\nQual dedução formal comprova a causa real do problema?',
+                                options: [
+                                    'Por Modus Ponens conclui-se que o banco atingiu o limite',
+                                    'Aplica-se Simplificação no alerta de saturação para concluir o timeout',
+                                    'Por Modus Tollens entre a regra do log e a ausência do alerta conclui-se que o banco NÃO atingiu o limite; por Silogismo Disjuntivo conclui-se que o sistema apresentou timeout de conexão',
+                                    'Aplica-se Dilema Destrutivo para refutar ambas as possibilidades'
+                                ],
+                                correct: 'Por Modus Tollens entre a regra do log e a ausência do alerta conclui-se que o banco NÃO atingiu o limite; por Silogismo Disjuntivo conclui-se que o sistema apresentou timeout de conexão',
+                                reason: 'q → r com ~r deduz ~q via Modus Tollens. Sabendo p ∨ q e tendo provado ~q, o Silogismo Disjuntivo garante p ("apresentou timeout de conexão").'
+                            },
+                            {
+                                id: '3C',
+                                desc: 'Considere a afirmação:\n"Ou o arquivo foi corrompido ou o certificado digital expirou. Se o certificado digital expirou, o validador rejeita a assinatura."\nSabendo adicionalmente que o validador NÃO rejeitou a assinatura, o que se deduz rigorosamente?',
+                                options: [
+                                    'O certificado digital expirou',
+                                    'O arquivo não foi corrompido',
+                                    'O arquivo foi corrompido',
+                                    'Nada pode ser deduzido'
+                                ],
+                                correct: 'O arquivo foi corrompido',
+                                reason: 'Se o certificado expirasse, rejeitaria. Como não rejeitou, o certificado não expirou (MT). Como ou o arquivo foi corrompido ou o certificado expirou, deduz-se que o arquivo foi corrompido (SD).'
+                            },
+                            {
+                                id: '3D',
+                                desc: 'Qual a diferença crucial entre uma Regra de Inferência (como MP) e uma Equivalência Lógica (como De Morgan) em deduções formais?',
+                                options: [
+                                    'Regras de inferência são unidirecionais (⇒) e operam sobre linhas inteiras; equivalências são bidirecionais (⇔) e podem substituir subfórmulas',
+                                    'Regras de inferência alteram o valor verdade; equivalências preservam',
+                                    'Equivalências só se aplicam à lógica de primeira ordem',
+                                    'Não existe diferença formal; os dois termos são rigorosamente sinônimos'
+                                ],
+                                correct: 'Regras de inferência são unidirecionais (⇒) e operam sobre linhas inteiras; equivalências são bidirecionais (⇔) e podem substituir subfórmulas',
+                                reason: 'Uma regra dedutiva acarreta da premissa para a conclusão sem volta (p ∧ q ⇒ p, mas p ⇏ p ∧ q). Já equivalências são substituições de mão dupla aplicáveis a partes de fórmulas.'
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            /* ========================================================================= */
+            /* TÓPICO 3: LÓGICA DE PREDICADOS E DOMÍNIO DE DISCURSO */
+            /* ========================================================================= */
+            {
+                id: 'topico3',
+                theme: 'Lógica de Predicados e Domínio de Discurso',
+                badgeTitle: 'Tópico 3',
+                badgeColor: 'bg-cyan-600',
+                borderColor: 'border-cyan-600',
+                blocks: [
+                    {
+                        blockNum: 1,
+                        title: '3.1: Instanciação, Funções de Verdade e Aridade',
+                        desc: 'Calcule a valoração de predicados sob instanciações e analise a assinatura funcional:',
+                        cards: [
+                            {
+                                id: '1A',
+                                desc: 'Considere o predicado aritmético p(x, y): "x² + y² ≤ 25" definido sobre o produto cartesiano U = ℤ × ℤ.\nQual das seguintes instanciações produz uma proposição com valor FALSO?',
+                                options: [
+                                    'p(3, 4)',
+                                    'p(4, 4)',
+                                    'p(-5, 0)',
+                                    'p(-3, -3)'
+                                ],
+                                correct: 'p(4, 4)',
+                                reason: 'Instanciando (4, 4): 4² + 4² = 16 + 16 = 32. Como 32 ≤ 25 é falso, p(4, 4) resulta em Falso. As demais: 3²+4²=25 (V), (-5)²+0=25 (V), (-3)²+(-3)²=18 ≤ 25 (V).'
+                            },
+                            {
+                                id: '1B',
+                                desc: 'Seja o predicado q(x): "(x - 2)(x + 3) = 0" no domínio U = ℕ = {0, 1, 2, ...}.\nQual é a valoração da conjunção q(2) ∧ q(-3)?',
+                                options: [
+                                    'Verdadeira, pois ambos anulam a equação algébrica',
+                                    'Falsa, pois apenas 2 é natural',
+                                    'Indefinida/Inválida, pois x = -3 não pertence ao domínio de discurso U = ℕ',
+                                    'Indeterminada por divisão por zero'
+                                ],
+                                correct: 'Indefinida/Inválida, pois x = -3 não pertence ao domínio de discurso U = ℕ',
+                                reason: 'Um predicado só pode ser avaliado para argumentos pertencentes ao seu domínio de discurso U. Como -3 ∉ ℕ, a expressão q(-3) não está bem-formada no modelo.'
+                            },
+                            {
+                                id: '1C',
+                                desc: 'Considere a função de verificação em software:\nvalidar_acesso(id_usuario, perfil_admin, token_ativo, ip_autorizado)\nQual é a aridade e o domínio de discurso formal deste predicado?',
+                                options: [
+                                    'Quaternária (aridade 4), com domínio no produto cartesiano U₁ × U₂ × U₃ × U₄',
+                                    'Binária (aridade 2), pois avalia apenas id_usuario e ip_autorizado',
+                                    'Ternária (aridade 3), pois token_ativo é booleano',
+                                    'Unária de ordem superior'
+                                ],
+                                correct: 'Quaternária (aridade 4), com domínio no produto cartesiano U₁ × U₂ × U₃ × U₄',
+                                reason: 'Predicados com 4 parâmetros têm aridade 4 (quaternários) e operam sobre tuplas de 4 elementos pertencentes ao produto cartesiano de seus respectivos domínios.'
+                            },
+                            {
+                                id: '1D',
+                                desc: 'Seja p(x): "x é par" e q(x): "x < 10" em U = ℕ. Qual o valor lógico da condicional p(7) → q(15)?',
+                                options: [
+                                    'Falso',
+                                    'Verdadeiro (por vacuidade do antecedente F → F)',
+                                    'Indeterminado',
+                                    'Contraditório'
+                                ],
+                                correct: 'Verdadeiro (por vacuidade do antecedente F → F)',
+                                reason: 'p(7) avalia como Falso (7 não é par). Na tabela do condicional, F → qualquer coisa é estritamente Verdadeiro. Como q(15) é Falso, F → F resulta em Verdadeiro.'
+                            }
+                        ]
+                    },
+                    {
+                        blockNum: 2,
+                        title: '3.2: Determinação Algébrica do Conjunto Verdade Vp',
+                        desc: 'Calcule com rigor o conjunto verdade Vp sob as restrições de domínio especificadas:',
+                        cards: [
+                            {
+                                id: '2A',
+                                desc: 'Determine o conjunto verdade de p(x): "2x - 5 < 7" sob o domínio dos números inteiros não-negativos U = ℕ = {0, 1, 2, ...}:',
+                                options: [
+                                    '{1, 2, 3, 4, 5}',
+                                    '(-∞, 6)',
+                                    '{0, 1, 2, 3, 4, 5, 6}',
+                                    '{0, 1, 2, 3, 4, 5}'
+                                ],
+                                correct: '{0, 1, 2, 3, 4, 5}',
+                                reason: 'Resolvendo a inequação: 2x < 12 ⇒ x < 6. Como o universo é ℕ (que inclui o 0), os elementos inteiros estritamente menores que 6 são {0, 1, 2, 3, 4, 5}.'
+                            },
+                            {
+                                id: '2B',
+                                desc: 'Seja a sentença aberta p(x): "x² - 5x + 6 = 0".\nQual é o conjunto verdade Vp quando o domínio for U = {x ∈ ℤ | x é ímpar}?',
+                                options: [
+                                    '{2, 3}',
+                                    '{2}',
+                                    '{3}',
+                                    '∅'
+                                ],
+                                correct: '{3}',
+                                reason: 'As raízes da equação são x = 2 e x = 3. Como o domínio U restringe-se exclusivamente aos inteiros ímpares, o elemento 2 é filtrado fora. Logo, Vp = {3}.'
+                            },
+                            {
+                                id: '2C',
+                                desc: 'Seja o predicado binário p(x, y): "x + y = 5" definido sobre U = ℕ × ℕ, onde ℕ = {0, 1, 2, ...}.\nQuantos elementos (pares ordenados) pertencem ao conjunto verdade Vp?',
+                                options: [
+                                    '5 pares ordenados: (1,4), (2,3), (3,2), (4,1), (5,0)',
+                                    '6 pares ordenados: (0,5), (1,4), (2,3), (3,2), (4,1), (5,0)',
+                                    'Infinitos pares ordenados',
+                                    '4 pares ordenados'
+                                ],
+                                correct: '6 pares ordenados: (0,5), (1,4), (2,3), (3,2), (4,1), (5,0)',
+                                reason: 'Como ℕ inclui o zero, os pares ordenados cuja soma resulta exatamente 5 são (0,5), (1,4), (2,3), (3,2), (4,1) e (5,0), totalizando 6 pares.'
+                            },
+                            {
+                                id: '2D',
+                                desc: 'Para a sentença p(x): "2x = 5", compare o conjunto verdade considerando sucessivamente os universos U₁ = ℤ (números inteiros) e U₂ = ℚ (números racionais):',
+                                options: [
+                                    'Vp(U₁) = ∅ e Vp(U₂) = {5/2}',
+                                    'Vp(U₁) = {2,5} e Vp(U₂) = {2,5}',
+                                    'Vp(U₁) = {2} e Vp(U₂) = {5/2}',
+                                    'Vp(U₁) = ∅ e Vp(U₂) = ∅'
+                                ],
+                                correct: 'Vp(U₁) = ∅ e Vp(U₂) = {5/2}',
+                                reason: 'A solução é x = 5/2 = 2,5. Como 2,5 não é inteiro, Vp em ℤ é vazio (∅). Já em ℚ, 5/2 é uma fração de inteiros válida, logo Vp = {5/2}.'
+                            }
+                        ]
+                    },
+                    {
+                        blockNum: 3,
+                        title: '3.3: Álgebra de Conjuntos Verdade e Operações Compostas',
+                        desc: 'Calcule operações booleanas compostas entre predicados através de seus conjuntos verdade:',
+                        cards: [
+                            {
+                                id: '3A',
+                                desc: 'Considere o universo U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10} e os predicados:\np(x): "x é múltiplo de 2" (Vp = {2, 4, 6, 8, 10})\nq(x): "x ≥ 6" (Vq = {6, 7, 8, 9, 10})\nQual é o conjunto verdade do predicado composto ~p(x) ∧ q(x)?',
+                                options: [
+                                    '{1, 3, 5, 7, 9}',
+                                    '{6, 8, 10}',
+                                    '{7, 9}',
+                                    '{2, 4, 6, 8, 10}'
+                                ],
+                                correct: '{7, 9}',
+                                reason: '~p(x) corresponde a (U — Vp) = {1, 3, 5, 7, 9}. A conjunção com q(x) é a interseção com Vq = {6, 7, 8, 9, 10}. A interseção entre {1,3,5,7,9} e {6,7,8,9,10} é {7, 9}.'
+                            },
+                            {
+                                id: '3B',
+                                desc: 'No mesmo universo U = {1, ..., 10}, qual é a cardinalidade |V<sub>r</sub>| do conjunto verdade de r(x): p(x) ∨ q(x)?',
+                                options: [
+                                    '8 elementos: {2, 4, 5, 6, 7, 8, 9, 10}',
+                                    '7 elementos: {2, 4, 6, 7, 8, 9, 10}',
+                                    '5 elementos: {6, 8, 10}',
+                                    '10 elementos (o universo inteiro)'
+                                ],
+                                correct: '7 elementos: {2, 4, 6, 7, 8, 9, 10}',
+                                reason: 'União Vp ∪ Vq: {2, 4, 6, 8, 10} ∪ {6, 7, 8, 9, 10} = {2, 4, 6, 7, 8, 9, 10}. O conjunto resultante possui exatamente 7 elementos.'
+                            },
+                            {
+                                id: '3C',
+                                desc: 'Considere os predicados p(x) e q(x). Se Vp ∩ Vq = ∅, o que se pode afirmar categoricamente sobre o predicado p(x) ∧ q(x)?',
+                                options: [
+                                    'É uma sentença contraditória no universo U (seu conjunto verdade é ∅)',
+                                    'É uma sentença universalmente verdadeira',
+                                    'Implica que p(x) ⇔ q(x)',
+                                    'Significa que Vp = U'
+                                ],
+                                correct: 'É uma sentença contraditória no universo U (seu conjunto verdade é ∅)',
+                                reason: 'Como a interseção é vazia, nenhum elemento de U torna p(x) e q(x) verdadeiros simultaneamente; portanto, a conjunção é uma contradição em U.'
+                            },
+                            {
+                                id: '3D',
+                                desc: 'Qual operação de teoria dos conjuntos representa o conjunto verdade do predicado condicional p(x) → q(x)?',
+                                options: [
+                                    '(U — Vp) ∩ Vq',
+                                    'Vp ∩ (U — Vq)',
+                                    'U — (Vp ∪ Vq)',
+                                    '(U — Vp) ∪ Vq'
+                                ],
+                                correct: '(U — Vp) ∪ Vq',
+                                reason: 'Pela equivalência lógica fundamental, p → q ⇔ ~p ∨ q. Em teoria dos conjuntos, isso corresponde exatamente ao complementar de Vp em união com Vq: (U — Vp) ∪ Vq.'
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            /* ========================================================================= */
+            /* TÓPICO 4: QUANTIFICADORES E NEGAÇÃO DE QUANTIFICADORES */
+            /* ========================================================================= */
+            {
+                id: 'topico4',
+                theme: 'Quantificadores (∀, ∃, ∃!) & Negação de Quantificadores',
+                badgeTitle: 'Tópico 4',
+                badgeColor: 'bg-purple-600',
+                borderColor: 'border-purple-600',
+                blocks: [
+                    {
+                        blockNum: 1,
+                        title: '4.1: Valoração Analítica de Proposições Quantificadas',
+                        desc: 'Examine as afirmações sob análise de limites, raízes e paridade nos conjuntos numéricos:',
+                        cards: [
+                            {
+                                id: '1A',
+                                desc: 'Considere a proposição: ∀x ∈ ℕ, x + 3 ≥ 3.\nQual é o valor de verdade e a justificativa correspondente?',
+                                options: [
+                                    'Falso, pois para x = 0 a soma resulta em 0',
+                                    'Falso, pois vale apenas para números inteiros negativos',
+                                    'Verdadeiro, pois o menor elemento de ℕ é 0, e para qualquer x ≥ 0 temos x + 3 ≥ 3',
+                                    'Verdadeiro apenas se x for estritamente positivo'
+                                ],
+                                correct: 'Verdadeiro, pois o menor elemento de ℕ é 0, e para qualquer x ≥ 0 temos x + 3 ≥ 3',
+                                reason: 'Como x ∈ ℕ significa x ≥ 0, somando 3 a ambos os lados obtemos x + 3 ≥ 3 para qualquer natural sem exceção.'
+                            },
+                            {
+                                id: '1B',
+                                desc: 'Avalie a proposição de unicidade: ∃!x ∈ ℤ | x² - 4 = 0.\nQual é o valor lógico desta proposição e por quê?',
+                                options: [
+                                    'Falso, pois existem duas soluções inteiras distintas: x = 2 e x = -2',
+                                    'Verdadeiro, pois a raiz canônica é x = 2',
+                                    'Falso, pois não há nenhuma solução inteira',
+                                    'Verdadeiro, pois (-2)² não é inteiro'
+                                ],
+                                correct: 'Falso, pois existem duas soluções inteiras distintas: x = 2 e x = -2',
+                                reason: 'O quantificador ∃! exige cardinalidade exatamente 1 (|Vp| = 1). Como o conjunto verdade em ℤ é {-2, 2}, a unicidade é violada.'
+                            },
+                            {
+                                id: '1C',
+                                desc: 'Considere a proposição: ∀x ∈ ℕ*, ∃y ∈ ℕ* | y < x.\nQual o valor de verdade dessa sentença no domínio ℕ* = {1, 2, 3, ...}?',
+                                options: [
+                                    'Verdadeiro, basta tomar y = x - 1 para qualquer natural',
+                                    'Falso, pois para x = 1 não existe nenhum y natural positivo menor que 1',
+                                    'Verdadeiro, pois o conjunto ℕ* é infinito',
+                                    'Falso apenas para x = 0'
+                                ],
+                                correct: 'Falso, pois para x = 1 não existe nenhum y natural positivo menor que 1',
+                                reason: 'Para x = 1 (que pertence a ℕ*), o menor elemento possível em ℕ* é 1. Logo não há nenhum y ∈ ℕ* estritamente menor que 1. A universalidade é refutada em x = 1.'
+                            },
+                            {
+                                id: '1D',
+                                desc: 'Considere a afirmação: ∃x ∈ ℤ | 2x = 7.\nEssa proposição é:',
+                                options: [
+                                    'Verdadeira, pois x = 3,5 satisfaz a igualdade',
+                                    'Falsa, pois 7/2 = 3,5 não é um número inteiro (3,5 ∉ ℤ)',
+                                    'Verdadeira, pois 7 é um número primo',
+                                    'Indeterminada na reta numérica'
+                                ],
+                                correct: 'Falsa, pois 7/2 = 3,5 não é um número inteiro (3,5 ∉ ℤ)',
+                                reason: 'A única solução algébrica é 3,5. Como o domínio U é restrito a ℤ (inteiros), não há nenhum elemento no domínio que torne a sentença verdadeira.'
+                            }
+                        ]
+                    },
+                    {
+                        blockNum: 2,
+                        title: '4.2: Negação Rigorosa de Fórmulas Quantificadas',
+                        desc: 'Aplique as Leis de De Morgan para quantificadores e negações de condicionais:',
+                        cards: [
+                            {
+                                id: '2A',
+                                desc: 'Qual é a negação logicamente equivalente da proposição:\n∀x ∈ U, (p(x) → q(x))?',
+                                options: [
+                                    '∀x ∈ U, (p(x) ∧ ~q(x))',
+                                    '∃x ∈ U | (~p(x) → ~q(x))',
+                                    '∃x ∈ U | (p(x) ∧ ~q(x))',
+                                    '∃x ∈ U | (~p(x) ∨ q(x))'
+                                ],
+                                correct: '∃x ∈ U | (p(x) ∧ ~q(x))',
+                                reason: 'A negação de ∀x, α é ∃x | ~α. Negando a condicional p(x) → q(x), obtém-se p(x) ∧ ~q(x). Logo: ∃x ∈ U | (p(x) ∧ ~q(x)).'
+                            },
+                            {
+                                id: '2B',
+                                desc: 'Qual é a negação formal da proposição:\n"Existe um funcionário que ganha mais de 10.000 e não paga previdência"?',
+                                options: [
+                                    'Nenhum funcionário ganha mais de 10.000',
+                                    'Todos os funcionários que ganham mais de 10.000 pagam previdência',
+                                    'Existe um funcionário que ganha menos de 10.000 ou paga previdência',
+                                    'Todos os funcionários ganham menos de 10.000 e pagam previdência'
+                                ],
+                                correct: 'Todos os funcionários que ganham mais de 10.000 pagam previdência',
+                                reason: 'A sentença tem a forma ∃x | (G(x) ∧ ~P(x)). Sua negação é ∀x, ~(G(x) ∧ ~P(x)) ⇔ ∀x, (G(x) → P(x)): "Todo funcionário que ganha > 10k paga previdência".'
+                            },
+                            {
+                                id: '2C',
+                                desc: 'Qual é a negação logicamente equivalente da proposição universal:\n∀x ∈ U, (p(x) ∨ q(x))?',
+                                options: [
+                                    '∃x ∈ U | (~p(x) ∧ ~q(x))',
+                                    '∃x ∈ U | (~p(x) ∨ ~q(x))',
+                                    '∀x ∈ U, (~p(x) ∧ ~q(x))',
+                                    '∀x ∈ U, (~p(x) ∨ ~q(x))'
+                                ],
+                                correct: '∃x ∈ U | (~p(x) ∧ ~q(x))',
+                                reason: 'Pela regra de De Morgan para quantificadores, ~[∀x, α(x)] ⇔ ∃x | ~α(x). Negando a disjunção interna, ~(p ∨ q) ⇔ ~p ∧ ~q.'
+                            },
+                            {
+                                id: '2D',
+                                desc: 'Uma equipe afirma: "Todos os pacotes de rede com flag SYN foram inspecionados pelo firewall". Um auditor quer refutar essa afirmação.\nO que o auditor precisa demonstrar formalmente?',
+                                options: [
+                                    'Provar que nenhum pacote de rede foi inspecionado pelo firewall',
+                                    'Provar que o firewall inspecionou pacotes sem flag SYN',
+                                    'Mostrar que todos os pacotes foram descartados',
+                                    'Apresentar pelo menos um pacote com flag SYN que NÃO foi inspecionado pelo firewall'
+                                ],
+                                correct: 'Apresentar pelo menos um pacote com flag SYN que NÃO foi inspecionado pelo firewall',
+                                reason: 'A negação de ∀x, (SYN(x) → Firewall(x)) é ∃x | (SYN(x) ∧ ~Firewall(x)). Um único contraexemplo é suficiente e necessário.'
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            /* ========================================================================= */
+            /* TÓPICO 5: PREDICADOS EM SQL E CONTRATOS DE CÓDIGO (DBC) */
+            /* ========================================================================= */
+            {
+                id: 'topico5',
+                theme: 'Predicados em SQL & Contratos de Código (DbC)',
+                badgeTitle: 'Tópico 5',
+                badgeColor: 'bg-emerald-600',
+                borderColor: 'border-emerald-600',
+                blocks: [
+                    {
+                        blockNum: 1,
+                        title: '5.1: Lógica Trivalente (3VL), Composição e Semântica de NULLs',
+                        desc: 'Calcule a valoração trivalente e determine o comportamento de consultas em SQL:',
+                        cards: [
+                            {
+                                id: '1A',
+                                desc: 'Avalie a seguinte expressão lógica em SQL onde a coluna idade é NULL:\nNOT (idade > 18) OR (idade <= 18)\nQual é o valor de verdade produzido pela Lógica Trivalente (3VL) de Kleene?',
+                                options: [
+                                    'TRUE',
+                                    'FALSE',
+                                    'UNKNOWN',
+                                    'NULL_POINTER'
+                                ],
+                                correct: 'UNKNOWN',
+                                reason: 'idade > 18 avalia para UNKNOWN; NOT(UNKNOWN) é UNKNOWN. idade <= 18 também avalia para UNKNOWN. Por fim, UNKNOWN OR UNKNOWN = UNKNOWN.'
+                            },
+                            {
+                                id: '1B',
+                                desc: 'Considere uma tabela Clientes com 10 registros, onde 3 possuem email cadastrado, 4 possuem telefone cadastrado e 3 possuem ambos NULL.\nQuantas linhas a seguinte consulta retornará?\nSELECT * FROM Clientes WHERE email = telefone;',
+                                options: [
+                                    'Apenas os clientes onde email e telefone forem idênticos e NÃO-NULOS; tuplas com ambos NULL resultam em UNKNOWN e são descartadas',
+                                    'Retorna os clientes com dados iguais mais os 3 clientes onde ambos são NULL',
+                                    'Retorna todas as 10 linhas',
+                                    'Provoca erro de execução de comparação nula'
+                                ],
+                                correct: 'Apenas os clientes onde email e telefone forem idênticos e NÃO-NULOS; tuplas com ambos NULL resultam em UNKNOWN e são descartadas',
+                                reason: 'Em SQL, a comparação NULL = NULL avalia como UNKNOWN, nunca TRUE. A cláusula WHERE descarta qualquer linha cujo resultado não seja estritamente TRUE.'
+                            },
+                            {
+                                id: '1C',
+                                desc: 'Pela tabela verdade de Kleene, qual é o resultado booleano exato de:\n(TRUE AND UNKNOWN) OR (FALSE AND UNKNOWN)?',
+                                options: [
+                                    'TRUE',
+                                    'UNKNOWN',
+                                    'FALSE',
+                                    'NULL'
+                                ],
+                                correct: 'UNKNOWN',
+                                reason: 'TRUE AND UNKNOWN = UNKNOWN. FALSE AND UNKNOWN = FALSE. Em seguida: UNKNOWN OR FALSE = UNKNOWN.'
+                            },
+                            {
+                                id: '1D',
+                                desc: 'Qual das seguintes consultas SQL é logicamente robusta para recuperar registros onde a coluna desconto é estritamente menor que 10, INCLUINDO aqueles que não possuem desconto (NULL)?',
+                                options: [
+                                    'WHERE desconto < 10',
+                                    'WHERE desconto < 10 AND desconto IS NOT NULL',
+                                    'WHERE NOT (desconto >= 10)',
+                                    'WHERE desconto < 10 OR desconto IS NULL'
+                                ],
+                                correct: 'WHERE desconto < 10 OR desconto IS NULL',
+                                reason: 'Como desconto < 10 resulta em UNKNOWN para valores nulos, é mandatório associar via OR a cláusula explícita desconto IS NULL para resgatá-los.'
+                            }
+                        ]
+                    },
+                    {
+                        blockNum: 2,
+                        title: '5.2: Quantificação e Semântica Lógica de Consultas SQL',
+                        desc: 'Modele afirmações existenciais e filtros relacionais relacionando predicados lógicos e consultas SQL:',
+                        cards: [
+                            {
+                                id: '2A',
+                                desc: 'Considere duas tabelas: Cursos(id, nome) e Matriculas(curso_id, aluno_id).\nQual consulta recupera os cursos que NÃO POSSUEM nenhum aluno matriculado (quantificação universal de ausência: ~∃m | m.curso_id = c.id)?',
+                                options: [
+                                    'SELECT c.nome FROM Cursos c WHERE EXISTS (SELECT 1 FROM Matriculas m WHERE m.curso_id != c.id)',
+                                    'SELECT c.nome FROM Cursos c WHERE NOT EXISTS (SELECT 1 FROM Matriculas m WHERE m.curso_id = c.id)',
+                                    'SELECT c.nome FROM Cursos c JOIN Matriculas m ON c.id = m.curso_id WHERE m.aluno_id IS NULL',
+                                    'SELECT c.nome FROM Cursos c WHERE c.id = 0'
+                                ],
+                                correct: 'SELECT c.nome FROM Cursos c WHERE NOT EXISTS (SELECT 1 FROM Matriculas m WHERE m.curso_id = c.id)',
+                                reason: 'NOT EXISTS verifica se o conjunto verdade da subconsulta correlacionada é vazio (∅), garantindo que não existe nenhuma matrícula vinculada àquele curso.'
+                            },
+                            {
+                                id: '2B',
+                                desc: 'Como o quantificador existencial (∃) é diretamente representado em consultas SQL quando se deseja verificar se existe ao menos um registro relacionado?',
+                                options: [
+                                    'Através da cláusula GROUP BY',
+                                    'Através do predicado EXISTS (subconsulta)',
+                                    'Através da cláusula ORDER BY',
+                                    'Através da função SUM()'
+                                ],
+                                correct: 'Através do predicado EXISTS (subconsulta)',
+                                reason: 'O operador EXISTS avalia como TRUE se o conjunto resultante da subconsulta contiver ao menos uma tupla (|Vp| ≥ 1), implementando fielmente o quantificador existencial ∃.'
+                            },
+                            {
+                                id: '2C',
+                                desc: 'Se uma tabela de Usuários possui uma coluna status que pode ser \'ATIVO\', \'INATIVO\' ou NULL, qual das seguintes cláusulas WHERE recupera EXATAMENTE os usuários cujo status NÃO é \'ATIVO\'?',
+                                options: [
+                                    'WHERE status <> \'ATIVO\'',
+                                    'WHERE NOT (status = \'ATIVO\')',
+                                    'WHERE status != \'ATIVO\' OR status IS NULL',
+                                    'WHERE status = \'INATIVO\''
+                                ],
+                                correct: 'WHERE status != \'ATIVO\' OR status IS NULL',
+                                reason: 'Apenas status != \'ATIVO\' descarta os registros com NULL (pois NULL != \'ATIVO\' dá UNKNOWN). Para incluir quem não tem status ativo de forma completa, adiciona-se OR status IS NULL.'
+                            },
+                            {
+                                id: '2D',
+                                desc: 'Em uma consulta SQL do tipo SELECT colunas FROM Tabela WHERE predicado_p, qual é o papel formal da cláusula WHERE sob a ótica da Lógica de Predicados?',
+                                options: [
+                                    'Filtrar as tuplas do domínio Tabela que pertencem ao Conjunto Verdade Vp do predicado',
+                                    'Definir a aridade dos atributos retornados',
+                                    'Ordenar os elementos do domínio de discurso',
+                                    'Criar um novo produto cartesiano entre tabelas'
+                                ],
+                                correct: 'Filtrar as tuplas do domínio Tabela que pertencem ao Conjunto Verdade Vp do predicado',
+                                reason: 'A tabela atua como o universo/domínio de discurso U (conjunto de tuplas), e a cláusula WHERE avalia p(t), retornando exatamente o conjunto verdade Vp = {t ∈ U | p(t) = TRUE}.'
+                            }
+                        ]
+                    },
+                    {
+                        blockNum: 3,
+                        title: '5.3: Design by Contract (DbC), Invariantes e Culpabilidade',
+                        desc: 'Diagnostique as obrigações contratuais e responsabilidades de software sob o paradigma de Meyer:',
+                        cards: [
+                            {
+                                id: '3A',
+                                desc: 'Considere a especificação do contrato para a operação de inserção em uma estrutura de dados de capacidade fixa:\n<div class="bg-blue-50/80 border border-blue-200 rounded-lg p-2.5 my-2 space-y-1 text-xs code-font">\n<div class="text-[#003B71] font-bold">Operação: enfileirar(item)</div>\n<div class="text-gray-600 font-semibold">• Invariante: 0 ≤ tamanho ≤ capacidade</div>\n<div class="text-amber-800 font-semibold">• Pré-condição (requires): tamanho < capacidade</div>\n<div class="text-emerald-800 font-semibold">• Pós-condição (ensures): tamanho == tamanho_anterior + 1</div>\n</div>\nUm cliente invocou a operação quando tamanho era exatamente igual a capacidade, causando estouro de memória no sistema.\nDe acordo com o princípio de Design by Contract (DbC), onde reside o bug?',
+                                options: [
+                                    'Na implementação da fila, que deveria alocar mais memória automaticamente',
+                                    'No código cliente (chamador), por violar a pré-condição exigida pelo contrato',
+                                    'Na pós-condição do método',
+                                    'No invariante de classe que era excessivamente restritivo'
+                                ],
+                                correct: 'No código cliente (chamador), por violar a pré-condição exigida pelo contrato',
+                                reason: 'No princípio de Design by Contract, a pré-condição é uma obrigação estrita do cliente (chamador). Se o cliente invoca a rotina com a pré-condição violada, a responsabilidade pelo erro é do próprio cliente.'
+                            },
+                            {
+                                id: '3B',
+                                desc: 'Considere o contrato para a operação de transferência entre contas:\n<div class="bg-blue-50/80 border border-blue-200 rounded-lg p-2.5 my-2 space-y-1 text-xs code-font">\n<div class="text-[#003B71] font-bold">Operação: transferir(origem, destino, valor)</div>\n<div class="text-amber-800 font-semibold">• Pré-condição (requires): valor > 0 E origem.saldo ≥ valor</div>\n<div class="text-emerald-800 font-semibold">• Pós-condição (ensures): origem.saldo == saldo_origem_antigo - valor E destino.saldo == saldo_destino_antigo + valor</div>\n</div>\nO cliente respeitou todas as pré-condições (valor positivo e saldo suficiente). Contudo, após a execução, a conta de origem foi debitada, mas a conta de destino permaneceu inalterada.\nQual o diagnóstico formal do contrato?',
+                                options: [
+                                    'Violação de Pré-condição: o cliente forneceu valores ilegais',
+                                    'Quebra de contrato satisfeita por vacuidade',
+                                    'Erro de tempo de execução não contratual',
+                                    'Violação de Pós-condição: a rotina é defeituosa (bug na implementação do fornecedor)'
+                                ],
+                                correct: 'Violação de Pós-condição: a rotina é defeituosa (bug na implementação do fornecedor)',
+                                reason: 'Quando o cliente cumpre rigorosamente a pré-condição, o fornecedor tem a obrigação inegociável de garantir a pós-condição. A falha observada indica um bug na implementação da rotina.'
+                            },
+                            {
+                                id: '3C',
+                                desc: 'Em um laço de repetição (loop), o que representa formalmente o INVARIANTE DE LOOP?',
+                                options: [
+                                    'Uma propriedade lógica que é verdadeira antes da primeira iteração e se mantém verdadeira após cada iteração do laço',
+                                    'A condição de parada que força o término do laço',
+                                    'Uma variável contadora que decrementa até zero',
+                                    'O tempo total de execução do laço'
+                                ],
+                                correct: 'Uma propriedade lógica que é verdadeira antes da primeira iteração e se mantém verdadeira após cada iteração do laço',
+                                reason: 'Um invariante de loop é um predicado de estado que é verdadeiro na inicialização, preservado na manutenção e que, ao término, garante a correção do algoritmo.'
+                            },
+                            {
+                                id: '3D',
+                                desc: 'Se um cliente invoca uma função SEM satisfazer sua pré-condição exigida, qual garantia o contrato oferece ao cliente sobre o resultado retornado pela função?',
+                                options: [
+                                    'A função é obrigada a retornar um valor padrão (como 0 ou null)',
+                                    'Nenhuma garantia! O contrato é satisfeito por vacuidade (P é falso em P → Q, liberando o fornecedor de qualquer garantia)',
+                                    'A função é obrigada a reverter o estado anterior',
+                                    'O contrato força a execução em modo seguro'
+                                ],
+                                correct: 'Nenhuma garantia! O contrato é satisfeito por vacuidade (P é falso em P → Q, liberando o fornecedor de qualquer garantia)',
+                                reason: 'O contrato de código tem a forma lógica P (pré-condição) → Q (pós-condição). Se o chamador faz P ser Falso, a condicional F → Q é trivialmente satisfeita, desobrigando o método de entregar Q.'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        /* RENDERIZADOR COMPLETO DOS 5 TÓPICOS COM SEUS 3 BLOCOS E 4 CARDS */
+        function renderAllModules() {
+            const container = document.getElementById('modules-container');
+            const isGabaritoVisible = document.getElementById('toggle-gabarito-checkbox')?.checked;
+
+            container.innerHTML = reviewTopics.map(mod => `
+                <section class="glass-panel rounded-2xl p-6 sm:p-8 border-l-8 ${mod.borderColor} space-y-8" id="sec-${mod.id}">
+                    <!-- CABEÇALHO DO TÓPICO -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-200 pb-4">
+                        <div>
+                            <span class="${mod.badgeColor} text-white font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">
+                                ${mod.badgeTitle}
+                            </span>
+                            <h2 class="text-2xl font-black text-[#003B71] mt-1.5">${mod.theme}</h2>
+                        </div>
+                        <div class="flex items-center gap-2 self-start sm:self-center">
+                            <button type="button" onclick="correctModule('${mod.id}')" class="bg-[#00AEEF] hover:bg-cyan-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1.5">
+                                <i class="fas fa-check-double"></i> Corrigir Tópico
+                            </button>
+                            <button type="button" onclick="resetModule('${mod.id}')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xs px-3 py-2 rounded-xl transition">
+                                <i class="fas fa-undo"></i> Resetar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- BLOCOS DO TÓPICO -->
+                    <div class="space-y-8">
+                        ${mod.blocks.map(block => `
+                            <div class="bg-gray-50/70 p-4 sm:p-5 rounded-2xl border border-gray-200 space-y-4">
+                                <div class="border-b border-gray-200 pb-2">
+                                    <h3 class="font-extrabold text-[#003B71] text-sm sm:text-base flex items-center gap-2">
+                                        <i class="fas fa-layer-group text-[#00AEEF] text-xs"></i> ${block.title}
+                                    </h3>
+                                    <p class="text-xs text-gray-600 mt-0.5">${block.desc}</p>
+                                </div>
+
+                                <!-- GRID DE 4 QUESTÕES POR BLOCO (2 COLUNAS) -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+                                    ${block.cards.map(card => {
+                                        const globalQId = `${mod.id}_b${block.blockNum}_${card.id}`;
+
+                                        return `
+                                            <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3" id="card-box-${globalQId}">
+                                                <div class="flex items-center justify-between border-b border-gray-100 pb-1.5">
+                                                    <span class="${mod.badgeColor} text-white font-bold text-[10px] px-2 py-0.5 rounded">
+                                                        ${card.id}
+                                                    </span>
+                                                    <button type="button" onclick="toggleAnswer('${globalQId}')" class="gabarito-btn ${isGabaritoVisible ? '' : 'hidden'} text-[10px] font-bold text-[#00AEEF] hover:underline flex items-center gap-1 transition">
+                                                        <i class="fas fa-eye text-[9px]"></i> Gabarito
+                                                    </button>
+                                                </div>
+
+                                                <div class="text-xs text-gray-800 font-semibold leading-relaxed">${card.desc}</div>
+
+                                                <div class="space-y-2 pt-1">
+                                                    <div class="grid grid-cols-1 gap-1.5 text-xs">
+                                                        ${card.options.map(opt => `
+                                                            <label class="flex items-start gap-2.5 bg-gray-50/80 p-2 rounded-lg border border-gray-200 hover:border-[#00AEEF] cursor-pointer transition select-none">
+                                                                <input type="radio" name="radio-${globalQId}" value="${opt}" onchange="selectOption('${globalQId}', this.value)" class="accent-[#00AEEF] cursor-pointer mt-0.5">
+                                                                <span class="font-mono text-gray-700 text-[11px] leading-tight">${opt}</span>
+                                                            </label>
+                                                        `).join('')}
+                                                    </div>
+
+                                                    <div id="feedback-${globalQId}" class="hidden text-[10px] p-1.5 rounded-lg font-bold"></div>
+
+                                                    <div id="answer-${globalQId}" class="hidden bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl text-xs space-y-1">
+                                                        <span class="font-extrabold text-emerald-950 font-mono text-[11px] block">
+                                                            <i class="fas fa-check-circle text-emerald-600 mr-1"></i> Resposta Correta: <span class="text-emerald-700">${card.correct}</span>
+                                                        </span>
+                                                        <p class="text-gray-600 text-[10px] leading-relaxed">${card.reason}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+            `).join('');
+        }
+
+        function selectOption(qId, val) {
+            userState[qId] = val;
+            document.getElementById(`feedback-${qId}`)?.classList.add('hidden');
+        }
+
+        function toggleAnswer(qId) {
+            document.getElementById(`answer-${qId}`)?.classList.toggle('hidden');
+        }
+
+        /* CORREÇÃO POR TÓPICO */
+        function correctModule(modId) {
+            const mod = reviewTopics.find(m => m.id === modId);
+            if (!mod) return;
+
+            mod.blocks.forEach(block => {
+                block.cards.forEach(card => {
+                    const globalQId = `${mod.id}_b${block.blockNum}_${card.id}`;
+                    const userVal = userState[globalQId];
+                    const feedback = document.getElementById(`feedback-${globalQId}`);
+                    const box = document.getElementById(`card-box-${globalQId}`);
+                    if (!feedback) return;
+
+                    feedback.classList.remove('hidden');
+
+                    if (!userVal) {
+                        feedback.className = 'text-[10px] p-1.5 rounded-lg font-bold bg-amber-50 text-amber-800 border border-amber-200';
+                        feedback.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Selecione uma alternativa.';
+                    } else if (userVal === card.correct) {
+                        box.classList.remove('border-rose-300', 'bg-rose-50/20');
+                        box.classList.add('border-emerald-300', 'bg-emerald-50/20');
+                        feedback.className = 'text-[10px] p-1.5 rounded-lg font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+                        feedback.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Correto!';
+                    } else {
+                        box.classList.remove('border-emerald-300', 'bg-emerald-50/20');
+                        box.classList.add('border-rose-300', 'bg-rose-50/20');
+                        feedback.className = 'text-[10px] p-1.5 rounded-lg font-bold bg-rose-100 text-rose-800 border border-rose-200';
+                        feedback.innerHTML = '<i class="fas fa-times-circle mr-1"></i> Incorreto.';
+                    }
+                });
+            });
+        }
+
+        function resetModule(modId) {
+            const mod = reviewTopics.find(m => m.id === modId);
+            if (!mod) return;
+
+            mod.blocks.forEach(block => {
+                block.cards.forEach(card => {
+                    const globalQId = `${mod.id}_b${block.blockNum}_${card.id}`;
+                    delete userState[globalQId];
+                    const box = document.getElementById(`card-box-${globalQId}`);
+                    if (box) box.className = 'bg-white p-4 rounded-xl border border-gray-200 shadow-xs exercise-card space-y-3';
+                    document.getElementById(`feedback-${globalQId}`)?.classList.add('hidden');
+                    document.getElementById(`answer-${globalQId}`)?.classList.add('hidden');
+                    const radios = document.getElementsByName(`radio-${globalQId}`);
+                    radios.forEach(r => r.checked = false);
+                });
+            });
+        }
+
+        function correctAllModules() {
+            reviewTopics.forEach(mod => correctModule(mod.id));
+        }
+
+        /* CAÇA-NÍQUEIS DE EMOJIS */
+        const slotReels = [
+            ['🎲', '🤖', '⚖️', '⚡', '🔒', '💡', '🧠', '🛠️', '📚', '🎯'],
+            ['🎮', '💻', '🌐', '🔥', '🧩', '⚙️', '🔬', '🎨', '🚀', '🔍'],
+            ['⭐', '🔑', '🎯', '🧪', '💎', '🛡️', '👑', '🚨', '🧭', '🏆']
+        ];
+        const slotTargetIndices = [6, 8, 9];
+        const currentSlotIndices = [0, 0, 0];
+
+        function spinSlot(slotIndex) {
+            const btn = document.getElementById(`slot-${slotIndex}`);
+            if (!btn) return;
+
+            currentSlotIndices[slotIndex] = (currentSlotIndices[slotIndex] + 1) % slotReels[slotIndex].length;
+            const newEmoji = slotReels[slotIndex][currentSlotIndices[slotIndex]];
+
+            btn.classList.remove('slot-spinning');
+            void btn.offsetWidth;
+            btn.classList.add('slot-spinning');
+            btn.innerText = newEmoji;
+
+            checkSlotPassword();
+        }
+
+        function checkSlotPassword() {
+            const isUnlocked = currentSlotIndices[0] === slotTargetIndices[0] &&
+                               currentSlotIndices[1] === slotTargetIndices[1] &&
+                               currentSlotIndices[2] === slotTargetIndices[2];
+
+            const wrapper = document.getElementById('gabarito-checkbox-wrapper');
+            if (isUnlocked) {
+                if (wrapper && wrapper.classList.contains('hidden')) {
+                    playFaahSound();
+                }
+                wrapper?.classList.remove('hidden');
+            } else {
+                wrapper?.classList.add('hidden');
+                const checkbox = document.getElementById('toggle-gabarito-checkbox');
+                if (checkbox && checkbox.checked) {
+                    checkbox.checked = false;
+                    onToggleGabaritoCheckbox();
+                }
+            }
+        }
+
+        function onToggleGabaritoCheckbox() {
+            const isChecked = document.getElementById('toggle-gabarito-checkbox')?.checked;
+            const gabaritoBtns = document.querySelectorAll('.gabarito-btn');
+            gabaritoBtns.forEach(btn => {
+                if (isChecked) btn.classList.remove('hidden');
+                else btn.classList.add('hidden');
+            });
+
+            if (!isChecked) {
+                reviewTopics.forEach(mod => {
+                    mod.blocks.forEach(block => {
+                        block.cards.forEach(card => {
+                            const globalQId = `${mod.id}_b${block.blockNum}_${card.id}`;
+                            document.getElementById(`answer-${globalQId}`)?.classList.add('hidden');
+                        });
+                    });
+                });
+            }
+        }
+
+        /* INICIALIZAÇÃO NA CARGA */
+        window.onload = function() {
+            renderAllModules();
+        };
+    </script>
+</body>
+</html>
